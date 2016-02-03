@@ -1,0 +1,20 @@
+<div class="wrap-form">
+
+
+    <form action="{{ url_for('registration.login') }}" method="post">
+
+        <div class="log-fls">
+
+            <input id="log-user" type="text" name="username" placeholder="Username"><br>
+            <input id="log-pass" type="password" name="password" placeholder="Password"><br>
+
+
+            <input type="submit" value="Confirm"><br>
+            <input id="chk" type="checkbox" name="checked" checked>
+            <label for="chk">Remember me</label>
+
+        </div>
+
+    </form>
+
+</div>
