@@ -6,20 +6,17 @@
     <link href="{{ url_for('main.static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
-{#{{ current_user }}#}
 {% if current_user.is_authenticated %}
 
+    {{ current_user }}, <a href="{{ url_for('reg.logout') }}">Logout</a>
 <div class="left-block">
-    {{ current_user }}, <a href="{{ url_for('registration.logout') }}">Logout</a>
+
 </div>
 
 {% else %}
 
-{#<div class="login-form">#}
+    {% include 'login.html' %}
 
-{% include 'login.html' %}
-
-{#</div>#}
 
 {% endif %}
 

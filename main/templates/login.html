@@ -1,7 +1,6 @@
 <div class="wrap-form">
 
-
-    <form action="{{ url_for('registration.login') }}" method="post">
+    <form action="{{ url_for('reg.login') }}" method="post">
 
         <div class="log-fls">
 
@@ -10,11 +9,11 @@
 
 
             <input type="submit" value="Confirm"><br>
-            <input id="chk" type="checkbox" name="checked" checked>
-            <label for="chk">Remember me</label>
-
+            <a href="{{ url_for('reg.register') }}">Register</a>
+            {{ current_user }}
         </div>
 
     </form>
+
 
 </div>

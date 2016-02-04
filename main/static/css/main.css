@@ -17,7 +17,7 @@ body{
 }
 
 .wrap-form {
-    background: #004b7d;
+    background: #00223a;
 
     position: fixed;
     top: 0;
@@ -39,23 +39,12 @@ body{
     background: inherit;
     border: 1px solid #f6edff;
     margin: 10px;
-    color: #00081c;
+    color: white;
 
 }
 
 .log-fls > input[type="submit"]{
     width: 402px;
-}
-
-.log-fls > input[type="checkbox"]  {
-    width: 30px;
-    height: 30px;
-}
-
-label{
-    position: relative;
-    top: -10px;
-    font-size: 18px;
 }
 
 input[type="submit"]:hover{

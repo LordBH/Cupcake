@@ -1,10 +1,13 @@
-from flask import Blueprint, render_template
+from flask import render_template, Blueprint
 
-views_from_about = Blueprint('main', __name__, template_folder='templates',
-                             static_folder='static', static_url_path='/%s' % __name__)
-extra = views_from_about
+from_main = Blueprint('main', __name__, template_folder='templates',
+                      static_folder='static', static_url_path='/%s' % __name__)
+
+
+extra = from_main
 
 
 @extra.route('/')
 def index_page():
-    return render_template('about/index.html')
+    # return render_template('main/index.html')
+    return render_template('base.html')

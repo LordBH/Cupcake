@@ -3,10 +3,10 @@ import os
 
 class ConfigClass(object):
     SECRET_KEY = 'SECRET_KEY'
-    SQLALCHEMY_DATABASE_URI = "postgresql:///db"
+    SQLALCHEMY_DATABASE_URI = "postgresql:///keks_db"
     CSRF_ENABLED = True
 
-    # Flask-Mail settings
+    # Flask-Mail settings1
     MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'testingdjangomaxx@gmail.com')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '][poi123')
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', 'fugg@ukr.net')

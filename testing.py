@@ -1,12 +1,12 @@
-import psycopg2
+from models.models import Users
+from run_app import db
 
-conn = psycopg2.connect("dbname=website_db user=maxx")
-cur = conn.cursor()
-cur.execute("""SELECT name FROM products WHERE (name = '3') """)
-z = cur.fetchall()
-print(bool(z))
-for x in cur.fetchall():
-    print(x)
-conn.commit()
-cur.close()
-conn.close()
+
+# admin = Users('admin', '123', 'example@admin.com')
+# db.session.add(admin)
+# db.session.commit()
+
+y = Users.query.filter(Users.username == 'admin', Users.password == '123').all()
+
+for x in y:
+    print(x.__dict__)

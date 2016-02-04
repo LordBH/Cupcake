@@ -1,9 +1,8 @@
 from flask import Flask
-from flask_mail import Mail
-from config import settings, urls
 from flask_login import LoginManager
-from registration.models import SqlQuery, User
-
+from flask_mail import Mail
+from flask_sqlalchemy import SQLAlchemy
+import settings
 
 app = Flask(__name__)
 
@@ -13,28 +12,43 @@ app.config.from_object(settings.DevelopmentConfig)
 # sending email
 mail = Mail(app)
 
+db = SQLAlchemy(app)
+
 # user handling
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-# register blueprints
-for x in urls.blueprints:
-    app.register_blueprint(x)
+if __name__ == '__main__':
+
+    from models.models import Users
+
+    @login_manager.user_loader
+    def load_user(user_id):
+
+        user = Users(user_id=user_id)
+
+        return user
 
 
-@login_manager.user_loader
-def load_user(user_id):
 
-    response = SqlQuery()
-    query = response.execute(
-            """SELECT * FROM user_table as u WHERE u.id='%s';""" % (user_id[0],)
+    from main.views import from_main
+    from reg.views import from_reg
+
+
+
+    blueprints = (
+
+        from_main,
+        from_reg,
+
     )
 
-    user = User(query[1], query[0])
-    return user
+    for x in blueprints:
+        app.register_blueprint(x)
 
 
-if __name__ == '__main__':
+
+
     app.run()
