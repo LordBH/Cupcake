@@ -23,6 +23,7 @@ def register():
         email = request.form['email'] or None
 
         user = Users(username=username, password=password, email=email, register=True)
+
         login_user(user, remember=True)
     return redirect(url_for('main.index_page'))
 
