@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Base</title>
     <link href="{{ url_for('main.static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
@@ -8,9 +9,18 @@
 <body>
 {% if current_user.is_authenticated %}
 
-    {{ current_user }}, <a href="{{ url_for('reg.logout') }}">Logout</a>
+
 <div class="left-block">
 
+    <ul class="nav-bar">
+        <li class="active"><a class="menu-link" href=".">Profile</a></li>
+        <li><a class="menu-link" href=".">Messages</a></li>
+        <li><a class="menu-link" href=".">Users</a></li>
+    </ul>
+
+</div>
+    <div class="main-block">
+        {{ current_user.username }}, <a href="{{ url_for('reg.logout') }}">Logout</a>
 </div>
 
 {% else %}

@@ -32,11 +32,8 @@ if __name__ == '__main__':
         return user
 
 
-
     from main.views import from_main
     from reg.views import from_reg
-
-
 
     blueprints = (
 
@@ -48,7 +45,4 @@ if __name__ == '__main__':
     for x in blueprints:
         app.register_blueprint(x)
 
-
-
-
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
