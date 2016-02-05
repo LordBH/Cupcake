@@ -1,17 +1,12 @@
-from models.models import Users
-from run_app import db
-from sqlalchemy import update
+from base64 import b64encode
+from os import urandom
 
-# db.create_all()
+random_bytes = urandom(20)
+token = b64encode(random_bytes).decode('utf-8')
+a = ''
+for x in token:
+    if '/' == x:
+        continue
+    a += x
 
-# query = Users(username='admin', password='1', email='fugg@ukr.net', register=True)
-# db.session.add(query)
-# db.session.commit()
-
-
-query = Users.query.filter_by(username='Name2').first()
-query.username = 'Name2'
-query.activated = True
-db.session.commit()
-
-print(query.__dict__)
+print(a[:-1])

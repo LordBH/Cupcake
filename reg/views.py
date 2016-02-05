@@ -23,11 +23,9 @@ def register():
             db.session.add(user)
             db.session.commit()
 
-            Users.send_email(user.email)
+            user.send_email()
 
-            login_user(user, remember=True)
-
-            return redirect(url_for('main.index_page'))
+            return render_template('base.html', msg='Please accept your message on email')
 
     return render_template('register.html', msg='Problem with registration')
 
@@ -41,15 +39,19 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        query = Users.query.filter(Users.username == username, Users.password == password).first()
+        query = Users.query.filter_by(username=username, password=Users.hash_password(password)).first()
+        activated = None
 
-        activated = query.__dict__['activated']
+        if query:
+            activated = query.__dict__['activated']
 
-        if query and activated:
+        if activated:
             user = Users(query=query)
             login_user(user, remember=True)
+        elif activated is False:
+            return render_template('base.html', msg="U don't confirm email")
 
-        return render_template('base.html', msg='Please accept your message on email')
+        return render_template('base.html', msg='Wrong username or password')
 
     return redirect(url_for('main.index_page'))
 
@@ -63,8 +65,11 @@ def logout():
 @extra.route(r'/user/activate/<num>')
 def activate_user(num):
     query = Users.query.filter_by(activated_str=num).first()
-    query = query.__dict__
-    if query['activated_str'] == num:
-        query['activated'] = True
 
-    return render_template('base.html', msg='Successfully accept email')
+    if query is not None:
+        query.activated = True
+        db.session.commit()
+
+        return render_template('base.html', msg='Successfully accept email')
+
+    return render_template('base.html', msg='wrong code')

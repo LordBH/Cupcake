@@ -84,17 +84,17 @@ class Users(db.Model, UserMixin):
             return False
         return True
 
-    @staticmethod
-    def send_email(email):
+    def send_email(self):
 
-        msg = Message("Confirm your account on Cake Messenger", recipients=[email])
-        msg.html = "Link http://192.168.3.111:5000/user/activate/%s" % (Users.activated_message(),)
+        msg = Message("Confirm your account on Cake Messenger", recipients=[self.email])
+        msg.html = "Link http://192.168.3.111:5000/user/activate/%s" % (self.activated_str,)
 
         mail.send(msg)
 
     @staticmethod
     def hash_password(p):
 
+        p = p.encode()
         md = hashlib.md5()
 
         md.update(b"%s" % (p,))
@@ -106,4 +106,9 @@ class Users(db.Model, UserMixin):
     def activated_message():
         random_bytes = urandom(20)
         token = b64encode(random_bytes).decode('utf-8')
-        return token[:-2]
+        a = ''
+        for x in token:
+            if '/' == x:
+                continue
+            a += x
+        return a[:-1]
