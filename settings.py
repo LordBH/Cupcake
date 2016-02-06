@@ -1,5 +1,6 @@
 class ConfigClass(object):
     SECRET_KEY = 'SECRET_KEY'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = "postgresql:///keks_db"
     CSRF_ENABLED = True
 
@@ -27,11 +28,3 @@ class ProductionConfig(ConfigClass):
 class DevelopmentConfig(ConfigClass):
     DEVELOPMENT = True
     DEBUG = True
-
-
-class TestingConfig(ConfigClass):
-    TESTING = True
-
-
-class ManageConfig(DevelopmentConfig):
-    pass

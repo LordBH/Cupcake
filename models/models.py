@@ -1,36 +1,33 @@
-from flask_login import UserMixin
 from flask import request
 from run_app import db, mail
+from flask_login import UserMixin
 from flask_mail import Message
 from base64 import b64encode
 from os import urandom
-import hashlib
-import datetime
+from hashlib import sha224
+from datetime import datetime
 
 
-class Users(db.Model, UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(40), unique=True)
-    email = db.Column(db.String(80), unique=True)
-    password = db.Column(db.String(80))
-    activated = db.Column(db.Boolean, default=False)
-    activated_str = db.Column(db.String(80))
-    registered = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    active = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    username = db.Column(db.String(40), unique=True, nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+    active = db.Column(db.DateTime, default=datetime.now())
+    online = db.Column(db.Boolean, default=False)
 
-    def __init__(self, user_id=None, username=None, password=None, email=None, query=None, register=False):
+    child = db.relationship('ActivatedUsers', backref='users')
+
+    def __init__(self, username=None, password=None, email=None,
+                 query=None, register=False):
 
         if register:
             self.username = username
             self.email = email
             self.password = password
-            self.activated_str = self.activated_message()
-
-        if user_id:
-            print(user_id)
-            query = Users.query.filter(Users.id == user_id).first()
+            self.online = True
 
         if query:
             self.take_query(query)
@@ -40,12 +37,12 @@ class Users(db.Model, UserMixin):
 
     def take_query(self, query):
         query = query.__dict__
+        self.id = query['id']
         self.username = query['username']
         self.password = query['password']
-        self.id = query['id']
-        self.activated = query['activated']
-        self.registered = query['registered']
+        self.email = query['email']
         self.active = query['active']
+        self.online = query['online']
 
     @classmethod
     def valid_date(cls):
@@ -64,7 +61,7 @@ class Users(db.Model, UserMixin):
         if not cls.clean_email(email):
             return False
 
-        return dict(username=username, password=Users.hash_password(password1), email=email)
+        return dict(username=username, password=User.hash_password(password1), email=email)
 
     @staticmethod
     def clean_username(name):
@@ -84,23 +81,38 @@ class Users(db.Model, UserMixin):
             return False
         return True
 
-    def send_email(self):
-
-        msg = Message("Confirm your account on Cake Messenger", recipients=[self.email])
-        msg.html = "Link http://192.168.3.111:5000/user/activate/%s" % (self.activated_str,)
-
-        mail.send(msg)
-
     @staticmethod
     def hash_password(p):
 
         p = p.encode()
-        md = hashlib.md5()
+        sha = sha224(p)
+        sha = sha.hexdigest()
 
-        md.update(b"%s" % (p,))
-        md = md.hexdigest()
+        return sha
 
-        return md
+
+class ActivatedUsers(db.Model):
+    __tablename__ = 'activated_users'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    username = db.Column(db.String(80), nullable=False)
+    activated = db.Column(db.Boolean, default=False)
+    activated_str = db.Column(db.String(80))
+    registered = db.Column(db.DateTime, default=datetime.now())
+
+    parent = db.Column(db.String(80), db.ForeignKey('users.username'))
+
+    def __init__(self, cls):
+        self.username = cls.username
+        self.activated_str = self.activated_message()
+        self.email = cls.email
+
+    def send_email(self):
+
+        msg = Message("Confirm your account on Cake Messenger", recipients=[self.email])
+        msg.html = "Link http://127.0.0.1:5000/user/activate/%s" % (self.activated_str,)
+
+        mail.send(msg)
 
     @staticmethod
     def activated_message():

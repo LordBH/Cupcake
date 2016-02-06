@@ -21,6 +21,17 @@
 </div>
     <div class="main-block">
         {{ current_user.username }}, <a href="{{ url_for('reg.logout') }}">Logout</a>
+        <br>
+        {{ current_user.email }}<br>
+        {% if current_user.online %}
+
+            Online
+
+        {% else %}
+
+            {{ current_user.active | online }}
+
+        {% endif %}
 </div>
 
 {% else %}
