@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template, url_for, Blueprint
+from flask import request, redirect, render_template, url_for, Blueprint, abort
 from flask_login import login_user, logout_user, current_user
 
 
@@ -31,6 +31,7 @@ def register():
 
             login_user(user, remember=True)
 
+            # return redirect(url_for('main.index_page'))
             return render_template('base.html', msg='Please accept your message on email')
 
     return render_template('register.html', msg='Problem with registration')
@@ -61,9 +62,12 @@ def login():
 
             query.online = True
             query.active = datetime.now()
-            db.session.commit()
 
+            db.session.commit()
             login_user(user, remember=True)
+
+            return redirect(url_for('main.index_page'))
+
         elif activated is False:
             return render_template('base.html', msg="U don't confirm email")
 
@@ -74,9 +78,15 @@ def login():
 
 @extra.route('/logout')
 def logout():
+
     from models.models import User, db, datetime
 
-    query = User.query.filter_by(id=current_user.id).first()
+    query = None
+
+    try:
+        query = User.query.filter_by(id=current_user.id).first()
+    except AttributeError:
+        abort(404)
 
     if query is not None:
         query.online = False
@@ -89,6 +99,9 @@ def logout():
 
 @extra.route(r'/user/activate/<num>')
 def activate_user(num):
+
+    """Activation user for code from email """
+
     from models.models import ActivatedUsers, db
 
     query = ActivatedUsers.query.filter_by(activated_str=num).first()
@@ -97,6 +110,6 @@ def activate_user(num):
         query.activated = True
         db.session.commit()
 
-        return render_template('base.html', msg='Successfully accept email')
+        return render_template('reg/accepting_email.html', msg='Successfully accept email')
 
-    return render_template('base.html', msg='wrong code')
+    return render_template('reg/accepting_email.html', msg='Wrong code')

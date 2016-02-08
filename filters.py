@@ -18,9 +18,9 @@ def online(time):
         return 'Last seen at ' + full_time
 
     if now.minute > time.minute:
-        return 'Last seen ' + str(now.minute - time.minute)
+        return 'Last seen ' + str(now.minute - time.minute) + ' min'
 
-    return 'Last seen ' + str(now.second - time.second)
+    return 'Last seen ' + str(now.second - time.second) + 'sec'
 
 
 fil = (

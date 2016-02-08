@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from blueprints import blueprints
 from filters import fil
 import settings
+import psycopg2
 
 app = Flask(__name__)
 
@@ -33,6 +34,14 @@ for x in fil:
     app.jinja_env.filters[x.__name__] = x
 
 
+@app.teardown_request
+def teardown_request(exception):
+    if exception:
+        db.session.rollback()
+        db.session.remove()
+    db.session.remove()
+
+
 if __name__ == '__main__':
 
     from models.models import User, datetime
@@ -40,12 +49,15 @@ if __name__ == '__main__':
 
     @login_manager.user_loader
     def load_user(user_id):
+
         query = User.query.filter(User.id == user_id).first()
+
         if query is None:
             return None
 
         query.online = True
         query.active = datetime.now()
+
         db.session.commit()
 
         user = User(query=query)
