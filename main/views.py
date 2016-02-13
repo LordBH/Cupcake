@@ -1,7 +1,6 @@
-from flask import render_template, Blueprint, abort
-
-from_main = Blueprint('main', __name__, template_folder='templates',
-                      static_folder='static', static_url_path='/%s' % __name__)
+from flask import render_template, abort
+from datetime import datetime
+from . import from_main
 
 extra = from_main
 
@@ -11,33 +10,45 @@ def index_page():
     return render_template('main/index.html')
 
 
-@extra.route('/<name>')
-def user_page(name):
-    from models.models import User, db
-    from datetime import datetime
+# @extra.route('/<name>')
+# def user_page(name):
+#
+#     from models.models import User, db
+#
+#     try:
+#         name = int(name)
+#     except TypeError:
+#         abort(404)
+#
+#     user = User.query.filter_by(id=name).first()
+#
+#     if user is None:
+#         abort(404)
+#
+#     last_active = user.active
+#
+#     day_today = last_active.date() != datetime.now().date()
+#     hour_now = last_active.hour <= datetime.now().hour
+#     last_10_minute = last_active.minute < datetime.now().minute - 10
+#
+#     if day_today or hour_now and last_10_minute:
+#         user.online = False
+#         db.session.commit()
+#
+#     context = {
+#         'user': user
+#     }
+#
+#     return render_template('profile.html', context=context)
 
-    try:
-        name = int(name)
-    except TypeError:
-        abort(404)
 
-    q = User.query.filter_by(id=name).first()
+@extra.route('/all')
+def all_users():
 
-    if q is None:
-        abort(404)
+    from models.models import User
 
-    last_active = q.active
+    users = User.query.all()
 
-    day_today = last_active.date() != datetime.now().date()
-    hour_now = last_active.hour <= datetime.now().hour
-    last_10_minute = last_active.minute < datetime.now().minute - 1
+    return render_template('users.html', users=users)
 
-    if day_today or hour_now and last_10_minute:
-        q.online = False
-        db.session.commit()
 
-    context = {
-        'user': q
-    }
-
-    return render_template('user.html', context=context)

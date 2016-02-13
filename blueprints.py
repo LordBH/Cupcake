@@ -1,6 +1,6 @@
-from main.views import from_main
-from reg.views import from_reg
-from chats.views import from_chats
+from main import from_main
+from reg import from_reg
+from chats import from_chats
 
 
 blueprints = (

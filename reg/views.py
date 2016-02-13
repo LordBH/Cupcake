@@ -1,9 +1,6 @@
-from flask import request, redirect, render_template, url_for, Blueprint, abort
+from flask import request, redirect, render_template, url_for, abort
 from flask_login import login_user, logout_user, current_user
-
-
-from_reg = Blueprint('reg', __name__, template_folder='templates',
-                     static_folder='static', static_url_path='/%s' % __name__)
+from . import from_reg
 
 extra = from_reg
 
@@ -78,7 +75,6 @@ def login():
 
 @extra.route('/logout')
 def logout():
-
     from models.models import User, db, datetime
 
     query = None
@@ -99,7 +95,6 @@ def logout():
 
 @extra.route(r'/user/activate/<num>')
 def activate_user(num):
-
     """Activation user for code from email """
 
     from models.models import ActivatedUsers, db
@@ -113,3 +108,7 @@ def activate_user(num):
         return render_template('reg/accepting_email.html', msg='Successfully accept email')
 
     return render_template('reg/accepting_email.html', msg='Wrong code')
+
+
+
+

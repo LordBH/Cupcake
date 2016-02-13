@@ -1,11 +1,13 @@
 from flask import request
-from run_app import db, mail
+from run_app import db, mail, app
 from flask_login import UserMixin
 from flask_mail import Message
 from base64 import b64encode
 from os import urandom
 from hashlib import sha224
 from datetime import datetime
+from sqlalchemy.dialects.postgres import ARRAY
+from sqlalchemy.orm import backref
 
 
 class User(db.Model, UserMixin):
@@ -17,8 +19,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     active = db.Column(db.DateTime, default=datetime.now())
     online = db.Column(db.Boolean, default=False)
+    # rooms = db.Column(ARRAY(db.Text))
 
-    child = db.relationship('ActivatedUsers', backref='users')
+    child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 
     def __init__(self, username=None, password=None, email=None,
                  query=None, register=False):
@@ -95,24 +98,24 @@ class ActivatedUsers(db.Model):
     __tablename__ = 'activated_users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    username = db.Column(db.String(80), nullable=False)
     activated = db.Column(db.Boolean, default=False)
     activated_str = db.Column(db.String(80))
     registered = db.Column(db.DateTime, default=datetime.now())
 
-    parent = db.Column(db.String(80), db.ForeignKey('users.username'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    parent = db.relationship("User", backref=backref("activated_users", uselist=False))
 
     def __init__(self, cls):
-        self.username = cls.username
         self.activated_str = self.activated_message()
         self.email = cls.email
+        self.users = cls
 
     def send_email(self):
 
         msg = Message("Confirm your account on Cake Messenger", recipients=[self.email])
         msg.html = "Link http://127.0.0.1:5000/user/activate/%s" % (self.activated_str,)
 
-        mail.send(msg)
+        # mail.send(msg)
 
     @staticmethod
     def activated_message():
@@ -124,3 +127,8 @@ class ActivatedUsers(db.Model):
                 continue
             a += x
         return a[:-1]
+
+
+
+
+

@@ -1,6 +1,8 @@
 from flask import session
 from flask.ext.socketio import emit, join_room, leave_room
-from app import socketio
+from . import socket_io
+
+socketio = socket_io
 
 
 @socketio.on('joined', namespace='/chat')
@@ -13,7 +15,7 @@ def joined(message):
 
 
 @socketio.on('text', namespace='/chat')
-def left(message):
+def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
     room = session.get('room')
@@ -27,4 +29,3 @@ def left(message):
     room = session.get('room')
     leave_room(room)
     emit('status', {'msg': session.get('name') + ' has left the room.'}, room=room)
-

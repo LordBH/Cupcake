@@ -13,14 +13,15 @@
 <div class="left-block">
 
     <ul class="nav-bar">
-        <li class="active"><a class="menu-link" href=".">Profile</a></li>
+        <li class="active"><a class="menu-link" href="{{ url_for('main.index_page') }}">Profile</a></li>
         <li><a class="menu-link" href=".">Messages</a></li>
-        <li><a class="menu-link" href=".">Users</a></li>
+        <li><a class="menu-link" href="{{ url_for('main.all_users') }}">Users</a></li>
+        <li><a class="menu-link" href="{{ url_for('reg.logout') }}">Logout</a></li>
     </ul>
 
 </div>
     <div class="main-block">
-        {{ current_user.username }}, <a href="{{ url_for('reg.logout') }}">Logout</a>
+        {{ current_user.username }}
         <br>
         {{ current_user.email }}<br>
         {% if current_user.online %}

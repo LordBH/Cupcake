@@ -1,39 +1,35 @@
 from flask import Flask
+from chats import socket_io
+from settings import DevelopmentConfig
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
-from blueprints import blueprints
 from filters import fil
-import settings
-import psycopg2
 
+# application
 app = Flask(__name__)
 
-app.config.from_object(settings.DevelopmentConfig)
-
-db = SQLAlchemy(app)
-
 # configurations
+app.config.from_object(DevelopmentConfig)
+
+# db
+db = SQLAlchemy(app)
 
 # sending email
 mail = Mail(app)
-
-# db = SQLAlchemy(app)
 
 # user handling
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# blueprint
-for x in blueprints:
-    app.register_blueprint(x)
 
 # template filters
 for x in fil:
     app.jinja_env.filters[x.__name__] = x
 
 
+# rolling db when exception
 @app.teardown_request
 def teardown_request(exception):
     if exception:
@@ -43,28 +39,30 @@ def teardown_request(exception):
 
 
 if __name__ == '__main__':
-
-    from models.models import User, datetime
-
+    from blueprints import blueprints
 
     @login_manager.user_loader
     def load_user(user_id):
+        from models.models import User, datetime
 
         query = User.query.filter(User.id == user_id).first()
-
         if query is None:
             return None
-
         query.online = True
         query.active = datetime.now()
-
-        db.session.commit()
-
         user = User(query=query)
-
+        db.session.commit()
+        datetime.now()
         return user
 
+    # blueprint
+    for x in blueprints:
+        app.register_blueprint(x)
 
+
+
+    socket_io.init_app(app)
     host = '0.0.0.0'
     port = 5000
-    app.run(host=host, port=port)
+    socket_io.run(app, host=host, port=port)
+    # app.run(host=host, port=port)
