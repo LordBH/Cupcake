@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+    <meta charset="UTF-8">
+    <title>Base</title>
+    <link href="{{ url_for('main.static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body>
+{% if current_user.is_authenticated %}
+
+
+<div class="left-block">
+
+    <ul class="nav-bar">
+        <li class="active"><a class="menu-link" href="{{ url_for('main.index_page') }}">Profile</a></li>
+        <li><a class="menu-link" href=".">Messages</a></li>
+        <li><a class="menu-link" href="{{ url_for('main.all_users') }}">Users</a></li>
+        <li><a class="menu-link" href="{{ url_for('reg.logout') }}">Logout</a></li>
+    </ul>
+
+</div>
+    <div class="main-block">
+        {{ current_user.username }}
+        <br>
+        {{ current_user.email }}<br>
+        {% if current_user.online %}
+
+            Online
+
+        {% else %}
+
+            {{ current_user.active | online }}
+
+        {% endif %}
+</div>
+
+{% else %}
+
+    {% include 'login.html' %}
+
+
+{% endif %}
+
+<script src="{{ url_for('main.static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base</title>
+    <link href="{{ url_for('main.static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div class="wrap-form">
+
+    <p class="msg">{{ msg }}</p>
+    <img src="{{ url_for('main.static', filename='img/cake.png') }}">
+    <form action="{{ url_for('reg.register') }}" method="post">
+
+        <div class="log-fls">
+
+            <input id="log-user" type="text" name="username" placeholder="Username" required aria-required="true"><br>
+            <input id="log-email" type="text" name="email" placeholder="Email" required aria-required="true"><br>
+            <input id="log-pass1" type="password" name="password1" placeholder="Password" required aria-required="true"><br>
+            <input id="log-pass2" type="password" name="password2" placeholder="Password" required aria-required="true"><br>
+            <input type="submit" value="Confirm"><br>
+            <a href="{{ url_for('reg.login') }}" class="register">LOGIN / </a>
+            <a href="#" class="forgot">FORGOT PASSWORD</a>
+        </div>
+
+    </form>
+
+
+</div>
+
+<script src="{{ url_for('main.static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+@font-face {
+    src: url('../fonts/PT_Sans-Narrow-Web-Bold.ttf');
+    font-family: "PT";
+}
+
+body {
+    font-family: "PT";
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+.left-block{
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    background: #00081c;
+
+
+}
+
+.wrap-form {
+    background: #00223a;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-flow: wrap row;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+
+    width: inherit;
+    height: inherit;
+}
+
+.log-fls {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.log-fls > input{
+    font-family: "PT";
+    padding: 0 25px;
+    font-size: 19px;
+    width: 350px;
+    height: 50px;
+    outline: none;
+    background: inherit;
+    border: 1px solid #f6edff;
+    margin: 10px;
+    color: white;
+    box-shadow: 1px 1px 3px 1px #000611;
+    text-shadow: 1px 1px 3px #000611;
+    border-radius: 5px;
+
+}
+
+.log-fls > input[type="submit"]{
+    width: 402px;
+    transition: background 1s ease;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover{
+    color: #f6edff;
+    background: #00081c;
+}
+
+
+
+::-webkit-input-placeholder{
+    color: white;
+    text-shadow: 1px 1px 3px #000611;
+}
+
+input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 1000px #004b7d inset;
+}
+
+.register, .forgot {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-bar {
+    padding: 0;
+    margin: 0;
+}
+
+.nav-bar > li {
+    padding: 15px 10px;
+    display: list-item;
+    color: white;
+    list-style-type: none;
+
+}
+
+.active {
+    border-left: solid deepskyblue 10px;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: white;
+}
+
+.main-block {
+    position: relative;
+    right: -250px;
+}
+
+.msg {
+    color: red;
+}
+
+@media screen and (max-width: 800px) {
+    img {
+        width: 70%;
+    }
+
+    .log-fls > input, .log-fls > input[type="submit"] {
+        width: 60%;
+    }
+}

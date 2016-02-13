@@ -1,0 +1,21 @@
+<div class="wrap-form">
+
+    <p class="msg">{{ msg }}</p>
+    <img src="{{ url_for('main.static', filename='img/cake.png') }}">
+    <form action="{{ url_for('reg.login') }}" method="post">
+
+        <div class="log-fls">
+
+            <input id="log-user" type="text" name="username" placeholder="Username" aria-required="true"><br>
+            <input id="log-pass" type="password" name="password" placeholder="Password" aria-required="true"><br>
+
+
+            <input type="submit" value="Confirm"><br>
+            <a href="{{ url_for('reg.register') }}" class="register">REGISTER / </a>
+            <a href="#" class="forgot">FORGOT PASSWORD</a>
+        </div>
+
+    </form>
+
+
+</div>
