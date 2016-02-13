@@ -19,7 +19,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     active = db.Column(db.DateTime, default=datetime.now())
     online = db.Column(db.Boolean, default=False)
-    # rooms = db.Column(ARRAY(db.Text))
 
     child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 

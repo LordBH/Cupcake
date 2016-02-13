@@ -1,16 +1,15 @@
 from flask import Flask
 from chats import socket_io
-from settings import DevelopmentConfig
+from configurations import filters, settings
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
-from filters import fil
 
 # application
 app = Flask(__name__)
 
 # configurations
-app.config.from_object(DevelopmentConfig)
+app.config.from_object(settings.DevelopmentConfig)
 
 # db
 db = SQLAlchemy(app)
@@ -25,7 +24,7 @@ login_manager.login_view = 'login'
 
 
 # template filters
-for x in fil:
+for x in filters.filters:
     app.jinja_env.filters[x.__name__] = x
 
 
