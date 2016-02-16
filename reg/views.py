@@ -11,7 +11,7 @@ def register():
     from run_app import db
 
     if request.method == 'GET':
-        return render_template('register.html')
+        return render_template('reg/register.html')
 
     if request.method == 'POST':
         date = User.valid_date()
@@ -31,7 +31,7 @@ def register():
             # return redirect(url_for('main.index_page'))
             return render_template('base.html', msg='Please accept your message on email')
 
-    return render_template('register.html', msg='Problem with registration')
+    return render_template('reg/register.html', msg='Problem with registration')
 
 
 @extra.route('/login', methods=['GET', 'POST'])

@@ -1,9 +1,10 @@
 from flask import Flask
-from chats import socket_io
-from configurations import filters, settings
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
+
+from chats import socket_io
+from configurations import filters, settings
 
 # application
 app = Flask(__name__)
@@ -38,7 +39,11 @@ def teardown_request(exception):
 
 
 if __name__ == '__main__':
-    from blueprints import blueprints
+    from configurations.blueprints import blueprints
+
+    # blueprint
+    for x in blueprints:
+        app.register_blueprint(x)
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -53,11 +58,6 @@ if __name__ == '__main__':
         db.session.commit()
         datetime.now()
         return user
-
-    # blueprint
-    for x in blueprints:
-        app.register_blueprint(x)
-
 
 
     socket_io.init_app(app)

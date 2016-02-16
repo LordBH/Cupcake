@@ -1,7 +1,7 @@
 class ConfigClass(object):
     SECRET_KEY = 'SECRET_KEY'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = "postgresql:///keks_db"
+    SQLALCHEMY_DATABASE_URI = "postgresql:///cupcake"
     CSRF_ENABLED = True
 
     # Flask-Mail settings1
