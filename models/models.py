@@ -6,7 +6,6 @@ from base64 import b64encode
 from os import urandom
 from hashlib import sha224
 from datetime import datetime
-from sqlalchemy.dialects.postgres import ARRAY
 from sqlalchemy.orm import backref
 
 
@@ -98,7 +97,7 @@ class ActivatedUsers(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     activated = db.Column(db.Boolean, default=False)
-    activated_str = db.Column(db.String(80))
+    activated_str = db.Column(db.String(120))
     registered = db.Column(db.DateTime, default=datetime.now())
 
     parent_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -118,11 +117,11 @@ class ActivatedUsers(db.Model):
 
     @staticmethod
     def activated_message():
-        random_bytes = urandom(20)
+        random_bytes = urandom(80)
         token = b64encode(random_bytes).decode('utf-8')
         a = ''
         for x in token:
-            if '/' == x:
+            if '/' == x or '+' == x:
                 continue
             a += x
         return a[:-1]
