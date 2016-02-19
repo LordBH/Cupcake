@@ -1,8 +1,8 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from run_app import app, db
-
-from models.models import *
+from models.models import User, ActivatedUsers
+from models.rooms import Rooms
 
 
 db.create_all()

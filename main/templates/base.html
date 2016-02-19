@@ -14,7 +14,7 @@
 
     <ul class="nav-bar">
         <li class="active"><a class="menu-link" href="{{ url_for('main.index_page') }}">Profile</a></li>
-        <li><a class="menu-link" href=".">Messages</a></li>
+        <li><a class="menu-link" href="{{ url_for('chats.index') }}">Messages</a></li>
         <li><a class="menu-link" href="{{ url_for('main.all_users') }}">Users</a></li>
         <li><a class="menu-link" href="{{ url_for('reg.logout') }}">Logout</a></li>
     </ul>

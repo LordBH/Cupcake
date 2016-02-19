@@ -23,7 +23,7 @@
 
 {% for x in users %}
 
-    {{ x.username }}, <a href="{{ url_for('chats.chat', id_2=x.id) }}"> write</a>
+    {{ x.username }}, <a href="{{ url_for('chats.chat', id_user=x.id) }}"> write</a>
 
     <br>
     {% if x.online %}

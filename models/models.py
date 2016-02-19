@@ -1,5 +1,5 @@
 from flask import request
-from run_app import db, mail, app
+from run_app import db, mail
 from flask_login import UserMixin
 from flask_mail import Message
 from base64 import b64encode

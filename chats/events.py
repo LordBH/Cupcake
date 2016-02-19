@@ -1,4 +1,5 @@
 from flask import session
+from flask_login import current_user
 from flask.ext.socketio import emit, join_room, leave_room
 from . import socket_io
 
@@ -20,6 +21,18 @@ def text(message):
     The message is sent to all people in the room."""
     room = session.get('room')
     emit('message', {'msg': session.get('name') + ':' + message['msg']}, room=room)
+
+    from models.rooms import Rooms, db
+
+    a = room.split('|')
+
+    if a[0] == str(current_user.id):
+        q = Rooms(room, user1_mes=message['msg'])
+    else:
+        q = Rooms(room, user2_mes=message['msg'])
+
+    db.session.add(q)
+    db.session.commit()
 
 
 @socketio.on('left', namespace='/chat')

@@ -1,32 +1,34 @@
-from flask import session, redirect, url_for, render_template, request
-from . import from_chats
+from flask import session, render_template
 from flask_login import current_user
+from . import from_chats
+from .tools import cmp_user as compare
 
 
 main = from_chats
 
 
-@main.route('/im/<id_2>', methods=['GET', 'POST'])
-def chat(id_2=None):
-    # from models.models import User, db
+@main.route('/im/<id_user>', methods=['GET', 'POST'])
+def chat(id_user=None):
 
-    if current_user.is_authenticated:
-        session['name'] = current_user.username
+    user1 = current_user.id
+    try:
+        user2 = int(id_user)
+    except ValueError:
+        user2 = None
 
-        # room_id_1 = '%d_%s' % (current_user.id, id_2)
-        # room_id_2 = '%d_%s' % (id_2, current_user.id)
-        #
+    extra = compare(user1, user2)
 
+    room_id = '%d|%d' % extra
 
-        # session['room'] = '1'
+    session['name'] = current_user.username
+    session['room'] = room_id
 
-        return redirect(url_for('.index'))
-    return redirect(url_for('main.index_page'))
+    return render_template('im.html', room=session.get('room'))
 
 
 @main.route('/im', methods=['GET', 'POST'])
 def index():
-    # from chats.models.rooms import Rooms
-    # from models.models import User
 
-    return render_template('im.html', room='1')
+    session['name'] = current_user.username
+
+    return render_template('im.html', room=session.get('room'))
