@@ -33,6 +33,7 @@ def user_page(name):
 
     if day_today or hour_now or last_10_minute:
         user.online = False
+        print(__file__)
         db.session.commit()
 
     context = {

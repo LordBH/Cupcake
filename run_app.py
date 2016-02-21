@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 # configurations
 app.config.from_object(settings.DevelopmentConfig)
+
 
 # db
 db = SQLAlchemy(app)
@@ -47,6 +48,7 @@ if __name__ == '__main__':
 
     @login_manager.user_loader
     def load_user(user_id):
+
         from models.models import User, datetime
 
         query = User.query.filter(User.id == user_id).first()
@@ -55,10 +57,12 @@ if __name__ == '__main__':
         query.online = True
         query.active = datetime.now()
         user = User(query=query)
+        print(__file__)
         db.session.commit()
         datetime.now()
+        session['user_id'] = user.id
+        session['user_username'] = user.username
         return user
-
 
     socket_io.init_app(app)
     host = '0.0.0.0'

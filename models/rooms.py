@@ -6,7 +6,7 @@ class Rooms(db.Model):
     __tablename__ = 'rooms'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    room_id = db.Column(db.String(80), nullable=False)
+    room_id = db.Column(db.String(80))
     time = db.Column(db.DateTime, default=datetime.now())
     user1_mes = db.Column(db.Text)
     user2_mes = db.Column(db.Text)

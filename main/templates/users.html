@@ -21,7 +21,14 @@
 
 <div class="main-block">
 
+{#{% for x in session %}#}
+
+
+{#{% endfor %}#}
+
 {% for x in users %}
+
+    {% if x.username != session['user_username'] %}
 
     {{ x.username }}, <a href="{{ url_for('chats.chat', id_user=x.id) }}"> write</a>
 
@@ -35,8 +42,11 @@
         {{ x.active | online }}<br>
 
     {% endif %}
-<br>
-<br>
+        <br>
+        <br>
+
+    {% endif %}
+
 
 {% endfor %}
 

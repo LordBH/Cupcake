@@ -1,5 +1,5 @@
-from flask import request, redirect, render_template, url_for, abort
-from flask_login import login_user, logout_user, current_user
+from flask import request, redirect, render_template, url_for, abort, session
+from flask_login import login_user, logout_user
 from . import from_reg
 
 extra = from_reg
@@ -22,6 +22,7 @@ def register():
 
             db.session.add(user)
             db.session.add(activate)
+            print(__file__)
             db.session.commit()
 
             activate.send_email()
@@ -60,6 +61,7 @@ def login():
             query.online = True
             query.active = datetime.now()
 
+            print(__file__)
             db.session.commit()
             login_user(user, remember=True)
 
@@ -80,13 +82,14 @@ def logout():
     query = None
 
     try:
-        query = User.query.filter_by(id=current_user.id).first()
+        query = User.query.filter_by(id=session['user_id']).first()
     except AttributeError:
         abort(404)
 
     if query is not None:
         query.online = False
         query.active = datetime.now()
+        print(__file__)
         db.session.commit()
 
     logout_user()
@@ -103,6 +106,7 @@ def activate_user(num):
 
     if query is not None:
         query.activated = True
+        print(__file__)
         db.session.commit()
 
         return render_template('reg/accepting_email.html', msg='Successfully accept email')

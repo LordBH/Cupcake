@@ -1,5 +1,4 @@
 from flask import session, render_template
-from flask_login import current_user
 from . import from_chats
 from .tools import cmp_user as compare
 
@@ -10,7 +9,7 @@ main = from_chats
 @main.route('/im/<id_user>', methods=['GET', 'POST'])
 def chat(id_user=None):
 
-    user1 = current_user.id
+    user1 = session.get('user_id')
     try:
         user2 = int(id_user)
     except ValueError:
@@ -20,7 +19,7 @@ def chat(id_user=None):
 
     room_id = '%d|%d' % extra
 
-    session['name'] = current_user.username
+    session['name'] = session.get('user_username')
     session['room'] = room_id
 
     return render_template('im.html', room=session.get('room'))
@@ -29,6 +28,6 @@ def chat(id_user=None):
 @main.route('/im', methods=['GET', 'POST'])
 def index():
 
-    session['name'] = current_user.username
+    session['name'] = session.get('user_username')
 
     return render_template('im.html', room=session.get('room'))
