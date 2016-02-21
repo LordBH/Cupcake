@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
@@ -31,12 +31,12 @@ for x in filters.filters:
 
 
 # rolling db when exception
-@app.teardown_request
-def teardown_request(exception):
-    if exception:
-        db.session.rollback()
-        db.session.remove()
-    db.session.remove()
+# @app.teardown_request
+# def teardown_request(exception):
+#     if exception:
+#         db.session.rollback()
+#         db.session.remove()
+#     db.session.remove()
 
 
 if __name__ == '__main__':
@@ -49,19 +49,22 @@ if __name__ == '__main__':
     @login_manager.user_loader
     def load_user(user_id):
 
-        from models.models import User, datetime
+        from models.models import User, datetime, session
 
+        if session['user_id'] == user_id:
+            return User(username=session['user_username'], user_id=session['user_id'], login=True)
+        print('==>')
         query = User.query.filter(User.id == user_id).first()
+        print('<==')
         if query is None:
             return None
         query.online = True
         query.active = datetime.now()
         user = User(query=query)
-        print(__file__)
+
         db.session.commit()
+
         datetime.now()
-        session['user_id'] = user.id
-        session['user_username'] = user.username
         return user
 
     socket_io.init_app(app)

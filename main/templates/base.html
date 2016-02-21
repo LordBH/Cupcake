@@ -21,16 +21,17 @@
 
 </div>
     <div class="main-block">
-        {{ current_user.username }}
+
+        {{ session.get('user_username') }}
         <br>
-        {{ current_user.email }}<br>
-        {% if current_user.online %}
+        {{ session.get('user_email') }}<br>
+        {% if session.get('user_online') %}
 
             Online
 
         {% else %}
 
-            {{ current_user.active | online }}
+            {{ session.get('user_active') | online }}
 
         {% endif %}
 </div>

@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, session
 from run_app import db, mail
 from flask_login import UserMixin
 from flask_mail import Message
@@ -21,8 +21,12 @@ class User(db.Model, UserMixin):
 
     child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 
-    def __init__(self, username=None, password=None, email=None,
-                 query=None, register=False):
+    def __init__(self, username=None, password=None, email=None, user_id=None,
+                 query=None, register=False, login=False):
+
+        if login:
+            self.username = username
+            self.id = user_id
 
         if register:
             self.username = username
@@ -38,12 +42,14 @@ class User(db.Model, UserMixin):
 
     def take_query(self, query):
         query = query.__dict__
-        self.id = query['id']
-        self.username = query['username']
+        self.id = session['user_id'] = query['id']
+        self.username = session['user_username'] = query['username']
         self.password = query['password']
-        self.email = query['email']
-        self.active = query['active']
-        self.online = query['online']
+        self.email = session['user_email'] = query['email']
+        self.active = session['user_active'] = query['active']
+        self.online = session['user_online'] = query['online']
+
+        # session['user_password'] = self.password
 
     @classmethod
     def valid_date(cls):
