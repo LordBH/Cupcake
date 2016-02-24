@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from chats import socket_io
 from configurations import filters, settings
 
+
 # application
 app = Flask(__name__)
 
@@ -31,6 +32,7 @@ for x in filters.filters:
 
 
 # rolling db when exception
+
 # @app.teardown_request
 # def teardown_request(exception):
 #     if exception:
@@ -51,16 +53,19 @@ if __name__ == '__main__':
 
         from models.models import User, datetime, session
 
-        if session['user_id'] == user_id:
-            return User(username=session['user_username'], user_id=session['user_id'], login=True)
-        print('==>')
+        if session.get('user_active'):
+            return User()
+
+        print('==>'*50)
         query = User.query.filter(User.id == user_id).first()
-        print('<==')
+        print('<=='*50)
+
         if query is None:
             return None
+
         query.online = True
         query.active = datetime.now()
-        user = User(query=query)
+        user = User(query=query, user_session=True)
 
         db.session.commit()
 
@@ -71,4 +76,3 @@ if __name__ == '__main__':
     host = '0.0.0.0'
     port = 5000
     socket_io.run(app, host=host, port=port)
-    # app.run(host=host, port=port)

@@ -4,7 +4,7 @@ class ConfigClass(object):
     SQLALCHEMY_DATABASE_URI = "postgresql:///cupcake"
     CSRF_ENABLED = True
 
-    # Flask-Mail settings1
+    # Flask-Mail settings
     MAIL_USERNAME = 'testingdjangomaxx@gmail.com'
     MAIL_PASSWORD = '][poi123'
     MAIL_DEFAULT_SENDER = 'testingdjangomaxx@gmail.com'
@@ -28,3 +28,7 @@ class ProductionConfig(ConfigClass):
 class DevelopmentConfig(ConfigClass):
     DEVELOPMENT = True
     DEBUG = True
+
+
+class BionicConfig(ConfigClass):
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost:5432/cupcake"

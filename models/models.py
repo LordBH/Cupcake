@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 
     def __init__(self, username=None, password=None, email=None, user_id=None,
-                 query=None, register=False, login=False):
+                 query=None, register=False, login=False, user_session=False):
 
         if login:
             self.username = username
@@ -37,19 +37,24 @@ class User(db.Model, UserMixin):
         if query:
             self.take_query(query)
 
-    def get_id(self):
-        return self.id
+        if user_session:
+            session['user_id'] = self.id
+            session['user_username'] = self.username
+            session['user_email'] = self.email
+            session['user_active'] = self.active
+            session['user_online'] = self.online
 
     def take_query(self, query):
         query = query.__dict__
-        self.id = session['user_id'] = query['id']
-        self.username = session['user_username'] = query['username']
+        self.id = query['id']
+        self.username = query['username']
         self.password = query['password']
-        self.email = session['user_email'] = query['email']
-        self.active = session['user_active'] = query['active']
-        self.online = session['user_online'] = query['online']
+        self.email = query['email']
+        self.active = query['active']
+        self.online = query['online']
 
-        # session['user_password'] = self.password
+    def get_id(self):
+            return self.id
 
     @classmethod
     def valid_date(cls):
@@ -131,8 +136,3 @@ class ActivatedUsers(db.Model):
                 continue
             a += x
         return a[:-1]
-
-
-
-
-

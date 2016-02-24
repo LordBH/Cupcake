@@ -42,7 +42,7 @@ def all_users():
     for x in users:
         if last_seen(x):
             x.online = False
-            db.session.commit()
+    db.session.commit()
 
     return render_template('users.html', users=users)
 
