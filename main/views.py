@@ -7,44 +7,13 @@ extra = from_main
 
 @extra.route('/')
 def index_page():
-    return render_template('main/index.html')
-
-
-@extra.route('/<name>')
-def user_page(name):
-
-    from models.models import User, db
-
-    try:
-        name = int(name)
-    except ValueError:
-        abort(404)
-
-    user = User.query.filter_by(id=name).first()
-
-    if last_seen(user):
-        user.online = False
-        db.session.commit()
 
     context = {
-        'user': user
+        'page': 'main/myPage.html',
+
     }
 
-    return render_template('profile.html', context=context)
-
-
-@extra.route('/all')
-def all_users():
-    from models.models import User, db
-
-    users = User.query.all()
-
-    for x in users:
-        if last_seen(x):
-            x.online = False
-    db.session.commit()
-
-    return render_template('users.html', users=users)
+    return render_template('base.html', context=context)
 
 
 def last_seen(user):

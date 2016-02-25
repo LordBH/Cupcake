@@ -1,47 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <title>Base</title>
-    <link href="{{ url_for('main.static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
+    <title>Cupcake</title>
+    <link href="{{ url_for('main.static', filename="img/favicon.ico") }}" rel="icon" type="image/x-icon"/>
+    <link href="{{ url_for('main.static', filename="css/style.css") }}" rel="stylesheet">
+    <link href="{{ url_for('main.static', filename="css/font-awesome.min.css") }}" rel="stylesheet">
+    <script src="{{ url_for('main.static', filename="js/jquery-2.2.0.js") }}"></script>
+    <script src="{{ url_for('main.static', filename="js/socket.io.min.js") }}"></script>
 </head>
 <body>
+
+
 {% if current_user.is_authenticated %}
 
-
-<div class="left-block">
-
-    <ul class="nav-bar">
-        <li class="active"><a class="menu-link" href="{{ url_for('main.index_page') }}">Profile</a></li>
-        <li><a class="menu-link" href="{{ url_for('chats.index') }}">Messages</a></li>
-        <li><a class="menu-link" href="{{ url_for('main.all_users') }}">Users</a></li>
-        <li><a class="menu-link" href="{{ url_for('reg.logout') }}">Logout</a></li>
-    </ul>
-
-</div>
-    <div class="main-block">
-
-        {{ session.get('user_username') }}
-        <br>
-        {{ session.get('user_email') }}<br>
-        {% if session.get('user_online') %}
-
-            Online
-
-        {% else %}
-
-            {{ session.get('user_active') | online }}
-
-        {% endif %}
-</div>
+    {% include 'main/index.html' %}
 
 {% else %}
 
     {% include 'reg/login.html' %}
 
-
 {% endif %}
+
 
 <script src="{{ url_for('main.static', filename='js/main.js') }}"></script>
 </body>

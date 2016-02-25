@@ -1,0 +1,758 @@
+@font-face {
+    src: url('../fonts/PT_Sans-Narrow-Web-Bold.ttf');
+    font-family: "PT";
+}
+
+body {
+    font-family: "PT";
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 16px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+#templates {
+    display: none;
+}
+
+::-webkit-file-upload-button {
+    cursor: pointer;
+}
+
+/*-------------------------*/
+
+.state { /*online*/
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    border-radius: 50%;
+    background: rgb(175, 175, 175);
+}
+
+.online {
+    background: rgb(133, 128, 223);
+}
+
+.status {
+    margin-left: 20px;
+    color: rgb(161, 161, 161);
+}
+
+.userImg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/*------------------------*/
+
+.left-side {
+    top: 0;
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background: #001561;
+}
+
+.left-side ul {
+    margin-top: 0;
+}
+
+.left-side ul li {
+    border-left: 10px solid transparent;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 240px;
+    height: 40px;
+}
+
+.left-side ul li:not(.active):hover {
+    background: #050a44;
+}
+
+.left-side ul li.active {
+    border-left: 10px solid white;
+    background: #050a44;
+}
+
+.left-side ul li a {
+    color: white;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.375em;
+    background: none;
+    line-height: 1.7em;
+    margin-left: 20px;
+}
+
+/*-------------------*/
+
+#rightSide {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    background: rgb(34, 55, 162);
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#rightSide::-webkit-scrollbar {
+    width: 0;
+}
+
+/*------------------*/
+
+#wrapper {
+    top: 0;
+    position: relative;
+    left: 260px;
+    width: 730px;
+    margin: 0;
+}
+
+/*--------------------*/
+
+article {
+    height: 500px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-bottom: 1px ridge rgb(214, 214, 214);
+    margin-bottom: 10px;
+}
+
+.mainInf {
+    margin-left: 20px;
+    padding: 0 0 0 20px;
+    border-left: 1px ridge rgb(214, 214, 214);
+}
+
+.mainInf h1#name {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.mainInf ul li {
+    margin: 20px 5px;
+}
+
+.mainInf ul li a {
+    color: rgb(77, 114, 153);
+}
+
+.mainInf ul li span:not(.inf) {
+    display: inline-block;
+    width: 60px;
+}
+
+.mainInf ul li span.inf {
+    display: inline-block;
+    width: 200px;
+    margin-left: 20px;
+    color: rgb(77, 114, 153);
+}
+
+.mainInf ul li i {
+    display: inline-block;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.photoInf {
+    height: auto;
+    width: 220px;
+    text-align: center;
+}
+
+.photoInf .changePhoto {
+    width: 160px;
+    height: 25px;
+    padding: 5px;
+    font-size: 18px;
+    position: relative;
+    cursor: pointer;
+    background: rgb(165, 195, 227);
+    margin: 20px auto;
+    color: rgb(32, 68, 131);
+    border-radius: 3px;
+}
+
+.photoInf button.changeButton {
+    display: none;
+    margin-left: -5px;
+    border: none;
+    height: 28px;
+    width: 170px;
+}
+
+.photoInf .changePhoto input {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mainPhoto {
+    margin: 10px auto;
+    width: 200px;
+    height: auto;
+    border: 5px solid white;
+    overflow: hidden;
+    box-shadow: 0 0 3px 1px rgb(195, 195, 195);
+}
+
+.education div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.education div span {
+    width: 200px;
+}
+
+.education div span small {
+    font-size: .8em;
+}
+
+.education div span small a {
+    color: rgb(58, 88, 164);
+}
+
+.education div > div {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 1px 1px rgb(189, 189, 189);
+}
+
+.education img {
+    width: 100%;
+    height: 100%;
+}
+
+.education i {
+    margin-right: 5px;
+    color: rgb(58, 88, 164);
+}
+
+/*==========================================================*/
+
+section {
+    height: 200px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+section .comments {
+    width: 350px;
+    height: 160px;
+    background: rgb(162, 186, 212);
+    border-radius: 5px;
+    margin: 0 5px;
+    overflow: hidden;
+}
+
+.comments > div {
+    padding: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(52, 64, 152);
+}
+
+.comments div span {
+    font-size: .8em;
+    color: rgb(255, 255, 255);
+}
+
+.comments textarea {
+    text-align: left;
+    display: block;
+    width: 320px;
+    max-width: 320px;
+    max-height: 50px;
+    padding: 5px;
+    height: 50px;
+    margin: 10px auto;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+}
+
+.comments button {
+    margin: 5px 10px;
+    background: rgb(30, 57, 152);
+    color: white;
+    border: none;
+    outline: none;
+    height: 25px;
+    width: 120px;
+    font-size: 18px;
+    border-radius: 3px;
+}
+
+.comments button:active {
+    padding-top: 3px;
+    background: rgb(26, 65, 105);
+}
+
+form#commentForm > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Limage {
+    position: relative;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.Limage i {
+    top: 0;
+    left: 0;
+    position: absolute;
+    cursor: pointer;
+    color: rgb(34, 97, 161);
+}
+
+#Limage {
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    position: absolute;
+    opacity: 0;
+    background: none;
+    height: 100%;
+    width: 100%;
+}
+
+.showComment {
+    width: 330px;
+    height: 140px;
+    padding: 10px;
+    border: 1px solid rgb(199, 199, 199);
+    border-radius: 5px;
+    margin: 0 5px;
+    overflow: hidden;
+}
+
+div#mainPhComm {
+    display: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 5px 5px 0;
+    float: left;
+    box-shadow: 0 0 1px 1px rgb(189, 189, 189);
+}
+
+div.commentPhoto {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 5px 5px 0;
+    float: left;
+    box-shadow: 0 0 1px 1px rgb(189, 189, 189);
+}
+
+/*.showComment img#commentImg, #rightSide .showComment img#commentImg{
+    display: none;
+    width: 40px;
+    height: 40px;
+}*/
+
+.commentBox {
+    width: 100%;
+    height: auto;
+}
+
+.commentBox .showComment {
+    margin: 10px auto;
+    height: auto;
+}
+
+.commentBox .showComment > div.addImg {
+    float: none;
+    margin: 10px auto;
+    border-radius: 0;
+    min-width: 100px;
+    width: auto;
+    max-width: 200px;
+    height: auto;
+}
+
+.imgComment {
+    display: block;
+    width: 200px;
+    height: auto;
+    margin-top: 5px;
+}
+
+.friendComment .showComment {
+    width: 260px;
+    height: auto;
+    margin: 10px auto;
+    background: rgb(25, 45, 107);
+    border: none;
+    box-shadow: none;
+    color: white;
+}
+
+#rightSide .friendComment .showComment div {
+    box-shadow: none;
+}
+
+/*----------------=======Friends==========-------------------*/
+
+#wrapper article.friends {
+    border-bottom: none;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.myfriends {
+    position: relative;
+    width: 350px;
+    height: 150px;
+    border: 1px dashed black;
+    margin: 15px 0;
+}
+
+.friendPhoto {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    float: left;
+    margin: 20px 10px 0 10px;
+    box-shadow: 0 0 1px 1px rgb(176, 176, 176);
+    overflow: hidden;
+}
+
+.friendPhoto > img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.friendInf {
+    text-align: right;
+    margin: 10px 20px;
+}
+
+.friendName {
+    font-size: 26px;
+}
+
+.friendInf .status {
+    margin: 5px 5px 5px 0;
+}
+
+.friendState {
+    padding: 5px;
+    background: rgb(72, 232, 58);
+    color: white;
+    text-shadow: 1px 1px 1px rgb(39, 136, 37);
+    margin: 20px 10px 5px 0;
+    width: 80px;
+    text-align: center;
+    display: inline-block;
+}
+
+.myfriends .state {
+    position: relative;
+    top: -2px;
+}
+
+.sendMessage {
+    position: absolute;
+    background: rgb(12, 89, 152);
+    padding: 10px;
+    color: white;
+    border: 1px solid rgb(41, 33, 108);
+    border-radius: 3px;
+    font-weight: bold;
+    bottom: 10px;
+    left: 20px;
+    outline: none;
+    cursor: pointer;
+}
+
+/*chatWindow*/
+.frame {
+    width: 400px;
+    height: 450px;
+    border: 1px dashed black;
+    margin: 20px auto;
+}
+
+.showMessages {
+    width: 350px;
+    height: 250px;
+    margin: 5px auto;
+    border: 1px solid rgb(201, 201, 201);
+    overflow-y: scroll;
+    position: relative;
+}
+
+.wall {
+    position: absolute;
+    width: 100%;
+}
+
+/*.showMessages::-webkit-scrollbar{
+  width: 0;
+}*/
+
+.typeMessage {
+    width: 380px;
+    height: 140px;
+    margin: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+}
+
+.typeMessage .friendPhoto {
+    width: 40px;
+    height: 40px;
+}
+
+.typeMessage textarea {
+    width: 240px;
+    height: 120px;
+    max-width: 240px;
+    max-height: 120px;
+}
+
+.typeMessage button {
+    width: 150px;
+    left: 50%;
+    margin-left: -75px;
+    bottom: -40px;
+}
+
+.miniMessage {
+    width: 95%;
+    height: 60px;
+    margin: 5px auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgb(149, 149, 149);
+}
+
+.miniMessage .friendPhoto {
+    width: 40px;
+    height: 40px;
+    float: none;
+    margin: 0;
+}
+
+.photoDate {
+    width: 60px;
+    height: 50px;
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.date {
+    font-size: 12px;
+    color: rgb(153, 153, 153);
+}
+
+.minMessage {
+    width: 100px;
+    display: block;
+    height: auto;
+    margin: 0 20px;
+}
+
+/*photos*/
+
+.photoContainer {
+    width: 650px;
+    height: auto;
+    margin: 10px auto;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.photoContainer .photo {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    box-shadow: 1px 1px 1px 1px rgb(181, 181, 181);
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    transition: transform 1s ease;
+    cursor: pointer;
+}
+
+.photoContainer .photo:hover {
+    transform: scale(1.2);
+}
+
+.photoContainer .photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/*modal dialog*/
+
+#modalWindow {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    z-index: 1000;
+    display: none;
+    background: rgba(94, 130, 163, .4);
+    position: fixed;
+}
+
+#modalWindow > div {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 20px auto;
+    display: inline-block;
+    padding: 10px;
+    background: white;
+}
+
+#imgContainer {
+    width: 300px;
+    height: auto;
+}
+
+#imgContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: -20px;
+}
+
+/*-=-=-===--=-=-configuration=--=-=-=-=-=-=-==-=*/
+
+#myPageConfig {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    position: relative;
+}
+
+#myPageConfig > div {
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+#myPageConfig input {
+    margin: 5px;
+    display: block;
+}
+
+#myPageConfig label {
+    display: block;
+    margin: 8px 0 0 0;
+}
+
+#myPageConfig button.sendMessage {
+    bottom: -40px;
+    left: 50%;
+    margin-left: -50px;
+}
+
+/* messages*/
+
+.message {
+    width: 90%;
+    height: 100px;
+    border: 3px solid rgb(39, 33, 92);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px auto;
+    cursor: pointer;
+    transition: background 1s ease;
+    position: relative;
+}
+
+.message:hover {
+    background: rgb(156, 183, 228);
+}
+
+.photoFriend {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 10px;
+    float: left;
+}
+
+.photoFriend img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.textMessage {
+    display: block;
+    margin-top: 15px;
+}
+
+.message .state {
+    position: absolute;
+    top: 70px;
+    left: 60px;
+    width: 25px;
+    height: 25px;
+}
+

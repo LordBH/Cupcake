@@ -1,6 +1,69 @@
-{% extends 'base.html' %}
+  <!-- leftside menu -->
+  <div class="left-side">
+    <ul>
+      <li id="myPage" class="active">
+        <a onclick="myPage()">My page</a>
+      </li>
+      <li id="myFriends">
+        <a onclick="myFriends()">My friends</a>
+      </li>
+      <li id="myMessages">
+        <a onclick="myMessages()">My messages</a>
+      </li>
+{#      <li id="myPhoto">#}
+{#        <a href="#myPhoto">My photos</a>#}
+{#      </li>#}
+{#      <li id="myMusic">#}
+{#        <a href="#">My music</a>#}
+{#      </li>#}
+{#      <li id="myVideo">#}
+{#        <a href="#">My videos</a>#}
+{#      </li>#}
+      <li id="myConfiguration">
+        <a onclick="myConfiguration()">Configuration</a>
+      </li>
+    </ul>
+  </div>
 
-{% block content %}
+  <!-- Main container for the inf -->
+  <div id="wrapper">
 
+      <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
+      <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
+      <div id="Messages" hidden>{% include 'main/myMessages.html' %}</div>
+      <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>
+      <div id="Configuration" hidden>{% include 'main/configuration.html' %}</div>
 
-{% endblock %}
+  </div>
+  <!-- News container -->
+  <div id='rightSide'></div>
+
+  <!-- templates -->
+  <div id='templates'>
+
+    <div id='rightSideComents'>
+
+      <div class="friendComment">
+        <div class="showComment">
+          <div class='commentPhoto'>
+{#            <img src="img/o12S9j9oevs.png" class='userImg'>#}
+          </div>
+          <span class='commentSpan'>Nowadays I study at NAU</span>
+          <div class="addImg">
+{#            <img class='imgComment' src="img/nau.jpg">#}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="modalWindow">
+      <div>
+        <div id="imgContainer"></div>
+        <div class="close" onclick="closeModal()">
+          <i class="fa fa-times"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>

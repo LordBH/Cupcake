@@ -1,0 +1,124 @@
+<article>
+  <!-- photo -->
+  <div class="photoInf">
+    <div class="mainPhoto">
+{#      <img class='userImg' src="img/o12S9j9oevs.png">#}
+    </div>
+    <div class="changePhoto">
+      <i class="fa fa-file"></i> Change a photo!
+      <form>
+        <input type="file" class='changeImg' onclick="document.getElementsByClassName('changeButton')[0].style.display = 'block';">
+        <button class="changePhoto changeButton">OK</button>
+      </form>
+    </div>
+  </div>
+  <!-- user inf. -->
+  <div class="mainInf">
+    <h1 id="name">Alexander Bondarenko</h1>
+    <div class="state online"></div>
+    <br>
+    <span class='status'>Veni. Vidi. Vici.</span>
+    <ul>
+      <!-- city -->
+      <li>
+        <i class="fa fa-home"></i> <span>City:</span> <span id='city' class="inf">Kyiv</span>
+      </li>
+      <!-- mail -->
+      <li>
+        <i class="fa fa-envelope-o"></i> <span>E-mail:</span>
+        <span class="inf">
+            <a id="mail" href="malito:bronzer2010@gmail.com">
+              bronzer2010@gmail.com
+            </a>
+          </span>
+      </li>
+      <!-- tel -->
+      <li>
+        <i class="fa fa-phone"></i> <span>Phone:</span>
+        <span class="inf">
+              <a id='tel' href="tel:+380962451992">+380962451992</a>
+          </span>
+      </li>
+      <!-- birth -->
+      <li>
+        <i class="fa fa-birthday-cake"></i> <span>Birthday:</span> <span id='birthday' class="inf">9 january 1996</span>
+      </li>
+      <!-- work -->
+      <li>
+        <i class="fa fa-briefcase"></i> <span>Work:</span> <span id='work' class="inf">Glukhov inc.</span>
+      </li>
+    </ul>
+    <div class="education">
+      <h3>Education:</h3>
+      <div id="school">
+        <div>
+{#          <img id='sch-img' src="img/566.jpg">#}
+        </div>
+        <span id='sch-inf'>
+          Kryvoryzka Ternivska Gymnasium
+          <small>
+            <q><em>Шукай собі долю, а гімназії славу</em></q><br>
+            <i class="fa fa-info-circle"></i><a href="https://sites.google.com/site/krivoyrogktg/">Перейти до сайту</a>
+          </small>
+        </span>
+      </div>
+      <div id='university'>
+        <div>
+{#          <img id='un-img' src="img/nau.jpg">#}
+        </div>
+        <span id='un-inf'>National aviation university<br>
+        <small>
+          <q><em>Сессия близко</em></q><br>
+          <i class="fa fa-info-circle"></i><a href="https://nau.edu.ua">nau.edu.ua</a>
+        </small>
+        </span>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- write a comment -->
+
+<section>
+  <div class="comments">
+    <div>
+      <span>Make a comment</span>
+      <span>Amount of comments: <span id='amount'>3</span></span>
+    </div>
+    <form id='commentForm'>
+      <textarea id="comment" oninput="changeTextArea(this.value)" onfocus="showPhoto()" onblur="checkArea(this.value)"></textarea>
+      <div>
+        <button onclick="addComment();return false;">Comment</button>
+        <div class="Limage">
+          <i class="fa fa-camera"></i>
+          <input type="file" id='Limage' onchange="loadImg(this.value)">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="showComment">
+    <div class='commentPhoto' id='mainPhComm'>
+{#      <img src="img/o12S9j9oevs.png" class="userImg">#}
+    </div>
+    <span id='commentChg'></span>
+    <!-- <img id='commentImg' src="" class='addImg'> -->
+  </div>
+</section>
+
+<!-- user's comments -->
+<div class="commentBox">
+
+  <div class="showComment">
+    <div class="commentPhoto">
+{#      <img src="img/o12S9j9oevs.png" class="userImg">#}
+    </div>
+    <span class='commentSpan'>Hello my name is Alex))</span>
+    <div class="addImg">
+{#      <img class='imgComment' src="img/o12S9j9oevs.png">#}
+    </div>
+
+  </div>
+
+</div>
+
