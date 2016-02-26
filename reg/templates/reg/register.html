@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Base</title>
     <link href="{{ url_for('main.static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ url_for('main.static', filename='js/jquery-2.2.0.js') }}"></script>
 </head>
-<body>
+<body class="body-log">
 
 <div class="wrap-form">
 
@@ -15,8 +16,9 @@
 
         <div class="log-fls">
 
-            <input id="log-user" type="text" name="username" placeholder="Username" required aria-required="true"><br>
-            <input id="log-email" type="text" name="email" placeholder="Email" required aria-required="true"><br>
+            <input id="log-f-user" type="text" name="first-name" placeholder="First-name" required aria-required="true"><br>
+            <input id="log-l-user" type="text" name="last-name" placeholder="Last-name" required aria-required="true"><br>
+            <input id="log-email" type="email" name="email" placeholder="Email" required aria-required="true"><br>
             <input id="log-pass1" type="password" name="password1" placeholder="Password" required aria-required="true"><br>
             <input id="log-pass2" type="password" name="password2" placeholder="Password" required aria-required="true"><br>
             <input type="submit" value="Confirm"><br>

@@ -756,3 +756,23 @@ div.commentPhoto {
     height: 25px;
 }
 
+
+/*=================registration/login===============*/
+
+.wrap-form{
+    width: 550px;
+    height: 500px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -250px 0 0 -275px;
+}
+
+.body-log{
+    background: #100c3a;
+}
+

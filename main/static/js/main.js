@@ -1,6 +1,5 @@
 $(document).ready(function () {
     editImgs();
-
 });
 
 
@@ -88,6 +87,7 @@ function createMessage() {
 
 
 function myPage() {
+    $('body').removeClass('body-log');
     OpenPage('myPage');
 
 }
