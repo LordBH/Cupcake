@@ -129,6 +129,7 @@ function OpenPage(pageName) {
 
     if (flag){
         $('#ChatWindow').hide();
+        flag = false;
     }
 
     $(hideDiv).hide();
