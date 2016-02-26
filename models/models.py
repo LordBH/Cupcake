@@ -13,7 +13,8 @@ class User(db.Model, UserMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    username = db.Column(db.String(40), unique=True, nullable=False)
+    first_name = db.Column(db.String(40), nullable=False)
+    last_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     active = db.Column(db.DateTime, default=datetime.now())
@@ -136,3 +137,19 @@ class ActivatedUsers(db.Model):
                 continue
             a += x
         return a[:-1]
+
+#
+# class UsersConfig(db.Model):
+#
+#     __tablename__ = "users_config"
+#
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+#     username = db.Column(db.String(40), unique=True, nullable=False)
+#     email = db.Column(db.String(80), unique=True, nullable=False)
+#     password = db.Column(db.String(80), nullable=False)
+#     active = db.Column(db.DateTime, default=datetime.now())
+#     online = db.Column(db.Boolean, default=False)
+#
+#     def __init__(self):
+#         pass
+#
