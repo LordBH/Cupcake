@@ -22,15 +22,16 @@ class User(db.Model, UserMixin):
 
     child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 
-    def __init__(self, username=None, password=None, email=None, user_id=None,
+    def __init__(self, last_name=None, first_name=None, password=None, email=None, user_id=None,
                  query=None, register=False, login=False, user_session=False):
 
-        if login:
-            self.username = username
-            self.id = user_id
+        # if login:
+        #     self.username = username
+        #     self.id = user_id
 
         if register:
-            self.username = username
+            self.last_name = last_name
+            self.first_name = first_name
             self.email = email
             self.password = password
             self.online = True
@@ -38,21 +39,22 @@ class User(db.Model, UserMixin):
         if query:
             self.take_query(query)
 
-        if user_session:
-            session['user_id'] = self.id
-            session['user_username'] = self.username
-            session['user_email'] = self.email
-            session['user_active'] = self.active
-            session['user_online'] = self.online
+    #     if user_session:
+    #         session['user_id'] = self.id
+    #         session['user_username'] = self.username
+    #         session['user_email'] = self.email
+    #         session['user_active'] = self.active
+    #         session['user_online'] = self.online
 
     def take_query(self, query):
         query = query.__dict__
         self.id = query['id']
-        self.username = query['username']
-        self.password = query['password']
-        self.email = query['email']
-        self.active = query['active']
-        self.online = query['online']
+        self.last_name = query.get('last_name')
+        self.first_name = query.get('first_name')
+        self.password = query.get('password')
+        self.email = query.get('email')
+        self.active = query.get('active')
+        self.online = query.get('online')
 
     def get_id(self):
             return self.id
@@ -60,13 +62,11 @@ class User(db.Model, UserMixin):
     @classmethod
     def valid_date(cls):
 
-        username = request.form['username']
+        last_name = request.form['last-name']
+        first_name = request.form['first-name']
         password1 = request.form['password1']
         password2 = request.form['password2']
         email = request.form['email']
-
-        if not cls.clean_username(username):
-            return False
 
         if not cls.clean_passwords(password1, password2):
             return False
@@ -74,13 +74,14 @@ class User(db.Model, UserMixin):
         if not cls.clean_email(email):
             return False
 
-        return dict(username=username, password=User.hash_password(password1), email=email)
+        extra = dict(
+            last_name=last_name,
+            first_name=first_name,
+            password=User.hash_password(password1),
+            email=email
+        )
 
-    @staticmethod
-    def clean_username(name):
-        if len(name) < 4:
-            return False
-        return True
+        return extra
 
     @staticmethod
     def clean_passwords(p1, p2):
@@ -138,18 +139,11 @@ class ActivatedUsers(db.Model):
             a += x
         return a[:-1]
 
-#
+
 # class UsersConfig(db.Model):
 #
 #     __tablename__ = "users_config"
 #
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-#     username = db.Column(db.String(40), unique=True, nullable=False)
-#     email = db.Column(db.String(80), unique=True, nullable=False)
-#     password = db.Column(db.String(80), nullable=False)
-#     active = db.Column(db.DateTime, default=datetime.now())
-#     online = db.Column(db.Boolean, default=False)
-#
 #     def __init__(self):
 #         pass
-#
+

@@ -33,12 +33,12 @@ for x in filters.filters:
 
 # rolling db when exception
 
-# @app.teardown_request
-# def teardown_request(exception):
-#     if exception:
-#         db.session.rollback()
-#         db.session.remove()
-#     db.session.remove()
+@app.teardown_request
+def teardown_request(exception):
+    if exception:
+        db.session.rollback()
+        db.session.remove()
+    db.session.remove()
 
 
 if __name__ == '__main__':

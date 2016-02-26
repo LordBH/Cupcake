@@ -13,26 +13,30 @@ def register():
     if request.method == 'GET':
         return render_template('reg/register.html')
 
+    context = {}
+
     if request.method == 'POST':
         date = User.valid_date()
         if date:
-            user = User(username=date['username'], password=date['password'],
-                        email=date['email'], register=True)
+            user = User(first_name=date.get('first_name'), last_name=date.get('last_name'),
+                        password=date.get('password'), email=date.get('email'), register=True)
             activate = ActivatedUsers(user)
 
             db.session.add(user)
             db.session.add(activate)
-            print(__file__)
             db.session.commit()
 
             activate.send_email()
 
             login_user(user, remember=True)
 
-            # return redirect(url_for('main.index_page'))
-            return render_template('base.html', msg='Please accept your message on email')
+            context['msg'] = 'Please accept your message on email'
 
-    return render_template('reg/register.html', msg='Problem with registration')
+            return render_template('base.html', context=context)
+
+    context['msg'] = 'Problem with registration'
+
+    return render_template('reg/register.html', context=context)
 
 
 @extra.route('/login', methods=['GET', 'POST'])
@@ -42,35 +46,29 @@ def login():
     if request.method == 'GET':
         return render_template('base.html')
 
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    context = {}
 
-        query = User.query.filter_by(username=username, password=User.hash_password(password)).first()
-        activated = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        query = User.query.filter_by(email=email, password=User.hash_password(password)).first()
 
         if query:
-            """ RE - WRITE THIS CODE """
 
-            # activated = query.__dict__['activated']
-            activated = True
-
-        if activated:
             user = User(query=query)
 
             query.online = True
             query.active = datetime.now()
 
-            print(__file__)
             db.session.commit()
             login_user(user, remember=True)
 
             return redirect(url_for('main.index_page'))
 
-        elif activated is False:
-            return render_template('base.html', msg="U don't confirm email")
+        context['msg'] = 'Wrong username or password'
 
-        return render_template('base.html', msg='Wrong username or password')
+        return render_template('base.html', context=context)
 
     return redirect(url_for('main.index_page'))
 
@@ -112,7 +110,3 @@ def activate_user(num):
         return render_template('reg/accepting_email.html', msg='Successfully accept email')
 
     return render_template('reg/accepting_email.html', msg='Wrong code')
-
-
-
-
