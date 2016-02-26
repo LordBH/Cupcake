@@ -107,8 +107,11 @@ function myConfiguration() {
 
 }
 
+var flag = false;
+
 function openChat() {
     $('#Messages').hide();
+    flag = true;
     $('#ChatWindow').show();
 
 }
@@ -123,6 +126,10 @@ function OpenPage(pageName) {
 
     active.removeClass('active');
     $(pageName).addClass('active');
+
+    if (flag){
+        $('#ChatWindow').hide();
+    }
 
     $(hideDiv).hide();
     $(showDiv).show();
