@@ -1,5 +1,6 @@
 $(document).ready(function () {
     editImgs();
+
 });
 
 
@@ -88,6 +89,7 @@ function createMessage() {
 
 function myPage() {
     OpenPage('myPage');
+
 }
 
 function myFriends() {
@@ -105,17 +107,15 @@ function myConfiguration() {
 
 }
 
-var flag = false; //flag for hiding chat
-
 function openChat() {
     $('#Messages').hide();
-    flag = true;
     $('#ChatWindow').show();
 
 }
 
 
 function OpenPage(pageName) {
+
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
@@ -124,10 +124,9 @@ function OpenPage(pageName) {
     active.removeClass('active');
     $(pageName).addClass('active');
 
-    if (flag){
-        $('#ChatWindow').hide();
-    }
     $(hideDiv).hide();
     $(showDiv).show();
+
+
 }
 /** *************** **/
