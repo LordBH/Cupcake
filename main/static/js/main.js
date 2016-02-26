@@ -1,6 +1,5 @@
 $(document).ready(function () {
     editImgs();
-
 });
 
 
@@ -88,6 +87,7 @@ function createMessage() {
 
 
 function myPage() {
+    $('body').removeClass('body-log');
     OpenPage('myPage');
 
 }
@@ -107,8 +107,11 @@ function myConfiguration() {
 
 }
 
+var flag = false;
+
 function openChat() {
     $('#Messages').hide();
+    flag = true;
     $('#ChatWindow').show();
 
 }
@@ -123,6 +126,11 @@ function OpenPage(pageName) {
 
     active.removeClass('active');
     $(pageName).addClass('active');
+
+    if (flag){
+        $('#ChatWindow').hide();
+        flag = false;
+    }
 
     $(hideDiv).hide();
     $(showDiv).show();
