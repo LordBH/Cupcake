@@ -28,9 +28,9 @@ def register():
     if request.method == 'POST':
         date = User.valid_date(context)
         if date:
-            config = UsersConfig()
             user = User(first_name=date.get('first_name'), last_name=date.get('last_name'),
                         password=date.get('password'), email=date.get('email'), register=True)
+            config = UsersConfig()
             user.users_config = config
             activate = ActivatedUsers(user)
 
@@ -123,15 +123,19 @@ def activate_user(s):
 @extra.route(r'/config', methods=['POST'])
 def user_conf():
     if request.method == 'POST':
-        from models.models import User
+        from models.models import User, db
 
         q = User.query.filter_by(id=session.get('user_id')).first()
 
         if q is None:
             abort(404)
 
+        print(q.__dict__)
+
         user = User(query=q)
         user.re_write_config()
+
+        db.session.commit()
 
     return redirect(url_for('main.config'))
 
@@ -149,5 +153,5 @@ def check_unique_email(data):
         else:
             flag = False
 
-        emit('flag', {'extra': flag})
-    emit('flag', {'extra': False})
+        return emit('flag', {'extra': flag})
+    return emit('flag', {'extra': False})

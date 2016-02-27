@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     active = db.Column(db.DateTime, default=datetime.now())
     online = db.Column(db.Boolean, default=False)
+    users_config = None
 
     activ_users = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 
@@ -65,7 +66,7 @@ class User(db.Model, UserMixin):
         self.email = query.get('email')
         self.active = query.get('active')
         self.online = query.get('online')
-        self.config = query.get('config')
+        self.users_config = query.get('users_config')
 
     def get_id(self):
         return self.id
@@ -99,9 +100,9 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def clean_names(p1, p2):
-        if p1 and p2:
-            return True
-        return False
+        if not (p1 and p2):
+            return False
+        return True
 
     @staticmethod
     def clean_passwords(p1, p2):
@@ -132,17 +133,21 @@ class User(db.Model, UserMixin):
         city = request.form.get('city')
         phone = request.form.get('phone')
         birthday = request.form.get('birthday')
+        print(self.users_config)
 
+        if self.clean_names(last_name, first_name):
+            self.first_name = first_name
+            self.last_name = last_name
 
-        extra = {}
+        if status:
+            self.config.status = status
 
-        return extra
-        # self.last_name = request.form.get('last-name'),
-        # q.first_name = request.form.get('first-name'),
-        # q.: request.form.get('password1'),
-        # 'password2': request.form.get('password2'),
-        # 'email': request.form.get('email'),
-        # 'msg': 'Validation error',
+        if city:
+            self.config.city = city
+        if phone:
+            self.config.phone = phone
+        if birthday:
+            self.users_config.birthday = birthday
 
 
 class ActivatedUsers(db.Model):
@@ -191,5 +196,6 @@ class UsersConfig(db.Model):
 
     user = db.relationship('User', backref=backref("users_config", uselist=False))
 
+    # def save_key(self):
 
 db.create_all()
