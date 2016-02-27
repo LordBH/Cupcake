@@ -57,7 +57,7 @@ def login():
     from models.models import User, db, datetime
 
     if request.method == 'GET':
-        return render_template('base.html')
+        return render_template('base.html', context={})
 
     context = {
         'password': request.form.get('password'),
@@ -78,11 +78,8 @@ def login():
             db.session.commit()
 
             login_user(user, remember=True)
-            return redirect(url_for('main.index_page'))
 
-        return render_template('base.html', context=context)
-
-    return redirect(url_for('main.index_page'))
+    return render_template('base.html', context=context)
 
 
 @extra.route('/logout')
