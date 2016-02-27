@@ -141,61 +141,83 @@ function OpenPage(pageName) {
 
 /***********validation********* */
 
-var vFlag = false;
 
-function validation(emitName, obj, fn){
+function validation(emitName, obj, fn){  //send socket to validate any value of obj, fn - callback function
     var socket;
         socket = io.connect('http://' + document.domain + ':' + location.port + '/reg');
 
         socket.emit(emitName, obj);
 
         socket.on('flag', function (data) {
-             fn(data);
+            console.log(data);
+             fn(data['extra']);
         });
-
-
 }
 
-function checkEmail(val, i){
-    validation('validationEmail', {email:  val},
-        function(bool){
-            if(bool){
-                if (!vFlag){
+
+
+function checkValue(obj, val, i){ //check value of inputs, i - index of input
+    if (val){
+        switch (obj.id){
+            case 'log-email':
+                validation('validationEmail', {email:  val},
+                    function(bool){
+                        if(bool){
+                            obj.check = true;
+                            if (obj.cross){
+                                document.getElementsByClassName('fa-times')[i].style.display = 'none';
+                                obj.cross = false;
+                            }
+                            document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
+                        }
+                        else{
+                            obj.cross = true;
+                            if (obj.check){
+                                document.getElementsByClassName('fa-check')[i].style.display = 'none';
+                                obj.check = false;
+                            }
+                            document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
+                        }
+                    }
+                );
+                break;
+            case 'log-pass2':
+                    if (val == $('#log-pass1').val()){
+                        obj.check = true;
+                        if (obj.cross){
+                            document.getElementsByClassName('fa-times')[i].style.display = 'none';
+                            obj.cross = false;
+                        }
+                        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
+                    }
+                    else {
+                        obj.cross = true;
+                        if (obj.check){
+                            document.getElementsByClassName('fa-check')[i].style.display = 'none';
+                            obj.check = false;
+                        }
+                        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
+                    }
+                break;
+            default:
+                obj.check = true;
+                if (obj.cross){
                     document.getElementsByClassName('fa-times')[i].style.display = 'none';
+                    obj.cross = false;
                 }
                 document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
-            }
-            else{
-                vFlag = false;
-                document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
-            }
+                break;
         }
-    );
-}
-
-function checkV(val, i){
-    if (val){
-        if (!vFlag){
-            document.getElementsByClassName('fa-times')[i].style.display = 'none';
-        }
-        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
     }
     else {
-        vFlag = false;
+        obj.cross = true;
+        if (obj.check){
+            document.getElementsByClassName('fa-check')[i].style.display = 'none';
+            obj.check = false;
+        }
         document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
     }
 }
 
-function checkPass(val, i){
-    if (val == $('#log-pass1').val()){
-        if (!vFlag){
-            document.getElementsByClassName('fa-times')[i].style.display = 'none';
-        }
-        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
-    }
-    else {
-        vFlag = false;
-        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
-    }
-}
+
 

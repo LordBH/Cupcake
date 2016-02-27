@@ -879,6 +879,9 @@ input:-webkit-autofill{
     14%{
         color: #fe93df;
     }
+    80%{
+        color: #fe93df;
+    }
     90%{
         color: #93527f;
     }
@@ -921,6 +924,10 @@ input:-webkit-autofill{
         color: #2e729d;
     }
     14%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    80%{
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
