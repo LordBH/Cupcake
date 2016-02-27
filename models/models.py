@@ -99,9 +99,9 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def clean_names(p1, p2):
-        if len(p1) > 3 and len(p2) > 3:
-            return False
-        return True
+        if p1 and p2:
+            return True
+        return False
 
     @staticmethod
     def clean_passwords(p1, p2):
