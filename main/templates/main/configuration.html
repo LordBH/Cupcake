@@ -1,4 +1,4 @@
-  <form id='myPageConfig'>
+  <form id='myPageConfig' method="post" action="{{ url_for('reg.user_conf') }}">
     <div class="labels">
       <label for="last_name">Last Name: </label>
       <label for="first_name">First Name: </label>
@@ -8,8 +8,8 @@
       <label for="birthday">Birthday: </label>
     </div>
     <div class="inputs">
-        <input type="text" id="last_name" name="status">
-        <input type="text" id="first_name" name="status">
+        <input type="text" id="last_name" name="last_name">
+        <input type="text" id="first_name" name="first_name">
         <input type="text" id="status" name="status">
       <input id="city" name="city" type="text">
       <input id="phone" name="phone" type="tel">

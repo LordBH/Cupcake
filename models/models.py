@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
     config = db.relationship("UsersConfig", backref=backref("users", uselist=False))
 
     def __init__(self, last_name=None, first_name=None, password=None, email=None,
-                 query=None, register=False, user_session=False):
+                 query=None, register=False, user_session=False, reverse_user_session=False):
 
         if register:
             self.last_name = last_name
@@ -45,6 +45,16 @@ class User(db.Model, UserMixin):
             session['user_email'] = self.email
             session['user_active'] = self.active
             session['user_online'] = self.online
+            # session['user_config'] = self.config
+
+        if reverse_user_session:
+            self.id = session.get('user_id')
+            self.last_name = session.get('user_last_name')
+            self.first_name = session.get('user_first_name')
+            self.email = session.get('user_email')
+            self.active = session.get('user_active')
+            self.online = session.get('user_online')
+            # self.config = session.get('user_config')
 
     def take_query(self, query):
         query = query.__dict__
@@ -55,9 +65,10 @@ class User(db.Model, UserMixin):
         self.email = query.get('email')
         self.active = query.get('active')
         self.online = query.get('online')
+        self.config = query.get('config')
 
     def get_id(self):
-            return self.id
+        return self.id
 
     @staticmethod
     def valid_date(context):
@@ -88,13 +99,6 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def clean_names(p1, p2):
-        print()
-        print(p1)
-        print(type(p1))
-        print()
-        print(p2)
-        print(type(p2))
-        print()
         if len(p1) > 3 and len(p2) > 3:
             return False
         return True
@@ -119,6 +123,26 @@ class User(db.Model, UserMixin):
         sha = sha.hexdigest()
 
         return sha
+
+    def re_write_config(self):
+
+        last_name = request.form.get('last_name')
+        first_name = request.form.get('first_name')
+        status = request.form.get('status')
+        city = request.form.get('city')
+        phone = request.form.get('phone')
+        birthday = request.form.get('birthday')
+
+
+        extra = {}
+
+        return extra
+        # self.last_name = request.form.get('last-name'),
+        # q.first_name = request.form.get('first-name'),
+        # q.: request.form.get('password1'),
+        # 'password2': request.form.get('password2'),
+        # 'email': request.form.get('email'),
+        # 'msg': 'Validation error',
 
 
 class ActivatedUsers(db.Model):
@@ -166,9 +190,6 @@ class UsersConfig(db.Model):
     birthday = db.Column(db.DateTime)
 
     user = db.relationship('User', backref=backref("users_config", uselist=False))
-
-    def __init__(self):
-        pass
 
 
 db.create_all()
