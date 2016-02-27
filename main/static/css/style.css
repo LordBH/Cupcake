@@ -812,7 +812,7 @@ div.commentPhoto {
 }
 
 .wrap-form input{
-    width: 200px;
+    width: 300px;
     height: 25px;
     padding: 10px;
     margin-top: 10px;
@@ -824,7 +824,7 @@ div.commentPhoto {
 }
 
 .wrap-form input[type = submit]{
-    width: 225px;
+    width: 325px;
     font-size: 22px;
     font-weight: bold;
     height: auto;
@@ -850,17 +850,17 @@ div.commentPhoto {
 
 .wrap-form h1{
     margin:  0;
-    color: white;
-    font-size: 36px;
+    color: #4cb8ff;
+    font-size: 42px;
     text-shadow: 2px 2px 1px #0c0a18;
     font-family: 'lobster';
 
 }
 
-.wrap-form h1:first-letter{
-    font-size: 42px;
-
+.wrap-form h1 span{
+    color: #fe93df;
 }
+
 
 .wrap-form a{
     color: white;
