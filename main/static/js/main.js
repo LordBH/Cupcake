@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    OpenPage($('.active')[0].id.substr(0));
     editImgs();
 });
 
@@ -89,7 +90,6 @@ function createMessage() {
 function myPage() {
     $('body').removeClass('body-log');
     OpenPage('myPage');
-
 }
 
 function myFriends() {
@@ -135,20 +135,30 @@ function OpenPage(pageName) {
     $(hideDiv).hide();
     $(showDiv).show();
 
+    sendSocket('page', {id : pageName}, function(){},'/main');
 
 }
 /** *************** **/
 
 /***********validation********* */
 
-function sendSocket(emitName, obj, fn){  //send socket to validate any value of obj, fn - callback function
+function sendSocket(emitName, obj, fn, namespace){  //send socket to validate any value of obj, fn - callback function
     var socket;
-        socket = io.connect('http://' + document.domain + ':' + location.port + '/reg');
+        socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
 
         socket.emit(emitName, obj);
 
         socket.on('flag', function (data) {
              fn(data['extra'], 2);
+        });
+
+        socket.on('userData', function(data){
+            if (data['flag']){
+
+            }
+            else{
+                $('#wrapper').innerHTML = '404';
+            }
         });
 }
 
@@ -169,7 +179,7 @@ function checkValue(obj, val, i){ //check value of inputs, i - index of input
     if (val){
         switch (obj.id){
             case 'log-email':
-                sendSocket('validationEmail', {email:  val}, checks);
+                sendSocket('validationEmail', {email:  val}, checks, '/reg');
                 break;
             case 'log-pass2':
                 checkPass2(val, i);
@@ -195,7 +205,7 @@ function checkValue(obj, val, i){ //check value of inputs, i - index of input
     }
 }
 
-function checkPass2(val, i){console.log(i);
+function checkPass2(val, i){
     if (val == $('#log-pass1').val()){
         checks(true, i);
     }
