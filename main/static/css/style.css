@@ -778,26 +778,7 @@ div.commentPhoto {
 
 }
 
-.wrap-form form{
-    position: relative;
-    animation-name: try;
-    animation-duration: 1.8s;
-    animation-timing-function: ease;
-    z-index: 1;
-    text-align: center;
-}
 
-@keyframes try {
-    0%{
-        left: -150px;
-        transform: scale(0);
-    }
-    100%{
-        left: 0;
-        transform: scale(1);
-    }
-
-}
 
 .body-log{
     background: #100c3a;
@@ -862,7 +843,35 @@ div.commentPhoto {
     font-size: 42px;
     text-shadow: 2px 2px 1px #0c0a18;
     font-family: 'lobster';
+    animation-name: try;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    text-align: center;
+}
 
+@keyframes try {
+    0%{
+        text-shadow: none;
+    }
+    50%{
+        text-shadow: 0 0 5px #fcffa8;
+    }
+    51%{
+        text-shadow: none;
+    }
+    52%{
+        text-shadow: 0 0 5px #fcffa8;
+    }
+    53%{
+        text-shadow: none;
+    }
+    54%{
+        text-shadow: 0 0 5px #fcffa8;
+    }
+    100%{
+        text-shadow: none;
+    }
 }
 
 .wrap-form h1 span{
@@ -878,3 +887,6 @@ div.commentPhoto {
     color: #cf171e;
     display: none;
 }
+
+
+
