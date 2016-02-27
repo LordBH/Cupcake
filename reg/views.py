@@ -13,7 +13,7 @@ def register():
     from run_app import db
 
     if request.method == 'GET':
-        return render_template('reg/register.html')
+        return render_template('reg/register.html', context={})
 
     context = {
         'last_name': request.form.get('last-name'),
@@ -25,7 +25,7 @@ def register():
     }
 
     if request.method == 'POST':
-        date = User.valid_date()
+        date = User.valid_date(context)
         if date:
             config = UsersConfig()
             user = User(first_name=date.get('first_name'), last_name=date.get('last_name'),
