@@ -1,5 +1,6 @@
-from flask import render_template, abort
-from datetime import datetime
+from flask import render_template, abort, request, session, redirect, url_for
+from flask_socketio import emit
+from chats import socket_io
 from . import from_main
 
 extra = from_main
@@ -7,20 +8,30 @@ extra = from_main
 
 @extra.route('/')
 def index_page():
-
     context = {}
-
     return render_template('base.html', context=context)
 
 
-def last_seen(user):
-    if user is None:
-        abort(404)
+@extra.route(r'/config', methods=['POST'])
+def user_conf():
+    if request.method == 'POST':
+        from models.models import User, db
 
-    last_active = user.active
+        q = User.query.filter_by(id=session.get('user_id')).first()
+        if q is None:
+            abort(404)
 
-    day_today = last_active.date() != datetime.now().date()
-    hour_now = last_active.hour <= datetime.now().hour
-    last_10_minute = last_active.minute < datetime.now().minute - 1
+        User.re_write_config(q)
+        db.session.commit()
 
-    return day_today or hour_now or last_10_minute
+    return redirect(url_for('main.index_page'))
+
+
+@socket_io.on('page', namespace='/main')
+def page(date):
+    from models.models import User
+    q = User.query.filter_by(id=date.get('id'))
+
+    if q is None:
+        pass
+

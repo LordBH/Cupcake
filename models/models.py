@@ -55,7 +55,7 @@ class User(db.Model, UserMixin):
             self.email = session.get('user_email')
             self.active = session.get('user_active')
             self.online = session.get('user_online')
-            # self.config = session.get('user_config')
+            # self.user_config = session.get('user_config')
 
     def take_query(self, query):
         query = query.__dict__
@@ -125,29 +125,28 @@ class User(db.Model, UserMixin):
 
         return sha
 
-    def re_write_config(self):
-
+    @staticmethod
+    def re_write_config(q):
         last_name = request.form.get('last_name')
         first_name = request.form.get('first_name')
         status = request.form.get('status')
         city = request.form.get('city')
         phone = request.form.get('phone')
         birthday = request.form.get('birthday')
-        print(self.users_config)
 
-        if self.clean_names(last_name, first_name):
-            self.first_name = first_name
-            self.last_name = last_name
+        if User.clean_names(last_name, first_name):
+            q.first_name = first_name
+            q.last_name = last_name
 
         if status:
-            self.config.status = status
+            q.users_config.status = status
 
         if city:
-            self.config.city = city
+            q.users_config.city = city
         if phone:
-            self.config.phone = phone
+            q.users_config.phone = phone
         if birthday:
-            self.users_config.birthday = birthday
+            q.users_config.birthday = birthday
 
 
 class ActivatedUsers(db.Model):
@@ -195,7 +194,5 @@ class UsersConfig(db.Model):
     birthday = db.Column(db.DateTime)
 
     user = db.relationship('User', backref=backref("users_config", uselist=False))
-
-    # def save_key(self):
 
 db.create_all()

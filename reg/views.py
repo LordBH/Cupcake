@@ -120,26 +120,6 @@ def activate_user(s):
     return render_template('reg/accepting_email.html', context=context)
 
 
-@extra.route(r'/config', methods=['POST'])
-def user_conf():
-    if request.method == 'POST':
-        from models.models import User, db
-
-        q = User.query.filter_by(id=session.get('user_id')).first()
-
-        if q is None:
-            abort(404)
-
-        print(q.__dict__)
-
-        user = User(query=q)
-        user.re_write_config()
-
-        db.session.commit()
-
-    return redirect(url_for('main.config'))
-
-
 @socket_io.on('validationEmail', namespace='/reg')
 def check_unique_email(data):
     from models.models import User
