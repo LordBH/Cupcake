@@ -765,7 +765,7 @@ div.commentPhoto {
 /*=================registration/login===============*/
 
 .wrap-form{
-    width: 550px;
+    width: 700px;
     height: 500px;
     display: flex;
     flex-flow: row nowrap;
@@ -774,8 +774,8 @@ div.commentPhoto {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -250px 0 0 -285px;
-
+    margin: -250px 0 0 -385px;
+    text-align: center;
 }
 
 
@@ -783,6 +783,7 @@ div.commentPhoto {
 .body-log{
     background: #100c3a;
 }
+
 
 .wrap-form img{
    width: 100%;
@@ -810,6 +811,7 @@ div.commentPhoto {
     background: none;
     color: white;
     box-shadow: 2px 2px 1px 1px #0c0a18;
+    display: inline-block;
 }
 
 .wrap-form input[type = submit]{
@@ -831,7 +833,7 @@ div.commentPhoto {
     color: white;
 }
 
-:-webkit-autofill{
+input:-webkit-autofill{
     -webkit-box-shadow: 0 0 0px 1000px #100c3a inset;
     -webkit-text-fill-color: white !important;
 }
@@ -843,34 +845,108 @@ div.commentPhoto {
     font-size: 42px;
     text-shadow: 2px 2px 1px #0c0a18;
     font-family: 'lobster';
-    animation-name: try;
+    animation-name: lightName;
     animation-duration: 10s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
     text-align: center;
 }
 
-@keyframes try {
+.wrap-form h1 span{
+    animation-name: noLight;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    text-align: center;
+}
+
+@keyframes noLight{
     0%{
-        text-shadow: none;
+        color: #fe93df;
     }
-    50%{
-        text-shadow: 0 0 5px #fcffa8;
+    10%{
+        color: #fe93df;
     }
-    51%{
-        text-shadow: none;
+    11%{
+        color: #93527f;
     }
-    52%{
-        text-shadow: 0 0 5px #fcffa8;
+    12%{
+        color: #fe93df;
     }
-    53%{
-        text-shadow: none;
+    13%{
+        color: #93527f;
     }
-    54%{
-        text-shadow: 0 0 5px #fcffa8;
+    14%{
+        color: #fe93df;
+    }
+    90%{
+        color: #93527f;
+    }
+    92%{
+        color: #fe93df;
+    }
+    93%{
+        color: #93527f;
+    }
+    94%{
+        color: #fe93df;
+    }
+    95%{
+        color: #93527f;
     }
     100%{
+        color: #fe93df;
+    }
+}
+
+@keyframes lightName {
+    0%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    10%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    11%{
         text-shadow: none;
+        color: #2e729d;
+    }
+    12%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    13%{
+        text-shadow: none;
+        color: #2e729d;
+    }
+    14%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    90%{
+        text-shadow: none;
+        color: #2e729d;
+    }
+    92%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    93%{
+        text-shadow: none;
+        color: #2e729d;
+    }
+    94%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
+    }
+    95%{
+        text-shadow: none;
+        color: #2e729d;
+    }
+    100%{
+        text-shadow: 0 0 5px #fcffa8;
+        color: #4cb8ff;
     }
 }
 
@@ -885,8 +961,21 @@ div.commentPhoto {
 
 .wrap-form .incorrect{
     color: #cf171e;
-    display: none;
 }
 
+.check{
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px;
+    left: 13px;
+}
+.wrap-form i{
+    color: white;
+    position: relative;
+    display: none;
+}
 
 

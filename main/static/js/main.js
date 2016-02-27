@@ -154,20 +154,34 @@ function validation(emitName, obj, fn){
 
 }
 
-function checkEmail(val){
+function checkEmail(val, i){
     validation('validationEmail', {email:  val},
         function(bool){
             if(bool){
-
+                document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
             }
             else{
-
+                document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
             }
         }
     );
 }
 
-function checkLogin(){
+function checkV(val, i){
+    if (val){
+        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
+    }
+    else {
+        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
+    }
+}
 
+function checkPass(val, i){
+    if (val == $('#log-pass1').value){
+        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
+    }
+    else {
+        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
+    }
 }
 
