@@ -154,7 +154,7 @@ function sendSocket(emitName, obj, fn, namespace){  //send socket to validate an
 
         socket.on('userData', function(data){
             if (data['flag']){
-
+                console.log('lalka');
             }
             else{
                 $('#wrapper').innerHTML = '404';
