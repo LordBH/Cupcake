@@ -141,6 +141,8 @@ function OpenPage(pageName) {
 
 /***********validation********* */
 
+var vFlag = false;
+
 function validation(emitName, obj, fn){
     var socket;
         socket = io.connect('http://' + document.domain + ':' + location.port + '/reg');
@@ -158,9 +160,13 @@ function checkEmail(val, i){
     validation('validationEmail', {email:  val},
         function(bool){
             if(bool){
+                if (!vFlag){
+                    document.getElementsByClassName('fa-times')[i].style.display = 'none';
+                }
                 document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
             }
             else{
+                vFlag = false;
                 document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
             }
         }
@@ -169,18 +175,26 @@ function checkEmail(val, i){
 
 function checkV(val, i){
     if (val){
+        if (!vFlag){
+            document.getElementsByClassName('fa-times')[i].style.display = 'none';
+        }
         document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
     }
     else {
+        vFlag = false;
         document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
     }
 }
 
 function checkPass(val, i){
-    if (val == $('#log-pass1').value){
+    if (val == $('#log-pass1').val()){
+        if (!vFlag){
+            document.getElementsByClassName('fa-times')[i].style.display = 'none';
+        }
         document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
     }
     else {
+        vFlag = false;
         document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
     }
 }
