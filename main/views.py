@@ -30,8 +30,33 @@ def user_conf():
 @socket_io.on('page', namespace='/main')
 def page(date):
     from models.models import User
-    q = User.query.filter_by(id=date.get('id'))
+
+    user_id = date.get('id')
+    try:
+        user_id = int(user_id)
+    except AttributeError:
+        return emit('userDate', {'flag': False, 'msg': 'not int'})
+
+    q = User.query.filter_by(id=user_id).first()
 
     if q is None:
-        pass
+        return emit('userDate', {'flag': False, 'msg': "don't have this id"})
+
+    q = q.__dict__
+
+    context = {
+        'flag': True,
+        'msg': 'success',
+        'id': q.id,
+        'last_name': q.last_name,
+        'first_name': q.first_name,
+        'email': q.email,
+        'online': q.id,
+        'status': q.users_config.status,
+        'city': q.users_config.city,
+        'phone': q.users_config.phone,
+        'birthday': q.users_config.birthday,
+    }
+
+    return emit('userDate', context)
 
