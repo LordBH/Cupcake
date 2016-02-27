@@ -46,7 +46,7 @@ class User(db.Model, UserMixin):
             session['user_email'] = self.email
             session['user_active'] = self.active
             session['user_online'] = self.online
-            # session['user_config'] = self.config
+            # session['users_config'] = self.config
 
         if reverse_user_session:
             self.id = session.get('user_id')
@@ -55,7 +55,7 @@ class User(db.Model, UserMixin):
             self.email = session.get('user_email')
             self.active = session.get('user_active')
             self.online = session.get('user_online')
-            # self.user_config = session.get('user_config')
+            # self.users_config = session.get('users_config')
 
     def take_query(self, query):
         query = query.__dict__

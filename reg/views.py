@@ -80,8 +80,8 @@ def login():
             db.session.commit()
 
             login_user(user, remember=True)
-
-        return render_template('base.html', context=context)
+        else:
+            return render_template('base.html', context=context)
     return redirect(url_for('main.index_page'))
 
 
