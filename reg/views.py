@@ -24,7 +24,9 @@ def register():
             user.users_config = config
             activate = ActivatedUsers(user)
 
-            db.session.add(config, user, activate)
+            db.session.add(config)
+            db.session.add(user)
+            db.session.add(activate)
             db.session.commit()
 
             activate.send_email()

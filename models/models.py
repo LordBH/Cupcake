@@ -147,8 +147,8 @@ class UsersConfig(db.Model):
     __tablename__ = "users_config"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    status = db.Column(db.String(80), nullable=False)
-    city = db.Column(db.String(80), nullable=False)
+    status = db.Column(db.String(80))
+    city = db.Column(db.String(80))
     phone = db.Column(db.String(80))
     birthday = db.Column(db.DateTime)
 
