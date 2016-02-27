@@ -59,22 +59,22 @@ class User(db.Model, UserMixin):
     def get_id(self):
             return self.id
 
-    @classmethod
-    def valid_date(cls):
+    @staticmethod
+    def valid_date(context):
 
-        last_name = request.form.get('last-name')
-        first_name = request.form.get('first_name')
-        password1 = request.form.get('password1')
-        password2 = request.form.get('password2')
-        email = request.form.get('email')
+        last_name = context.get('last_name')
+        first_name = context.get('first_name')
+        password1 = context.get('password1')
+        password2 = context.get('password2')
+        email = context.get('email')
 
-        if not cls.clean_names(first_name, last_name):
+        if not User.clean_names(first_name, last_name):
             return False
 
-        if not cls.clean_passwords(password1, password2):
+        if not User.clean_passwords(password1, password2):
             return False
 
-        if not cls.clean_email(email):
+        if not User.clean_email(email):
             return False
 
         extra = dict(
@@ -88,6 +88,13 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def clean_names(p1, p2):
+        print()
+        print(p1)
+        print(type(p1))
+        print()
+        print(p2)
+        print(type(p2))
+        print()
         if len(p1) > 3 and len(p2) > 3:
             return False
         return True
