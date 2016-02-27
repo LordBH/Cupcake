@@ -789,8 +789,8 @@ div.commentPhoto {
 
 @keyframes try {
     0%{
-        left: -200px;
-        transform: scale(.2);
+        left: -150px;
+        transform: scale(0);
     }
     100%{
         left: 0;
@@ -804,9 +804,16 @@ div.commentPhoto {
 }
 
 .wrap-form img{
+   width: 100%;
+    height: auto;
+    display: block;
+}
+
+.cupcake-logo{
+    background: #100c3a;
     width: 200px;
     height: auto;
-    margin-right: 20px;
+    margin-right: 40px;
     position: relative;
     z-index: 2;
 }
@@ -821,6 +828,7 @@ div.commentPhoto {
     border: 2px solid white;
     background: none;
     color: white;
+    box-shadow: 2px 2px 1px 1px #0c0a18;
 }
 
 .wrap-form input[type = submit]{
@@ -829,7 +837,7 @@ div.commentPhoto {
     font-weight: bold;
     height: auto;
     background: none;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 
@@ -864,4 +872,9 @@ div.commentPhoto {
 
 .wrap-form a{
     color: white;
+}
+
+.wrap-form .incorrect{
+    color: #cf171e;
+    display: none;
 }

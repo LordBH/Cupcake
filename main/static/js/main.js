@@ -138,3 +138,36 @@ function OpenPage(pageName) {
 
 }
 /** *************** **/
+
+/***********validation********* */
+
+function validation(emitName, obj, fn){
+    var socket;
+        socket = io.connect('http://' + document.domain + ':' + location.port + '/reg');
+
+        socket.emit(emitName, obj);
+
+        socket.on('flag', function (data) {
+             fn(data);
+        });
+
+
+}
+
+function checkEmail(val){
+    validation('validationEmail', {email:  val},
+        function(bool){
+            if(bool){
+
+            }
+            else{
+
+            }
+        }
+    );
+}
+
+function checkLogin(){
+
+}
+
