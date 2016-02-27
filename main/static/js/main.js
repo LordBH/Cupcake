@@ -1,7 +1,8 @@
 $(document).ready(function () {
     OpenPage($('.active')[0].id.substr(0));
-    editImgs();
 });
+
+var modalWindow = document.getElementById('modalWindow');
 
 
 function editImgs() {  //add func for modal window to all imgs
@@ -15,6 +16,7 @@ function editImgs() {  //add func for modal window to all imgs
 // =================================================
 
 function openModal(img) {   //open modal window
+    console.log('edit');
     var imgContainer = document.getElementById('imgContainer');
     imgContainer.innerHTML = '';
     modalWindow.style.display = 'block';
@@ -118,10 +120,11 @@ function openChat() {
 
 
 function OpenPage(pageName) {
-
+    editImgs();
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
+    sendSocket('page', {id : pageName}, function(){},'/main');
     pageName = '#' + pageName;
 
     active.removeClass('active');
@@ -134,10 +137,13 @@ function OpenPage(pageName) {
 
     $(hideDiv).hide();
     $(showDiv).show();
+}
 
-    sendSocket('page', {id : pageName}, function(){},'/main');
+
+function putData(page, obj){
 
 }
+
 /** *************** **/
 
 /***********validation********* */
