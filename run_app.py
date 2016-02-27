@@ -31,16 +31,6 @@ for x in filters.filters:
     app.jinja_env.filters[x.__name__] = x
 
 
-# rolling db when exception
-
-@app.teardown_request
-def teardown_request(exception):
-    if exception:
-        db.session.rollback()
-        db.session.remove()
-    db.session.remove()
-
-
 if __name__ == '__main__':
     from configurations.blueprints import blueprints
 
@@ -54,11 +44,12 @@ if __name__ == '__main__':
         from models.models import User, datetime, session
 
         if session.get('user_active'):
-            return User()
+            print(' - session - ')
+            return User(reverse_user_session=True)
 
-        print(' ==> '*10)
+        print(' ==> db ')
         query = User.query.filter(User.id == user_id).first()
-        print(' <== '*10)
+        print(' <== db')
 
         if query is None:
             return None
@@ -69,10 +60,12 @@ if __name__ == '__main__':
 
         db.session.commit()
 
-        datetime.now()
         return user
 
     socket_io.init_app(app)
     host = '0.0.0.0'
+
+    # port = 5000
     from port import port
+
     socket_io.run(app, host=host, port=port)

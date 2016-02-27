@@ -3,6 +3,7 @@ from flask_login import login_user, logout_user
 from chats import socket_io
 from flask_socketio import emit
 from . import from_reg
+from sqlalchemy.exc import IntegrityError
 
 extra = from_reg
 
@@ -36,7 +37,11 @@ def register():
             db.session.add(config)
             db.session.add(user)
             db.session.add(activate)
-            db.session.commit()
+            try:
+                db.session.commit()
+            except IntegrityError:
+                context['msg'] = 'This email has already registered'
+                return render_template('reg/register.html', context=context)
 
             activate.send_email()
 
@@ -55,9 +60,6 @@ def register():
 @extra.route('/login', methods=['GET', 'POST'])
 def login():
     from models.models import User, db, datetime
-
-    if request.method == 'GET':
-        return render_template('base.html', context={})
 
     context = {
         'password': request.form.get('password'),
@@ -79,7 +81,8 @@ def login():
 
             login_user(user, remember=True)
 
-    return render_template('base.html', context=context)
+        return render_template('base.html', context=context)
+    return redirect(url_for('main.index_page'))
 
 
 @extra.route('/logout')
@@ -126,26 +129,25 @@ def user_conf():
 
         if q is None:
             abort(404)
-        else:
-            context = {
-                'last_name': request.form.get(''),
-                'first_name': request.form.get(''),
-                'password1': request.form.get('password1'),
-                'password2': request.form.get('password2'),
-                'email': request.form.get('email'),
-                'msg': 'Validation error',
-            }
+
+        user = User(query=q)
+        user.re_write_config()
+
+    return redirect(url_for('main.config'))
 
 
 @socket_io.on('validationEmail', namespace='/reg')
-def check_unique_email(email):
+def check_unique_email(data):
     from models.models import User
 
-    q = User.query.filter_by(email=email.get('email')).first()
+    email = data.get('email')
+    if email:
+        q = User.query.filter_by(email=email).first()
 
-    if q is None:
-        flag = True
-    else:
-        flag = False
+        if q is None:
+            flag = True
+        else:
+            flag = False
 
-    emit('flag', {'extra': flag})
+        emit('flag', {'extra': flag})
+    emit('flag', {'extra': False})
