@@ -1,5 +1,7 @@
-from flask import request, redirect, render_template, url_for, abort, session
+from flask import request, redirect, render_template, url_for, session
 from flask_login import login_user, logout_user
+from chats import socket_io
+from flask_socketio import emit
 from . import from_reg
 
 extra = from_reg
@@ -13,7 +15,14 @@ def register():
     if request.method == 'GET':
         return render_template('reg/register.html')
 
-    context = {}
+    context = {
+        'last_name': request.form.get('last-name'),
+        'first_name': request.form.get('first_name'),
+        'password1': request.form.get('password1'),
+        'password2': request.form.get('password2'),
+        'email': request.form.get('email'),
+        'msg': 'Validation error',
+    }
 
     if request.method == 'POST':
         date = User.valid_date()
@@ -34,6 +43,9 @@ def register():
             login_user(user, remember=True)
 
             return redirect(url_for('main.index_page'))
+        else:
+
+            return render_template('reg/register.html', context=context)
 
     context['msg'] = 'Problem with registration'
 
@@ -47,16 +59,18 @@ def login():
     if request.method == 'GET':
         return render_template('base.html')
 
-    context = {}
+    context = {
+        'password': request.form.get('password'),
+        'email': request.form.get('email'),
+        'msg': 'Sorry, but your login or password is incorrect',
+    }
 
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
 
-        query = User.query.filter_by(email=email, password=User.hash_password(password)).first()
+        query = User.query.filter_by(email=context.get('email'),
+                                     password=User.hash_password(context.get('password'))).first()
 
         if query:
-
             user = User(query=query)
 
             query.online = True
@@ -66,7 +80,6 @@ def login():
             login_user(user, remember=True)
             return redirect(url_for('main.index_page'))
 
-        context['msg'] = 'Wrong username or password'
         return render_template('base.html', context=context)
 
     return redirect(url_for('main.index_page'))
@@ -76,36 +89,51 @@ def login():
 def logout():
     from models.models import User, db, datetime
 
-    query = None
-
-    try:
-        query = User.query.filter_by(id=session['user_id']).first()
-    except AttributeError:
-        abort(404)
+    query = User.query.filter_by(id=session.get('user_id')).first()
 
     if query is not None:
         query.online = False
         query.active = datetime.now()
-        print(__file__)
         db.session.commit()
+        logout_user()
 
-    logout_user()
     return redirect(url_for('main.index_page'))
 
 
-@extra.route(r'/user/activate/<num>')
-def activate_user(num):
-    """Activation user for code from email """
-
+@extra.route(r'/user/activate/<s>')
+def activate_user(s):
     from models.models import ActivatedUsers, db
 
-    query = ActivatedUsers.query.filter_by(activated_str=num).first()
+    context = {
+        'msg': 'Successfully accept email'
+    }
+
+    query = ActivatedUsers.query.filter_by(activated_str=s).first()
 
     if query is not None:
         query.activated = True
-        print(__file__)
         db.session.commit()
 
-        return render_template('reg/accepting_email.html', msg='Successfully accept email')
+        return render_template('reg/accepting_email.html', context=context)
 
-    return render_template('reg/accepting_email.html', msg='Wrong code')
+    context['msg'] = 'Wrong code'
+    return render_template('reg/accepting_email.html', context=context)
+
+
+@extra.route(r'/config')
+def user_conf():
+    pass
+
+
+@socket_io.on('validationEmail', namespace='/reg')
+def check_unique_email(email):
+    from models.models import User
+
+    q = User.query.filter_by(email=email.get('email')).first()
+
+    if q is None:
+        flag = True
+    else:
+        flag = False
+
+    emit('flag', {'extra': flag})

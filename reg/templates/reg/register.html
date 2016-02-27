@@ -32,5 +32,19 @@
 </div>
 
 <script src="{{ url_for('main.static', filename='js/main.js') }}"></script>
+
+<script>
+    function validation(emitName, obj){
+var socket;
+socket = io.connect('http://' + document.domain + ':' + location.port + '/reg');
+
+socket.emit(emitName, obj);
+
+socket.on('flag', function (data) {
+return data['extra'];
+});
+
+
+}</script>
 </body>
 </html>

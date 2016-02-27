@@ -25,12 +25,8 @@ class User(db.Model, UserMixin):
     id_config = db.Column(db.Integer, db.ForeignKey('users_config.id'))
     config = db.relationship("UsersConfig", backref=backref("users", uselist=False))
 
-    def __init__(self, last_name=None, first_name=None, password=None, email=None, user_id=None,
-                 query=None, register=False, login=False, user_session=False):
-
-        # if login:
-        #     self.username = username
-        #     self.id = user_id
+    def __init__(self, last_name=None, first_name=None, password=None, email=None,
+                 query=None, register=False, user_session=False):
 
         if register:
             self.last_name = last_name
@@ -42,16 +38,17 @@ class User(db.Model, UserMixin):
         if query:
             self.take_query(query)
 
-    #     if user_session:
-    #         session['user_id'] = self.id
-    #         session['user_username'] = self.username
-    #         session['user_email'] = self.email
-    #         session['user_active'] = self.active
-    #         session['user_online'] = self.online
+        if user_session:
+            session['user_id'] = self.id
+            session['user_last_name'] = self.last_name
+            session['user_first_name'] = self.first_name
+            session['user_email'] = self.email
+            session['user_active'] = self.active
+            session['user_online'] = self.online
 
     def take_query(self, query):
         query = query.__dict__
-        self.id = query['id']
+        self.id = query.get('id')
         self.last_name = query.get('last_name')
         self.first_name = query.get('first_name')
         self.password = query.get('password')
@@ -65,11 +62,14 @@ class User(db.Model, UserMixin):
     @classmethod
     def valid_date(cls):
 
-        last_name = request.form['last-name']
-        first_name = request.form['first-name']
-        password1 = request.form['password1']
-        password2 = request.form['password2']
-        email = request.form['email']
+        last_name = request.form.get('last-name')
+        first_name = request.form.get('first_name')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+        email = request.form.get('email')
+
+        if not cls.clean_names(first_name, last_name):
+            return False
 
         if not cls.clean_passwords(password1, password2):
             return False
@@ -85,6 +85,12 @@ class User(db.Model, UserMixin):
         )
 
         return extra
+
+    @staticmethod
+    def clean_names(p1, p2):
+        if len(p1) > 3 and len(p2) > 3:
+            return False
+        return True
 
     @staticmethod
     def clean_passwords(p1, p2):
