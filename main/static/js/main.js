@@ -122,6 +122,8 @@ function OpenPage(pageName) {
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
+    sendSocket('page', {id : pageName}, function(){},'/main');
+
     pageName = '#' + pageName;
 
     active.removeClass('active');
@@ -135,7 +137,6 @@ function OpenPage(pageName) {
     $(hideDiv).hide();
     $(showDiv).show();
 
-    sendSocket('page', {id : pageName}, function(){},'/main');
 
 }
 /** *************** **/
@@ -150,6 +151,11 @@ function sendSocket(emitName, obj, fn, namespace){  //send socket to validate an
 
         socket.on('flag', function (data) {
              fn(data['extra'], 2);
+        });
+
+        socket.on('q', function (data) {
+             console.log('q');
+             console.log(data);
         });
 
         socket.on('userData', function(data){

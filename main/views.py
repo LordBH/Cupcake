@@ -1,6 +1,7 @@
 from flask import render_template, abort, request, session, redirect, url_for
 from flask_socketio import emit
 from chats import socket_io
+from main.tools import get_context
 from . import from_main
 
 extra = from_main
@@ -28,39 +29,23 @@ def user_conf():
 
 
 @socket_io.on('page', namespace='/main')
-def page(date):
+def page(date=None):
     from models.models import User
 
-
-    print()
-    print('page')
-    print()
-    user_id = date.get('id')
-    try:
-        user_id = int(user_id)
-    except AttributeError:
-        return emit('userData', {'flag': False, 'msg': 'not int'})
+    if date is None:
+        user_id = session.get('id')
+    else:
+        user_id = date.get('id')
+        try:
+            user_id = int(user_id)
+        except ValueError:
+            return emit('userData', {'flag': False, 'msg': 'not int'})
 
     q = User.query.filter_by(id=user_id).first()
 
     if q is None:
         return emit('userData', {'flag': False, 'msg': "don't have this id"})
 
-    q = q.__dict__
-
-    context = {
-        'flag': True,
-        'msg': 'success',
-        'id': q.id,
-        'last_name': q.last_name,
-        'first_name': q.first_name,
-        'email': q.email,
-        'online': q.id,
-        'status': q.users_config.status,
-        'city': q.users_config.city,
-        'phone': q.users_config.phone,
-        'birthday': q.users_config.birthday,
-    }
+    context = get_context(q)
 
     return emit('userData', context)
-
