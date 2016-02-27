@@ -141,17 +141,26 @@ function OpenPage(pageName) {
 
 /***********validation********* */
 
-
-function validation(emitName, obj, fn){  //send socket to validate any value of obj, fn - callback function
+function sendSocket(emitName, obj, fn){  //send socket to validate any value of obj, fn - callback function
     var socket;
         socket = io.connect('http://' + document.domain + ':' + location.port + '/reg');
 
         socket.emit(emitName, obj);
 
         socket.on('flag', function (data) {
-            console.log(data);
-             fn(data['extra']);
+             fn(data['extra'], 2);
         });
+}
+
+function checks(flag, i) {
+    if (flag) {
+        document.getElementsByClassName('fa-times')[i].style.display = 'none';
+        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
+    }
+    else {
+        document.getElementsByClassName('fa-check')[i].style.display = 'none';
+        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
+    }
 }
 
 
@@ -160,64 +169,39 @@ function checkValue(obj, val, i){ //check value of inputs, i - index of input
     if (val){
         switch (obj.id){
             case 'log-email':
-                validation('validationEmail', {email:  val},
-                    function(bool){
-                        if(bool){
-                            obj.check = true;
-                            if (obj.cross){
-                                document.getElementsByClassName('fa-times')[i].style.display = 'none';
-                                obj.cross = false;
-                            }
-                            document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
-                        }
-                        else{
-                            obj.cross = true;
-                            if (obj.check){
-                                document.getElementsByClassName('fa-check')[i].style.display = 'none';
-                                obj.check = false;
-                            }
-                            document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
-                        }
-                    }
-                );
+                sendSocket('validationEmail', {email:  val}, checks);
                 break;
             case 'log-pass2':
-                    if (val == $('#log-pass1').val()){
-                        obj.check = true;
-                        if (obj.cross){
-                            document.getElementsByClassName('fa-times')[i].style.display = 'none';
-                            obj.cross = false;
-                        }
-                        document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
-                    }
-                    else {
-                        obj.cross = true;
-                        if (obj.check){
-                            document.getElementsByClassName('fa-check')[i].style.display = 'none';
-                            obj.check = false;
-                        }
-                        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
-                    }
+                checkPass2(val, i);
+                break;
+            case 'log-pass1':
+                checks(obj, i);
+                if ($('#log-pass2').val()){
+                    checkPass2($('#log-pass2').val(), 4);
+                }
                 break;
             default:
-                obj.check = true;
-                if (obj.cross){
-                    document.getElementsByClassName('fa-times')[i].style.display = 'none';
-                    obj.cross = false;
-                }
-                document.getElementsByClassName('fa-check')[i].style.display = 'inline-block';
+                checks(true, i);
                 break;
         }
     }
     else {
-        obj.cross = true;
-        if (obj.check){
-            document.getElementsByClassName('fa-check')[i].style.display = 'none';
-            obj.check = false;
+        if (obj.id = 'log-pass1'){
+            if ($('#log-pass2').val()){
+                checkPass2($('#log-pass2').val(), 4);
+            }
         }
-        document.getElementsByClassName('fa-times')[i].style.display = 'inline-block';
+        checks(false, i);
     }
 }
 
+function checkPass2(val, i){console.log(i);
+    if (val == $('#log-pass1').val()){
+        checks(true, i);
+    }
+    else {
+        checks(false, i);
+    }
+}
 
 
