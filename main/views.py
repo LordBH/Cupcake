@@ -31,16 +31,20 @@ def user_conf():
 def page(date):
     from models.models import User
 
+
+    print()
+    print('page')
+    print()
     user_id = date.get('id')
     try:
         user_id = int(user_id)
     except AttributeError:
-        return emit('userDate', {'flag': False, 'msg': 'not int'})
+        return emit('userData', {'flag': False, 'msg': 'not int'})
 
     q = User.query.filter_by(id=user_id).first()
 
     if q is None:
-        return emit('userDate', {'flag': False, 'msg': "don't have this id"})
+        return emit('userData', {'flag': False, 'msg': "don't have this id"})
 
     q = q.__dict__
 
@@ -58,5 +62,5 @@ def page(date):
         'birthday': q.users_config.birthday,
     }
 
-    return emit('userDate', context)
+    return emit('userData', context)
 
