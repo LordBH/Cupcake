@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template, url_for, session
+from flask import request, redirect, render_template, url_for, session, abort
 from flask_login import login_user, logout_user
 from chats import socket_io
 from flask_socketio import emit
@@ -17,7 +17,7 @@ def register():
 
     context = {
         'last_name': request.form.get('last-name'),
-        'first_name': request.form.get('first_name'),
+        'first_name': request.form.get('first-name'),
         'password1': request.form.get('password1'),
         'password2': request.form.get('password2'),
         'email': request.form.get('email'),
@@ -120,9 +120,24 @@ def activate_user(s):
     return render_template('reg/accepting_email.html', context=context)
 
 
-@extra.route(r'/config')
+@extra.route(r'/config', methods=['POST'])
 def user_conf():
-    pass
+    if request.method == 'POST':
+        from models.models import User
+
+        q = User.query.filter_by(id=session.get('user_id')).first()
+
+        if q is None:
+            abort(404)
+        else:
+            context = {
+                'last_name': request.form.get(''),
+                'first_name': request.form.get(''),
+                'password1': request.form.get('password1'),
+                'password2': request.form.get('password2'),
+                'email': request.form.get('email'),
+                'msg': 'Validation error',
+            }
 
 
 @socket_io.on('validationEmail', namespace='/reg')
