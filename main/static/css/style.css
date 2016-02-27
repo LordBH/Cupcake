@@ -3,6 +3,11 @@
     font-family: "PT";
 }
 
+@font-face {
+    src: url('../fonts/Lobster/Lobster-Regular.ttf');
+    font-family: "lobster";
+}
+
 body {
     font-family: "PT";
     vertical-align: top;
@@ -769,10 +774,94 @@ div.commentPhoto {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -250px 0 0 -275px;
+    margin: -250px 0 0 -285px;
+
+}
+
+.wrap-form form{
+    position: relative;
+    animation-name: try;
+    animation-duration: 1.8s;
+    animation-timing-function: ease;
+    z-index: 1;
+    text-align: center;
+}
+
+@keyframes try {
+    0%{
+        left: -200px;
+        transform: scale(.2);
+    }
+    100%{
+        left: 0;
+        transform: scale(1);
+    }
+
 }
 
 .body-log{
     background: #100c3a;
 }
 
+.wrap-form img{
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.wrap-form input{
+    width: 200px;
+    height: 25px;
+    padding: 10px;
+    margin-top: 10px;
+    outline: none;
+    border-radius: 3px;
+    border: 2px solid white;
+    background: none;
+    color: white;
+}
+
+.wrap-form input[type = submit]{
+    width: 225px;
+    font-size: 22px;
+    font-weight: bold;
+    height: auto;
+    background: none;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.wrap-form input[type = submit]:active{
+    padding-top: 12px;
+    background: #0f0d27;
+}
+
+::-webkit-input-placeholder{
+    color: white;
+}
+
+:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0px 1000px #100c3a inset;
+    -webkit-text-fill-color: white !important;
+}
+
+
+.wrap-form h1{
+    margin:  0;
+    color: white;
+    font-size: 36px;
+    text-shadow: 2px 2px 1px #0c0a18;
+    font-family: 'lobster';
+
+}
+
+.wrap-form h1:first-letter{
+    font-size: 42px;
+
+}
+
+.wrap-form a{
+    color: white;
+}
