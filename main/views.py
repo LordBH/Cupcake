@@ -8,10 +8,7 @@ extra = from_main
 @extra.route('/')
 def index_page():
 
-    context = {
-        'page': 'main/myPage.html',
-
-    }
+    context = {}
 
     return render_template('base.html', context=context)
 

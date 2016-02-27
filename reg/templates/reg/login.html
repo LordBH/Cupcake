@@ -7,7 +7,8 @@
         <h1><span>Cup</span>Cake</h1>
         <div class="log-fls">
 
-            <input id="log-email" type="email" name="email" placeholder="E-mail" required aria-required="true"><br>
+            <input id="log-email" type="email" name="email"
+                   placeholder="E-mail" required aria-required="true" value="{{ context['email']  }}"><br>
             <input id="log-pass" type="password" name="password" placeholder="Password" aria-required="true"><br>
 
 
@@ -21,4 +22,6 @@
     <script>
         $('body').addClass('body-log');
     </script>
+
+
 </div>

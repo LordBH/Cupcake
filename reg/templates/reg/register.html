@@ -16,9 +16,9 @@
         <h1>CupCake</h1>
         <div class="log-fls">
 
-            <input id="log-f-user" type="text" name="first-name" placeholder="First-name" required aria-required="true"><br>
-            <input id="log-l-user" type="text" name="last-name" placeholder="Last-name" required aria-required="true"><br>
-            <input id="log-email" type="email" name="email" placeholder="Email" required aria-required="true"><br>
+            <input id="log-f-user" type="text" name="first-name" placeholder="First-name" required aria-required="true" value="{{ context['first_name']  }}"><br>
+            <input id="log-l-user" type="text" name="last-name" placeholder="Last-name" required aria-required="true" value="{{ context['last_name']  }}"><br>
+            <input id="log-email" type="email" name="email" placeholder="Email" required aria-required="true" value="{{ context['email']  }}"><br>
             <input id="log-pass1" type="password" name="password1" placeholder="Password" required aria-required="true"><br>
             <input id="log-pass2" type="password" name="password2" placeholder="Password" required aria-required="true"><br>
             <input type="submit" value="Confirm"><br>
