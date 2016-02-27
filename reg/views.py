@@ -7,7 +7,7 @@ extra = from_reg
 
 @extra.route('/register', methods=['GET', 'POST'])
 def register():
-    from models.models import User, ActivatedUsers
+    from models.models import User, ActivatedUsers, UsersConfig
     from run_app import db
 
     if request.method == 'GET':
@@ -18,21 +18,20 @@ def register():
     if request.method == 'POST':
         date = User.valid_date()
         if date:
+            config = UsersConfig()
             user = User(first_name=date.get('first_name'), last_name=date.get('last_name'),
                         password=date.get('password'), email=date.get('email'), register=True)
+            user.users_config = config
             activate = ActivatedUsers(user)
 
-            db.session.add(user)
-            db.session.add(activate)
+            db.session.add(config, user, activate)
             db.session.commit()
 
             activate.send_email()
 
             login_user(user, remember=True)
 
-            context['msg'] = 'Please accept your message on email'
-
-            return render_template('base.html', context=context)
+            return redirect(url_for('main.index_page'))
 
     context['msg'] = 'Problem with registration'
 
@@ -60,14 +59,12 @@ def login():
 
             query.online = True
             query.active = datetime.now()
-
             db.session.commit()
-            login_user(user, remember=True)
 
+            login_user(user, remember=True)
             return redirect(url_for('main.index_page'))
 
         context['msg'] = 'Wrong username or password'
-
         return render_template('base.html', context=context)
 
     return redirect(url_for('main.index_page'))

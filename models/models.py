@@ -20,7 +20,10 @@ class User(db.Model, UserMixin):
     active = db.Column(db.DateTime, default=datetime.now())
     online = db.Column(db.Boolean, default=False)
 
-    child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
+    activ_users = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
+
+    id_config = db.Column(db.Integer, db.ForeignKey('users_config.id'))
+    config = db.relationship("UsersConfig", backref=backref("users", uselist=False))
 
     def __init__(self, last_name=None, first_name=None, password=None, email=None, user_id=None,
                  query=None, register=False, login=False, user_session=False):
@@ -113,7 +116,7 @@ class ActivatedUsers(db.Model):
     activated_str = db.Column(db.String(120))
     registered = db.Column(db.DateTime, default=datetime.now())
 
-    parent_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.Column(db.Integer, db.ForeignKey('users.id'))
     parent = db.relationship("User", backref=backref("activated_users", uselist=False))
 
     def __init__(self, cls):
@@ -140,10 +143,19 @@ class ActivatedUsers(db.Model):
         return a[:-1]
 
 
-# class UsersConfig(db.Model):
-#
-#     __tablename__ = "users_config"
-#
-#     def __init__(self):
-#         pass
+class UsersConfig(db.Model):
+    __tablename__ = "users_config"
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    status = db.Column(db.String(80), nullable=False)
+    city = db.Column(db.String(80), nullable=False)
+    phone = db.Column(db.String(80))
+    birthday = db.Column(db.DateTime)
+
+    user = db.relationship('User', backref=backref("users_config", uselist=False))
+
+    def __init__(self):
+        pass
+
+
+db.create_all()

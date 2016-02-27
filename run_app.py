@@ -56,9 +56,9 @@ if __name__ == '__main__':
         if session.get('user_active'):
             return User()
 
-        print('==>'*50)
+        print(' ==> '*10)
         query = User.query.filter(User.id == user_id).first()
-        print('<=='*50)
+        print(' <== '*10)
 
         if query is None:
             return None

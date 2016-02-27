@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Rooms(db.Model):
-    __tablename__ = 'rooms'
+    __tablename__ = 'users_chat'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     room_id = db.Column(db.String(80))
@@ -18,3 +18,6 @@ class Rooms(db.Model):
 
         self.user1_mes = user1_mes
         self.user2_mes = user2_mes
+
+
+db.create_all()

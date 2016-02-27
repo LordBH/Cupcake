@@ -1,11 +1,9 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from run_app import app, db
-from models.models import User, ActivatedUsers
-from models.rooms import Rooms
+from models.models import User, ActivatedUsers, UsersConfig
+from models.chat import Rooms
 
-
-db.create_all()
 
 migrate = Migrate(app, db)
 
@@ -15,3 +13,4 @@ manager.add_command('db', MigrateCommand)
 
 if __name__ == '__main__':
     manager.run()
+
