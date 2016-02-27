@@ -132,7 +132,7 @@ class ActivatedUsers(db.Model):
 
     def send_email(self):
 
-        msg = Message("Confirm your account on Cake Messenger", recipients=[self.email])
+        msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
         msg.html = "Link http://127.0.0.1:5000/user/activate/%s" % (self.activated_str,)
 
         # mail.send(msg)
