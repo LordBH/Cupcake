@@ -186,7 +186,7 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
     });
 
     socket.on('userData', function (data) {
-
+        console.log(data);
         if (data['flag']){
             fn(data);
         }

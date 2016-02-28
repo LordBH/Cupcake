@@ -15,25 +15,38 @@ def last_seen(user):
     return day_today or hour_now or last_10_minute
 
 
-def get_context(q=None):
+def all_users_context(query, current_id):
 
-    q = q.__dict__
-    extra = {
-        'flag': True,
-        'msg': 'success',
-        'id': q.get('id'),
-        'last_name': q.get('last_name'),
-        'first_name': q.get('first_name'),
-        'email': q.get('email'),
-        'online': q.get('online'),
-        'status': q.get('status'),
-        'city': q.get('city'),
-        'phone': q.get('phone'),
-        'birthday': str(q.get('birthday'))
+    data = {'people': []}
 
-    }
+    for x in query:
+        q = x.__dict__
 
-    if not extra.get('online'):
-        extra['active'] = str(q.get('active')),
+        extra = {
+            'flag': True,
+            'msg': 'success',
+            'id': q.get('id'),
+            'last_name': q.get('last_name'),
+            'first_name': q.get('first_name'),
+            'email': q.get('email'),
+            'online': q.get('online'),
+            'status': q.get('status'),
+            'city': q.get('city'),
+            'phone': q.get('phone'),
+            'birthday': str(q.get('birthday'))
 
-    return extra
+        }
+
+        if not extra.get('online'):
+            """Re-write for active"""
+            # extra['active'] = last_seen()
+            pass
+
+        if q.get('id') == current_id:
+            for key, value in extra.items():
+                data[key] = value
+        else:
+            dictionary = {extra['id']: extra}
+            data['people'].append(dictionary)
+
+    return data
