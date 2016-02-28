@@ -93,8 +93,41 @@ function myPage() {
     OpenPage('myPage');
 }
 
+var friendPageFlag = true;
+
 function myFriends() {
     OpenPage('myFriends');
+    if (usersID && friendPageFlag){
+        friendPageFlag = false;
+        var people = usersID['currentUser']['people'];
+        for (var i = 0; i < people.length-1; i++){
+            $('.friends').append($('.myfriends:first').clone());
+            $('.myfriends').get(i).style.display = 'block';
+        }
+        for (i = 0; i < people.length; i++){
+            for (var key in people[i]){
+                if ($('.myfriends .'+key).attr('class') != undefined){
+                    if (key == 'online'){
+                        if (people[i][key]){
+                            $('.state').get(i).classList.add('online');
+                        }
+                    }
+                    else {
+                        $('.myfriends .'+key).get(i).innerHTML = people[i][key];
+                    }
+                }
+                else {
+                    if(key == 'first_name'){
+                        $('.myfriends .friendName').get(i).innerHTML = people[i]['first_name'] + ' ' + people[i]['last_name'];
+                    }
+                    else if(key == 'status'){
+                        $('.myfriends .user-status').get(i).innerHTML = people[i][key];
+                    }
+                }
+
+            }
+        }
+    }
 }
 
 function myMessages() {
@@ -190,7 +223,7 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
     });
 
     socket.on('userData', function (data) {
-        console.log(data);
+
         if (data['flag']){
             fn(data);
         }
