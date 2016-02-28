@@ -30,7 +30,7 @@ def user_conf():
 
 @socket_io.on('page', namespace='/main')
 def page(date=None):
-    from models.models import User
+    from models.models import User, db
 
     user_id = date.get('id')
     if user_id is None:
@@ -45,5 +45,10 @@ def page(date=None):
     if q is None:
         return emit('userData', {'flag': False, 'msg': "don't have this id"})
 
+    if user_id != session.get('user_id'):
+        q.__dict__.online = False
+        db.session.commit()
+
     context = get_context(q)
+
     return emit('userData', context)

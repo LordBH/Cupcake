@@ -26,12 +26,14 @@ def get_context(q=None):
         'first_name': q.get('first_name'),
         'email': q.get('email'),
         'online': q.get('online'),
-        'active': str(q.get('active')),
         'status': q.get('status'),
         'city': q.get('city'),
         'phone': q.get('phone'),
         'birthday': str(q.get('birthday'))
 
     }
+
+    if not extra.get('online'):
+        extra['active'] = str(q.get('active')),
 
     return extra
