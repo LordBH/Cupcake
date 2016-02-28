@@ -23,6 +23,10 @@ def user_conf():
             abort(404)
 
         User.re_write_config(q)
+        print(q.__dict__)
+        print()
+        print(q.__dict__['users_config'].status)
+        print()
         db.session.commit()
 
     return redirect(url_for('main.index_page'))
@@ -33,7 +37,6 @@ def page(date=None):
     from models.models import User
 
     user_id = date.get('id')
-
     if user_id is None:
         user_id = session.get('user_id')
     else:
@@ -41,12 +44,10 @@ def page(date=None):
             user_id = int(user_id)
         except ValueError:
             return emit('userData', {'flag': False, 'msg': 'not int'})
-
     q = User.query.filter_by(id=user_id).first()
 
     if q is None:
         return emit('userData', {'flag': False, 'msg': "don't have this id"})
 
     context = get_context(q)
-
     return emit('userData', context)

@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template, url_for, session, abort
+from flask import request, redirect, render_template, url_for, session
 from flask_login import login_user, logout_user
 from chats import socket_io
 from flask_socketio import emit
@@ -10,7 +10,7 @@ extra = from_reg
 
 @extra.route('/register', methods=['GET', 'POST'])
 def register():
-    from models.models import User, ActivatedUsers, UsersConfig
+    from models.models import User, ActivatedUsers
     from run_app import db
 
     if request.method == 'GET':
@@ -30,11 +30,8 @@ def register():
         if date:
             user = User(first_name=date.get('first_name'), last_name=date.get('last_name'),
                         password=date.get('password'), email=date.get('email'), register=True)
-            config = UsersConfig()
-            user.users_config = config
             activate = ActivatedUsers(user)
 
-            db.session.add(config)
             db.session.add(user)
             db.session.add(activate)
             try:

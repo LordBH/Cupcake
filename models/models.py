@@ -19,12 +19,12 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     active = db.Column(db.DateTime, default=datetime.now())
     online = db.Column(db.Boolean, default=False)
-    users_config = None
+    status = db.Column(db.String(80))
+    city = db.Column(db.String(80))
+    phone = db.Column(db.String(80))
+    birthday = db.Column(db.DateTime)
 
-    activ_users = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
-
-    id_config = db.Column(db.Integer, db.ForeignKey('users_config.id'))
-    config = db.relationship("UsersConfig", backref=backref("users", uselist=False))
+    child = db.relationship('ActivatedUsers', backref=backref("users", uselist=False))
 
     def __init__(self, last_name=None, first_name=None, password=None, email=None,
                  query=None, register=False, user_session=False, reverse_user_session=False):
@@ -46,7 +46,6 @@ class User(db.Model, UserMixin):
             session['user_email'] = self.email
             session['user_active'] = self.active
             session['user_online'] = self.online
-            # session['users_config'] = self.config
 
         if reverse_user_session:
             self.id = session.get('user_id')
@@ -55,7 +54,6 @@ class User(db.Model, UserMixin):
             self.email = session.get('user_email')
             self.active = session.get('user_active')
             self.online = session.get('user_online')
-            # self.users_config = session.get('users_config')
 
     def take_query(self, query):
         query = query.__dict__
@@ -66,7 +64,6 @@ class User(db.Model, UserMixin):
         self.email = query.get('email')
         self.active = query.get('active')
         self.online = query.get('online')
-        self.users_config = query.get('users_config')
 
     def get_id(self):
         return self.id
@@ -157,7 +154,7 @@ class ActivatedUsers(db.Model):
     activated_str = db.Column(db.String(120))
     registered = db.Column(db.DateTime, default=datetime.now())
 
-    user = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     parent = db.relationship("User", backref=backref("activated_users", uselist=False))
 
     def __init__(self, cls):
@@ -183,16 +180,5 @@ class ActivatedUsers(db.Model):
             a += x
         return a[:-1]
 
-
-class UsersConfig(db.Model):
-    __tablename__ = "users_config"
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    status = db.Column(db.String(80))
-    city = db.Column(db.String(80))
-    phone = db.Column(db.String(80))
-    birthday = db.Column(db.DateTime)
-
-    user = db.relationship('User', backref=backref("users_config", uselist=False))
 
 db.create_all()

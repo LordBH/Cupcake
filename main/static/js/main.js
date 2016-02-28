@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 
 var modalWindow = document.getElementById('modalWindow');
+var usersID = {};
 
 
 function editImgs() {  //add func for modal window to all imgs
@@ -124,14 +125,15 @@ function OpenPage(pageName) {
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
-    sendSocket('page', {}, function(){},'/main');
+    sendSocket('page', {}, function () {
+    }, '/main');
 
     pageName = '#' + pageName;
 
     active.removeClass('active');
     $(pageName).addClass('active');
 
-    if (flag){
+    if (flag) {
         $('#ChatWindow').hide();
         flag = false;
     }
@@ -141,8 +143,7 @@ function OpenPage(pageName) {
 }
 
 
-
-function putData(page, obj){
+function putData(page, obj) {
 
 
 }
@@ -151,31 +152,45 @@ function putData(page, obj){
 
 /***********validation********* */
 
-function sendSocket(emitName, obj, fn, namespace){  //send socket to validate any value of obj, fn - callback function
+function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate any value of obj, fn - callback function
     var socket;
-        socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+    socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
 
-        socket.emit(emitName, obj);
+    socket.emit(emitName, obj);
 
-        socket.on('flag', function (data) {
-             fn(data['extra'], 2);
-        });
+    socket.on('flag', function (data) {
+        fn(data['extra'], 2);
+    });
 
-        socket.on('q', function (data) {
-             console.log('q');
-             console.log(data);
-        });
+    socket.on('q', function (data) {
+        console.log('q');
+        console.log(data);
+    });
 
-        socket.on('userData', function(data){
+    socket.on('userData', function (data) {
 
-            console.log(data);
-            if (data['flag']){
-                console.log('lalka');
+        if (data['flag']){
+            $('#name').html(data['first_name'] + ' ' + data['last_name']);
+            $('#city').html(data['city']);
+            $('#mail').html(data['email']);
+            $('#tel').html(data['phone']);
+            $('#birthday').html(data['birthday']);
+            if (data['online']){
+                $('.online').addClass('online');
+            }else{
+                $('.online').removeClass('online');
             }
-            else{
-                $('#wrapper').innerHTML = '404';
-            }
-        });
+            $('.user-status').html(data['status']);
+
+            usersID[data['id']] = data;
+            console.log(usersID)
+
+        }
+
+        else {
+            $('#wrapper').innerHTML = '404';
+        }
+    });
 }
 
 function checks(flag, i) {
@@ -190,19 +205,18 @@ function checks(flag, i) {
 }
 
 
-
-function checkValue(obj, val, i){ //check value of inputs, i - index of input
-    if (val){
-        switch (obj.id){
+function checkValue(obj, val, i) { //check value of inputs, i - index of input
+    if (val) {
+        switch (obj.id) {
             case 'log-email':
-                sendSocket('validationEmail', {email:  val}, checks, '/reg');
+                sendSocket('validationEmail', {email: val}, checks, '/reg');
                 break;
             case 'log-pass2':
                 checkPass2(val, i);
                 break;
             case 'log-pass1':
                 checks(obj, i);
-                if ($('#log-pass2').val()){
+                if ($('#log-pass2').val()) {
                     checkPass2($('#log-pass2').val(), 4);
                 }
                 break;
@@ -212,8 +226,8 @@ function checkValue(obj, val, i){ //check value of inputs, i - index of input
         }
     }
     else {
-        if (obj.id = 'log-pass1'){
-            if ($('#log-pass2').val()){
+        if (obj.id = 'log-pass1') {
+            if ($('#log-pass2').val()) {
                 checkPass2($('#log-pass2').val(), 4);
             }
         }
@@ -221,8 +235,8 @@ function checkValue(obj, val, i){ //check value of inputs, i - index of input
     }
 }
 
-function checkPass2(val, i){
-    if (val == $('#log-pass1').val()){
+function checkPass2(val, i) {
+    if (val == $('#log-pass1').val()) {
         checks(true, i);
     }
     else {
