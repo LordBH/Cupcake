@@ -31,14 +31,18 @@ def user_conf():
 @socket_io.on('page', namespace='/main')
 def page(date=None):
     from models.models import User
-
-    if date is None:
+    user_id = date.get('id')
+    print(type(user_id))
+    print(user_id)
+    if user_id is None:
         user_id = session.get('id')
     else:
-        user_id = date.get('id')
         try:
+            print(' -> ')
             user_id = int(user_id)
+            print(' <- ')
         except ValueError:
+            print(' <-> ')
             return emit('userData', {'flag': False, 'msg': 'not int'})
 
     q = User.query.filter_by(id=user_id).first()
