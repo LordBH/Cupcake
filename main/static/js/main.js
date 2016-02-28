@@ -118,7 +118,10 @@ function myConfiguration() {
 var flag = false;
 
 
-function openChat() {
+function openChat(friendFlag) {
+    if (friendFlag){
+        $('#Friends').hide();
+    }
     $('#Messages').hide();
     flag = true;
     $('#ChatWindow').show();
@@ -150,17 +153,18 @@ function OpenPage(pageName) {
 
 
 function putData(data) {
+    console.log(data);
     $('#name').html(data['first_name'] + ' ' + data['last_name']);
     $('#city').html(data['city']);
     $('#mail').html(data['email']);
+    $('#mail').attr('href', 'malito:'+data['email']);
     $('#tel').html(data['phone']);
+    $('#tel').attr('href', 'tel:'+data['phone']);
     if (data['birthday'] != 'None'){
         $('#birthday').html(data['birthday']);
     }
-    if (data['online']){
-        $('.online').addClass('online');
-    }else{
-        $('.online').removeClass('online');
+    if (data['online']) {
+        $('.state').addClass('online');
     }
     $('.user-status').html(data['status']);
     usersID['currentUser'] = data;

@@ -121,26 +121,31 @@ a {
     width: 0;
 }
 
+#rightSide .showComment{
+
+}
+
 /*------------------*/
 
 #wrapper {
     top: 0;
     position: relative;
-    left: 260px;
-    width: 730px;
+    left: 210px;
+    width: 800px;
     margin: 0;
 }
 
 /*--------------------*/
 
 article {
+    width: 730px;
     height: 400px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
     border-bottom: 1px ridge rgb(214, 214, 214);
-    margin-bottom: 10px;
+    margin: 10px auto;
 }
 
 .mainInf {
@@ -266,6 +271,8 @@ article {
 /*==========================================================*/
 
 section {
+    width: 730px;
+    margin: 0 auto;
     height: 200px;
     display: flex;
     flex-flow: row wrap;
@@ -398,47 +405,6 @@ div.commentPhoto {
     height: 40px;
 }*/
 
-.commentBox {
-    width: 100%;
-    height: auto;
-}
-
-.commentBox .showComment {
-    margin: 10px auto;
-    height: auto;
-}
-
-.commentBox .showComment > div.addImg {
-    float: none;
-    margin: 10px auto;
-    border-radius: 0;
-    min-width: 100px;
-    width: auto;
-    max-width: 200px;
-    height: auto;
-}
-
-.imgComment {
-    display: block;
-    width: 200px;
-    height: auto;
-    margin-top: 5px;
-}
-
-.friendComment .showComment {
-    width: 260px;
-    height: auto;
-    margin: 10px auto;
-    background: rgb(25, 45, 107);
-    border: none;
-    box-shadow: none;
-    color: white;
-}
-
-#rightSide .friendComment .showComment div {
-    box-shadow: none;
-}
-
 /*----------------=======Friends==========-------------------*/
 
 #wrapper article.friends {
@@ -448,22 +414,23 @@ div.commentPhoto {
     flex-flow: row wrap;
     align-items: flex-start;
     justify-content: space-between;
+    margin: auto;
+    width: 780px;
 }
 
 .myfriends {
     position: relative;
-    width: 350px;
-    height: 150px;
+    width: 380px;
+    height: 270px;
     border: 1px dashed black;
     margin: 15px 0;
 }
 
 .friendPhoto {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 140px;
+    height: auto;
     float: left;
-    margin: 20px 10px 0 10px;
+    margin: 10px 10px 0 10px;
     box-shadow: 0 0 1px 1px rgb(176, 176, 176);
     overflow: hidden;
 }
@@ -476,7 +443,18 @@ div.commentPhoto {
 
 .friendInf {
     text-align: right;
-    margin: 10px 20px;
+    margin: 10px 5px;
+    float: right;
+    width: 200px;
+}
+.friendInf ul{
+     width: 200px;
+    display: inline-block;
+ }
+.friendInf ul li{
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
 .friendName {
@@ -512,7 +490,9 @@ div.commentPhoto {
     border-radius: 3px;
     font-weight: bold;
     bottom: 10px;
-    left: 20px;
+    left: 50%;
+    width: 200px;
+    margin-left: -100px;
     outline: none;
     cursor: pointer;
 }

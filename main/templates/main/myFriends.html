@@ -1,67 +1,61 @@
 <article class="friends">
   <div class="myfriends">
     <div class="friendPhoto">
-{#      <img src='img/maxx.jpg'>#}
+        <img class='userImg' src="{{ url_for('main.static', filename='img/hulk.jpg') }}">
     </div>
     <div class="friendInf">
       <span class="friendName">Maxx Seredenko</span>
-      <div class="state-online"></div>
+      <div class="state online"></div>
       <br>
-      <span class="status">'python is the best'</span>
+      <span class="user-status">'python is the best'</span>
       <br>
-      <div class="friendState">Best friend</div>
+        <ul>
+            <!-- city -->
+            <li>
+                <i class="fa fa-home"></i> <span>City:</span> <span class="city inf">Kyiv</span>
+            </li>
+            <!-- mail -->
+            <li>
+                <i class="fa fa-envelope-o"></i> <span>E-mail:</span>
+        <span class="inf">
+            <a id="mail"></a>
+          </span>
+            </li>
+            <!-- tel -->
+            <li>
+                <i class="fa fa-phone"></i> <span>Phone:</span>
+        <span class="inf">
+              <a id='tel'>+380962451992</a>
+          </span>
+            </li>
+            <!-- birth -->
+            <li>
+                <i class="fa fa-birthday-cake"></i> <span>Birthday:</span> <span id='birthday' class="inf">9 january 1996</span>
+            </li>
+            <!-- work -->
+
+        </ul>
       <br>
     </div>
-    <button class="sendMessage" onclick="openChat()">Send message</button>
+    <button class="sendMessage" onclick="openChat(true)">Send message</button>
   </div>
 
   <!-- friend #2 -->
-  <div class="myfriends">
-    <div class="friendPhoto">
-{#      <img src='img/hulk.jpg'>#}
-    </div>
-    <div class="friendInf">
-      <span class="friendName">Dodick Dodicovitch</span>
-      <div class="state-online"></div>
-      <br>
-      <span class="status">'mestniy doda'</span>
-      <br>
-      <div class="friendState">School friend</div>
-      <br>
-    </div>
-    <button class="sendMessage" onclick="openChat()">Send message</button>
-  </div>
 
-  <div class="myfriends">
-    <div class="friendPhoto">
-{#      <img src='img/hulk.jpg'>#}
+    <div class="myfriends">
+        <div class="friendPhoto">
+            {#      <img src='img/maxx.jpg'>#}
+        </div>
+        <div class="friendInf">
+            <span class="friendName">Maxx Seredenko</span>
+            <div class="state online"></div>
+            <br>
+            <span class="user-status">'python is the best'</span>
+            <br>
+            <div class="friendState">Best friend</div>
+            <br>
+        </div>
+        <button class="sendMessage" onclick="openChat()">Send message</button>
     </div>
-    <div class="friendInf">
-      <span class="friendName">Dodick Dodicovitch</span>
-      <div class="state-online"></div>
-      <br>
-      <span class="status">'mestniy doda'</span>
-      <br>
-      <div class="friendState">School friend</div>
-      <br>
-    </div>
-    <button class="sendMessage" onclick="openChat()">Send message</button>
-  </div>
-
-  <div class="myfriends">
-    <div class="friendPhoto">
-{#      <img src='img/hulk.jpg'>#}
-    </div>
-    <div class="friendInf">
-      <span class="friendName">Dodick Dodicovitch</span>
-      <div class="state-online"></div>
-      <br>
-      <span class="status">'mestniy doda'</span>
-      <br>
-      <div class="friendState">School friend</div>
-      <br>
-    </div>
-    <button class="sendMessage" onclick="openChat()">Send message</button>
-  </div>
 
 </article>
