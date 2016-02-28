@@ -107,8 +107,8 @@ function myConfiguration() {
     if (usersID){
         var currentUser = usersID['currentUser'];
         for (var key in currentUser){
-            if (currentUser[key] != undefined  && $('#'+key)[0] != undefined){
-                $('#'+key).val(currentUser[key]);
+            if (key == $('#'+key).attr('id') && currentUser[key]){
+                $('.inputs #'+key).val(currentUser[key]);
             }
         }
     }
@@ -124,12 +124,16 @@ function openChat() {
     $('#ChatWindow').show();
 }
 
+var socketFlag = 0;
 
 function OpenPage(pageName) {
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
-    sendSocket('page', {}, putData, '/main');
+    if (socketFlag == 0){
+        sendSocket('page', {}, putData, '/main');
+        socketFlag++;
+    }
     editImgs();
     pageName = '#' + pageName;
 
@@ -150,7 +154,9 @@ function putData(data) {
     $('#city').html(data['city']);
     $('#mail').html(data['email']);
     $('#tel').html(data['phone']);
-    $('#birthday').html(data['birthday']);
+    if (data['birthday'] != 'None'){
+        $('#birthday').html(data['birthday']);
+    }
     if (data['online']){
         $('.online').addClass('online');
     }else{

@@ -32,7 +32,7 @@ a {
 
 /*-------------------------*/
 
-.state { /*online*/
+.state { /*online - offline*/
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -45,7 +45,7 @@ a {
     background: rgb(133, 128, 223);
 }
 
-.status {
+.user-status {
     margin-left: 20px;
     color: rgb(161, 161, 161);
 }
@@ -61,13 +61,17 @@ a {
 .left-side {
     top: 0;
     position: fixed;
-    width: 250px;
+    width: 210px;
     height: 100%;
-    background: #001561;
+    background: #001036;
+}
+
+.left-side .mainLogo{
+    margin: 10px auto;
 }
 
 .left-side ul {
-    margin-top: 0;
+    margin-top: 10px;
 }
 
 .left-side ul li {
@@ -76,17 +80,18 @@ a {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    width: 240px;
+    width: 200px;
     height: 40px;
+    cursor: pointer;
 }
 
 .left-side ul li:not(.active):hover {
-    background: #050a44;
+    background: #05091f;
 }
 
 .left-side ul li.active {
-    border-left: 10px solid white;
-    background: #050a44;
+    border-left: 10px solid #4cb8ff;
+    background: #050a2d;
 }
 
 .left-side ul li a {
@@ -106,8 +111,8 @@ a {
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
-    background: rgb(34, 55, 162);
+    width: 350px;
+    background: #001036;
     height: 100%;
     overflow-y: scroll;
 }
@@ -129,7 +134,7 @@ a {
 /*--------------------*/
 
 article {
-    height: 500px;
+    height: 400px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -220,43 +225,43 @@ article {
     box-shadow: 0 0 3px 1px rgb(195, 195, 195);
 }
 
-.education div {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
+/*.education div {*/
+    /*display: flex;*/
+    /*flex-flow: row nowrap;*/
+    /*align-items: center;*/
+    /*justify-content: space-between;*/
+    /*margin-bottom: 10px;*/
+/*}*/
 
-.education div span {
-    width: 200px;
-}
+/*.education div span {*/
+    /*width: 200px;*/
+/*}*/
 
-.education div span small {
-    font-size: .8em;
-}
+/*.education div span small {*/
+    /*font-size: .8em;*/
+/*}*/
 
-.education div span small a {
-    color: rgb(58, 88, 164);
-}
+/*.education div span small a {*/
+    /*color: rgb(58, 88, 164);*/
+/*}*/
 
-.education div > div {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 0 1px 1px rgb(189, 189, 189);
-}
+/*.education div > div {*/
+    /*height: 50px;*/
+    /*width: 50px;*/
+    /*border-radius: 50%;*/
+    /*overflow: hidden;*/
+    /*box-shadow: 0 0 1px 1px rgb(189, 189, 189);*/
+/*}*/
 
-.education img {
-    width: 100%;
-    height: 100%;
-}
+/*.education img {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+/*}*/
 
-.education i {
-    margin-right: 5px;
-    color: rgb(58, 88, 164);
-}
+/*.education i {*/
+    /*margin-right: 5px;*/
+    /*color: rgb(58, 88, 164);*/
+/*}*/
 
 /*==========================================================*/
 
@@ -777,7 +782,7 @@ div.commentPhoto {
 
 
 .body-log{
-    background: #100c3a;
+    background: #001036;
 }
 
 
@@ -788,7 +793,7 @@ div.commentPhoto {
 }
 
 .cupcake-logo{
-    background: #100c3a;
+    background: #001036;
     width: 200px;
     height: auto;
     margin-right: 40px;
@@ -806,7 +811,7 @@ div.commentPhoto {
     border: 2px solid white;
     background: none;
     color: white;
-    box-shadow: 2px 2px 1px 1px #0c0a18;
+    box-shadow: 2px 2px 1px 1px #000e1f;
     display: inline-block;
 }
 
@@ -822,7 +827,7 @@ div.commentPhoto {
 
 .wrap-form input[type = submit]:active{
     padding-top: 12px;
-    background: #0f0d27;
+    background: #000a1d;
 }
 
 ::-webkit-input-placeholder{
@@ -830,16 +835,16 @@ div.commentPhoto {
 }
 
 input:-webkit-autofill{
-    -webkit-box-shadow: 0 0 0px 1000px #100c3a inset;
+    -webkit-box-shadow: 0 0 0px 1000px #001036 inset;
     -webkit-text-fill-color: white !important;
 }
 
 
-.wrap-form h1{
+h1.mainLogo{
     margin:  0;
     color: #4cb8ff;
     font-size: 42px;
-    text-shadow: 2px 2px 1px #0c0a18;
+    text-shadow: 2px 2px 1px #001020;
     font-family: 'lobster';
     animation-name: lightName;
     animation-duration: 10s;
@@ -848,7 +853,8 @@ input:-webkit-autofill{
     text-align: center;
 }
 
-.wrap-form h1 span{
+h1.mainLogo span{
+    color: #fe93df;
     animation-name: noLight;
     animation-duration: 10s;
     animation-timing-function: ease-in-out;
@@ -951,10 +957,6 @@ input:-webkit-autofill{
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-}
-
-.wrap-form h1 span{
-    color: #fe93df;
 }
 
 
