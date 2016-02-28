@@ -26,10 +26,6 @@ a {
     text-decoration: none;
 }
 
-#templates {
-    display: none;
-}
-
 ::-webkit-file-upload-button {
     cursor: pointer;
 }

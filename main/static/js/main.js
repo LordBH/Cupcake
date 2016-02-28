@@ -17,7 +17,6 @@ function editImgs() {  //add func for modal window to all imgs
 // =================================================
 
 function openModal(img) {   //open modal window
-    console.log('edit');
     var imgContainer = document.getElementById('imgContainer');
     imgContainer.innerHTML = '';
     modalWindow.style.display = 'block';
@@ -96,7 +95,6 @@ function myPage() {
 
 function myFriends() {
     OpenPage('myFriends');
-
 }
 
 function myMessages() {
@@ -106,27 +104,33 @@ function myMessages() {
 
 function myConfiguration() {
     OpenPage('myConfiguration');
-
+    if (usersID){
+        var currentUser = usersID['currentUser'];
+        for (var key in currentUser){
+            if (currentUser[key] != undefined  && $('#'+key)[0] != undefined){
+                $('#'+key).val(currentUser[key]);
+            }
+        }
+    }
 }
 
+
 var flag = false;
+
 
 function openChat() {
     $('#Messages').hide();
     flag = true;
     $('#ChatWindow').show();
-
 }
 
 
 function OpenPage(pageName) {
-    editImgs();
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
-    sendSocket('page', {}, function () {
-    }, '/main');
-
+    sendSocket('page', {}, putData, '/main');
+    editImgs();
     pageName = '#' + pageName;
 
     active.removeClass('active');
@@ -136,15 +140,24 @@ function OpenPage(pageName) {
         $('#ChatWindow').hide();
         flag = false;
     }
-
     $(hideDiv).hide();
     $(showDiv).show();
 }
 
 
-function putData(page, obj) {
-
-
+function putData(data) {
+    $('#name').html(data['first_name'] + ' ' + data['last_name']);
+    $('#city').html(data['city']);
+    $('#mail').html(data['email']);
+    $('#tel').html(data['phone']);
+    $('#birthday').html(data['birthday']);
+    if (data['online']){
+        $('.online').addClass('online');
+    }else{
+        $('.online').removeClass('online');
+    }
+    $('.user-status').html(data['status']);
+    usersID['currentUser'] = data;
 }
 
 /** *************** **/
@@ -169,23 +182,8 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
     socket.on('userData', function (data) {
 
         if (data['flag']){
-            $('#name').html(data['first_name'] + ' ' + data['last_name']);
-            $('#city').html(data['city']);
-            $('#mail').html(data['email']);
-            $('#tel').html(data['phone']);
-            $('#birthday').html(data['birthday']);
-            if (data['online']){
-                $('.online').addClass('online');
-            }else{
-                $('.online').removeClass('online');
-            }
-            $('.user-status').html(data['status']);
-
-            usersID[data['id']] = data;
-            console.log(usersID)
-
+            fn(data);
         }
-
         else {
             $('#wrapper').innerHTML = '404';
         }
