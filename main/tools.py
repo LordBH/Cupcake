@@ -46,7 +46,6 @@ def all_users_context(query, current_id):
             for key, value in extra.items():
                 data[key] = value
         else:
-            dictionary = {extra['id']: extra}
-            data['people'].append(dictionary)
+            data['people'].append(extra)
 
     return data
