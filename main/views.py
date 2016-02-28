@@ -32,13 +32,14 @@ def user_conf():
 def page(date=None):
     from models.models import User
 
-    if date is None:
+    user_id = date.get('id')
+
+    if user_id is None:
         user_id = session.get('id')
     else:
-        user_id = date.get('id')
         try:
             user_id = int(user_id)
-        except ValueError or TypeError:
+        except ValueError:
             return emit('userData', {'flag': False, 'msg': 'not int'})
 
     q = User.query.filter_by(id=user_id).first()
