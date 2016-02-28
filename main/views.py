@@ -1,7 +1,7 @@
 from flask import render_template, abort, request, session, redirect, url_for
 from flask_socketio import emit
 from chats import socket_io
-from main.tools import get_context
+from main.tools import all_users_context
 from . import from_main
 
 extra = from_main
@@ -29,26 +29,14 @@ def user_conf():
 
 
 @socket_io.on('page', namespace='/main')
-def page(date=None):
+def page(data=None):
     from models.models import User, db
 
-    user_id = date.get('id')
-    if user_id is None:
-        user_id = session.get('user_id')
-    else:
-        try:
-            user_id = int(user_id)
-        except ValueError:
-            return emit('userData', {'flag': False, 'msg': 'not int'})
-    q = User.query.filter_by(id=user_id).first()
+    current_id = session.get('user_id')
+    query = User.query.all()
 
-    if q is None:
-        return emit('userData', {'flag': False, 'msg': "don't have this id"})
+    context = all_users_context(query, current_id)
 
-    if user_id != session.get('user_id'):
-        q.__dict__.online = False
-        db.session.commit()
-
-    context = get_context(q)
+    db.session.commit()
 
     return emit('userData', context)
