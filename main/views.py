@@ -35,7 +35,7 @@ def page(date=None):
     user_id = date.get('id')
 
     if user_id is None:
-        user_id = session.get('id')
+        user_id = session.get('user_id')
     else:
         try:
             user_id = int(user_id)

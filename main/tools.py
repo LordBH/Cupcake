@@ -21,15 +21,16 @@ def get_context(q=None):
     extra = {
         'flag': True,
         'msg': 'success',
-        'id': q.id,
-        'last_name': q.last_name,
-        'first_name': q.first_name,
-        'email': q.email,
-        'online': q.id,
-        'status': q.users_config.status,
-        'city': q.users_config.city,
-        'phone': q.users_config.phone,
-        'birthday': q.users_config.birthday,
+        'id': q.get('id'),
+        'last_name': q.get('last_name'),
+        'first_name': q.get('first_name'),
+        'email': q.get('email'),
+        'online': q.get('online'),
+        'status': q.get('status'),
+        'city': q.get('city'),
+        'phone': q.get('phone'),
+        'birthday': q.get('birthday'),
+
     }
 
     return extra
