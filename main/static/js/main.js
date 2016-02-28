@@ -84,7 +84,6 @@ function createMessage() {
         document.getElementById('newMessage').focus();
         return false;
     }
-
 }
 
 /**manual functions**/
