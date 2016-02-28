@@ -23,10 +23,6 @@ def user_conf():
             abort(404)
 
         User.re_write_config(q)
-        print(q.__dict__)
-        print()
-        print(q.__dict__['users_config'].status)
-        print()
         db.session.commit()
 
     return redirect(url_for('main.index_page'))

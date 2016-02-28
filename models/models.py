@@ -5,7 +5,7 @@ from flask_mail import Message
 from base64 import b64encode
 from os import urandom
 from hashlib import sha224
-from datetime import datetime
+from datetime import datetime, date
 from sqlalchemy.orm import backref
 
 
@@ -136,14 +136,19 @@ class User(db.Model, UserMixin):
             q.last_name = last_name
 
         if status:
-            q.users_config.status = status
+            q.status = status
 
         if city:
-            q.users_config.city = city
+            q.city = city
         if phone:
-            q.users_config.phone = phone
+            q.phone = phone
         if birthday:
-            q.users_config.birthday = birthday
+            try:
+                birthday = [int(x) for x in birthday.split('-')]
+                birthday = date(birthday[0], birthday[1], birthday[2])
+            except ValueError:
+                birthday = None
+            q.birthday = birthday
 
 
 class ActivatedUsers(db.Model):
