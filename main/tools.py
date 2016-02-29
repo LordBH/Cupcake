@@ -10,7 +10,7 @@ def last_seen(user):
 
     day_today = last_active.date() != datetime.now().date()
     hour_now = last_active.hour <= datetime.now().hour
-    last_10_minute = last_active.minute < datetime.now().minute - 1
+    last_10_minute = last_active.minute < datetime.now().minute - 10
 
     return day_today or hour_now or last_10_minute
 
