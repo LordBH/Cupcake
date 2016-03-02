@@ -6,8 +6,8 @@
     </div>
     <div class="changePhoto">
       <i class="fa fa-file"></i> Change a photo!
-      <form>
-        <input type="file" class='changeImg' onclick="document.getElementsByClassName('changeButton')[0].style.display = 'block';">
+      <form action="{{ url_for('main.upload_img') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" class='changeImg' onclick="document.getElementsByClassName('changeButton')[0].style.display = 'block';">
         <button class="changePhoto changeButton">OK</button>
       </form>
     </div>

@@ -152,7 +152,7 @@ var flag = false;
 
 
 function openChat(friendFlag) {
-    sendSocket()
+    sendSocket();
     if (friendFlag) {
         $('#Friends').hide();
     }
@@ -178,7 +178,7 @@ function OpenPage(pageName) {
 
         socketFlag++;
     }
-    editImugs();
+    editImgs();
     pageName = '#' + pageName;
 
     active.removeClass('active');

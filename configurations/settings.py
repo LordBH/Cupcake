@@ -1,5 +1,12 @@
-class ConfigClass(object):
+import os
+
+
+class ConfigClass:
+    # App Settings
+    BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)))
     SECRET_KEY = 'SECRET_KEY'
+
+    # Database
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = "postgresql:///cupcake"
     CSRF_ENABLED = True
@@ -19,6 +26,10 @@ class ConfigClass(object):
     # Flask-User settings
     USER_APP_NAME = "Social website"
     STATIC_FOLDER = 'static'
+
+    # Files folder
+    FILES_FOLDER = BASE_DIR + '/files'
+    IMAGES_FOLDER = FILES_FOLDER + '/images'
 
 
 class ProductionConfig(ConfigClass):

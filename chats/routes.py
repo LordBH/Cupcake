@@ -3,6 +3,7 @@ from flask.ext.socketio import emit, join_room, leave_room
 from .tools import compare
 from . import from_chats, socket_io
 
+
 main = from_chats
 
 
@@ -27,7 +28,7 @@ def joined(data):
 
     join_room(room_id)
 
-    emit('status', {'flag': True, 'msg': user_1 + ' has entered the room.'}, room=room_id)
+    emit('status', {'flag': True, 'msg': session.get('user_first_name') + ' has entered the room.'}, room=room_id)
 
 
 @socket_io.on('message', namespace='/chat')
