@@ -97,30 +97,30 @@ var friendPageFlag = true;
 
 function myFriends() {
     OpenPage('myFriends');
-    if (usersID && friendPageFlag){
+    if (usersID && friendPageFlag) {
         friendPageFlag = false;
         var people = usersID['currentUser']['people'];
-        for (var i = 0; i < people.length-1; i++){
+        for (var i = 0; i < people.length - 1; i++) {
             $('.friends').append($('.myfriends:first').clone());
             $('.myfriends').get(i).style.display = 'block';
         }
-        for (i = 0; i < people.length; i++){
-            for (var key in people[i]){
-                if ($('.myfriends .'+key).attr('class') != undefined){
-                    if (key == 'online'){
-                        if (people[i][key]){
+        for (i = 0; i < people.length; i++) {
+            for (var key in people[i]) {
+                if ($('.myfriends .' + key).attr('class') != undefined) {
+                    if (key == 'online') {
+                        if (people[i][key]) {
                             $('.state').get(i).classList.add('online');
                         }
                     }
                     else {
-                        $('.myfriends .'+key).get(i).innerHTML = people[i][key];
+                        $('.myfriends .' + key).get(i).innerHTML = people[i][key];
                     }
                 }
                 else {
-                    if(key == 'first_name'){
+                    if (key == 'first_name') {
                         $('.myfriends .friendName').get(i).innerHTML = people[i]['first_name'] + ' ' + people[i]['last_name'];
                     }
-                    else if(key == 'status'){
+                    else if (key == 'status') {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                 }
@@ -137,11 +137,11 @@ function myMessages() {
 
 function myConfiguration() {
     OpenPage('myConfiguration');
-    if (usersID){
+    if (usersID) {
         var currentUser = usersID['currentUser'];
-        for (var key in currentUser){
-            if (key == $('#'+key).attr('id') && currentUser[key]){
-                $('.inputs #'+key).val(currentUser[key]);
+        for (var key in currentUser) {
+            if (key == $('#' + key).attr('id') && currentUser[key]) {
+                $('.inputs #' + key).val(currentUser[key]);
             }
         }
     }
@@ -152,7 +152,8 @@ var flag = false;
 
 
 function openChat(friendFlag) {
-    if (friendFlag){
+    sendSocket()
+    if (friendFlag) {
         $('#Friends').hide();
     }
     $('#Messages').hide();
@@ -166,11 +167,18 @@ function OpenPage(pageName) {
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
-    if (socketFlag == 0){
+    //var load = '#' + 'Load';
+    if (socketFlag == 0) {
+        //$(load).show();
         sendSocket('page', {}, putData, '/main');
+
+        //setTimeout(function () {
+        //    $(load).hide();
+        //}, 2000);
+
         socketFlag++;
     }
-    editImgs();
+    editImugs();
     pageName = '#' + pageName;
 
     active.removeClass('active');
@@ -182,6 +190,7 @@ function OpenPage(pageName) {
     }
     $(hideDiv).hide();
     $(showDiv).show();
+
 }
 
 
@@ -190,10 +199,10 @@ function putData(data) {
     $('#name').html(data['first_name'] + ' ' + data['last_name']);
     $('#city').html(data['city']);
     $('#mail').html(data['email']);
-    $('#mail').attr('href', 'malito:'+data['email']);
+    $('#mail').attr('href', 'malito:' + data['email']);
     $('#tel').html(data['phone']);
-    $('#tel').attr('href', 'tel:'+data['phone']);
-    if (data['birthday'] != 'None'){
+    $('#tel').attr('href', 'tel:' + data['phone']);
+    if (data['birthday'] != 'None') {
         $('#birthday').html(data['birthday']);
     }
     if (data['online']) {
@@ -224,7 +233,7 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
 
     socket.on('userData', function (data) {
 
-        if (data['flag']){
+        if (data['flag']) {
             fn(data);
         }
         else {

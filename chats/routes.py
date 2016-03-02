@@ -1,6 +1,6 @@
 from flask import session
 from flask.ext.socketio import emit, join_room, leave_room
-from .tools import cmp_user as compare
+from .tools import compare
 from . import from_chats, socket_io
 
 main = from_chats

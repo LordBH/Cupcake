@@ -1,4 +1,4 @@
-def cmp_user(a, b):
+def compare(a, b):
     if a > b:
         return a, b
     else:
