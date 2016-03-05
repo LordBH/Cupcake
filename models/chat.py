@@ -10,7 +10,7 @@ class Rooms(db.Model):
     time = db.Column(db.DateTime, default=datetime.now())
     user1_mes = db.Column(db.Text)
     user2_mes = db.Column(db.Text)
-    # checked = db.Column(db.Boolean, default=False)
+    checked = db.Column(db.Boolean, default=False)
 
     def __init__(self, room_id, time=None, user1_mes=None, user2_mes=None):
         self.room_id = room_id
