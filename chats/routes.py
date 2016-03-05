@@ -28,6 +28,7 @@ def joined(data):
 
     join_room(room_id)
 
+    emit('chat_open', {'flag': True, 'id': user_2}, room='Cupcake_users')
     emit('status', {'flag': True, 'msg': session.get('user_first_name') + ' has entered the room.'}, room=room_id)
 
 
@@ -62,3 +63,9 @@ def left(data):
     leave_room(room_id)
 
     emit('status', {'msg': data.get('first_name') + ' has left the room.'}, room=room_id)
+
+
+@socket_io.on('chat_all', namespace='/chat')
+def chat_all(data):
+    join_room('Cupcake_users')
+    print(str(session.get('user_id')) + ' was going chat for all .')
