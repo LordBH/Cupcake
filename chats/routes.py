@@ -3,7 +3,6 @@ from flask.ext.socketio import emit, join_room, leave_room
 from .tools import compare
 from . import from_chats, socket_io
 
-
 main = from_chats
 
 
@@ -15,21 +14,26 @@ def joined(data):
     try:
         user_2 = int(user_2)
     except ValueError:
-        return emit('status', {'flag': False, 'msg': 'id is not int'})
+        return emit('status', {'flag': False, 'msg': 'ValueError : id is not int'})
+    except TypeError:
+        return emit('status', {'flag': False, 'msg': 'TypeError'})
+
     user_1 = session.get('user_id')
 
     extra = compare(user_1, user_2)
 
     room_id = '%d|%d' % extra
+
     if session.get('rooms') is None:
         session['rooms'] = []
 
-    session['rooms'].append(room_id)
+    if room_id not in session['rooms']:
+        join_room(room_id)
+        session['rooms'].append(room_id)
+        emit('chat_open', {'flag': True, 'id': user_2, 'user': user_1}, room='Cupcake_users')
 
-    join_room(room_id)
-
-    emit('chat_open', {'flag': True, 'id': user_2}, room='Cupcake_users')
-    emit('status', {'flag': True, 'msg': session.get('user_first_name') + ' has entered the room.'}, room=room_id)
+    return emit('status', {'flag': True, 'room': room_id,
+                           'msg': session.get('user_first_name') + ' joined ' + room_id}, room=room_id)
 
 
 @socket_io.on('message', namespace='/chat')
@@ -38,34 +42,33 @@ def message(data):
 
     room_id = data.get('room')
     if room_id is None:
-        return emit('status', {'flag': False, 'msg': 'room is empty'})
+        return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
 
     a = room_id.split('|')
-    user_1 = session.get('user_id')
+    user = session.get('user_id')
 
-    if a[0] == str(user_1):
+    if a[0] == str(user):
         q = Rooms(room_id, user1_mes=data.get('msg'))
     else:
         q = Rooms(room_id, user2_mes=data.get('msg'))
     db.session.add(q)
     db.session.commit()
 
-    emit('message', {'flag': True, 'msg': data.get('msg')}, room=room_id)
-
-
-@socket_io.on('left', namespace='/chat')
-def left(data):
-
-    room_id = data.get('room_id')
-    if room_id is None:
-        return emit('status', {'flag': False, 'msg': 'room_id is empty'})
-
-    leave_room(room_id)
-
-    emit('status', {'msg': data.get('first_name') + ' has left the room.'}, room=room_id)
+    return emit('send_Message', {'flag': True, 'msg': data.get('msg')}, room=room_id)
 
 
 @socket_io.on('chat_all', namespace='/chat')
 def chat_all(data):
     join_room('Cupcake_users')
     print(str(session.get('user_id')) + ' was going chat for all .')
+
+
+@socket_io.on('left', namespace='/chat')
+def left(data):
+    room_id = data.get('room_id')
+    if room_id is None:
+        return emit('status', {'flag': False, 'msg': 'room_id is empty'})
+
+    leave_room(room_id)
+
+    return emit('status', {'msg': data.get('first_name') + ' has left the room.'}, room=room_id)
