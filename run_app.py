@@ -47,6 +47,7 @@ if __name__ == '__main__':
             print(' - session - ')
             return User(reverse_user_session=True)
 
+        print(' - request to DB - ')
         query = User.query.filter(User.id == user_id).first()
 
         if query is None:
