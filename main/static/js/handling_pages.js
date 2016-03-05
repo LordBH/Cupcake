@@ -37,7 +37,6 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                 }
-
             }
         }
     }
@@ -72,7 +71,14 @@ function openChat(friendFlag) {
     $('#Messages').hide();
     flag = true;
     $('#ChatWindow').show();
-    sendSocket('joined', {'id': usersID}, function(){}, '/chat')
+
+
+    // re-write this code for id !!!!
+    sendSocket('joined', {'id': usersID['currentUser']['people']['0'].id}, function () {
+    // re-write this code for id !!!!
+
+
+    }, '/chat')
 }
 
 var socketFlag = 0;

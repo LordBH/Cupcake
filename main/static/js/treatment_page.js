@@ -1,6 +1,3 @@
-
-// =================================================
-
 function openModal(img) {   //open modal window
     var imgContainer = document.getElementById('imgContainer');
     imgContainer.innerHTML = '';
@@ -13,7 +10,15 @@ function closeModal() {
     modalWindow.style.display = 'none';
 }
 
-// ====================================================
+
+function editImgs() {  //add func for modal window to all imgs
+    var imgs = document.getElementsByTagName('img');
+    for (var i = 0; i < imgs.length; i++) {
+        imgs[i].setAttribute('onclick', 'openModal(this)');
+    }
+}
+
+/* ******************************   ******************************  */
 
 function changeTextArea(val) {
     var span = document.getElementById("commentChg");
@@ -38,7 +43,7 @@ function checkArea(val) {
     }
 }
 
-// ===========================================================
+/* ******************************   ******************************  */
 
 function createMessage() {
     var mess = document.getElementById('newMessage').value;
@@ -68,7 +73,7 @@ function createMessage() {
         document.getElementById('newMessage').value = '';
         document.getElementById('newMessage').focus();
 
-        //sendSocket('')
+        sendSocket('message', {'room': '7|2', 'msg': minMessage.innerHTML}, {}, '/chat');
         return false;
     }
 }

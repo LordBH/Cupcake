@@ -11,14 +11,6 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
         fn(data['extra'], 2);
     });
 
-    socket.on('chat_open', function (data) {
-        console.log('chat_open');
-        if (data['flag'] && (data['id'] == usersID['currentUser']['id'])){
-            console.log('sending to join this current_user' + data['id']);
-            sendSocket('joined', {}, function(){}, '/chat')
-        }
-    });
-
     socket.on('userData', function (data) {
         console.log('userData');
         if (data['flag']) {
@@ -28,6 +20,8 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
             $('#wrapper').innerHTML = '404';
         }
     });
+
+
 }
 
 function checks(flag, i) {
@@ -43,6 +37,7 @@ function checks(flag, i) {
 
 
 function checkValue(obj, val, i) { //check value of inputs, i - index of input
+    var log_pass2 = '#log-pass2';
     if (val) {
         switch (obj.id) {
             case 'log-email':
@@ -53,7 +48,7 @@ function checkValue(obj, val, i) { //check value of inputs, i - index of input
                 break;
             case 'log-pass1':
                 checks(obj, i);
-                if ($('#log-pass2').val()) {
+                if ($(log_pass2).val()) {
                     checkPass2($('#log-pass2').val(), 4);
                 }
                 break;
@@ -64,7 +59,7 @@ function checkValue(obj, val, i) { //check value of inputs, i - index of input
     }
     else {
         if (obj.id = 'log-pass1') {
-            if ($('#log-pass2').val()) {
+            if ($(log_pass2).val()) {
                 checkPass2($('#log-pass2').val(), 4);
             }
         }
