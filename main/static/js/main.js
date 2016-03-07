@@ -21,7 +21,7 @@ socket.on('status', function (data) {
     document.getElementById('formNewMessage').setAttribute('onSubmit', 'return createMessage('
         + data['room'] + ')');
     document.getElementById('newMessage').setAttribute('onkeypress',
-        'if (event.keyCode==13){return createMessage(' + data['room'] + ')}');
+        'if (event.keyCode==13){return createMessage("' + data['room'] + '")}');
 });
 
 socket.on('unique_wire', function (data) {

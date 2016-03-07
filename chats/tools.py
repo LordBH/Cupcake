@@ -10,8 +10,6 @@ def take_message(room, l=None, number=10):
 
     query = Rooms.query.filter_by(room_id=room).order_by('id').all()[-number:]
 
-    print(query[0].time)
-
     if query is None:
         return False
 
