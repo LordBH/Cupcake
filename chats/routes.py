@@ -30,10 +30,10 @@ def joined(data):
     if room_id not in session['rooms']:
         join_room(room_id)
         session['rooms'].append(room_id)
-        emit('chat_open', {'flag': True, 'id': user_2, 'user': user_1}, room='Cupcake_users')
+        emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
 
-    return emit('status', {'flag': True, 'room': room_id,
-                           'msg': session.get('user_first_name') + ' joined ' + room_id}, room=room_id)
+        return emit('status', {'flag': True, 'room': room_id,
+                               'msg': session.get('user_first_name') + ' joined ' + room_id}, room=room_id)
 
 
 @socket_io.on('message', namespace='/chat')
@@ -57,10 +57,10 @@ def message(data):
     return emit('send_Message', {'flag': True, 'msg': data.get('msg')}, room=room_id)
 
 
-@socket_io.on('chat_all', namespace='/chat')
-def chat_all(data):
-    join_room('Cupcake_users')
-    print(str(session.get('user_id')) + ' was going chat for all .')
+@socket_io.on('unique_wire', namespace='/chat')
+def unique_wire(data):
+    user = session.get('user_id')
+    join_room(user)
 
 
 @socket_io.on('left', namespace='/chat')
