@@ -45,7 +45,7 @@ function checkArea(val) {
 
 /* ******************************   ******************************  */
 
-function createMessage() {
+function createMessage(room) {
     var mess = document.getElementById('newMessage').value;
     if (mess != '' && mess != undefined && mess[0] != '\n') {
         var miniMessage = document.createElement('div');
@@ -73,7 +73,9 @@ function createMessage() {
         document.getElementById('newMessage').value = '';
         document.getElementById('newMessage').focus();
 
-        sendSocket('message', {'room': '7|2', 'msg': minMessage.innerHTML}, {}, '/chat');
+        console.log(room);
+
+        sendSocket('message', {'room': room, 'msg': minMessage.innerHTML}, function(){ }, '/chat');
         return false;
     }
 }
