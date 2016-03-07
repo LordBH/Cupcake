@@ -1,0 +1,29 @@
+<div class="wrap-form">
+
+    <p class="msg">{{ msg }}</p>
+    <div class="cupcake-logo">
+        <img src="{{ url_for('main.static', filename='img/cake.png') }}">
+    </div>
+    <form action="{{ url_for('reg.login') }}" method="post">
+        <h1 class="mainLogo"><span>Cup</span>Cake</h1>
+        <span class="incorrect">{{context.msg}}</span>
+        <div class="log-fls">
+
+            <input id="log-email" type="email" name="email"
+                   placeholder="E-mail" required aria-required="true" value="{{ context['email']  }}"><br>
+            <input id="log-pass" type="password" name="password" placeholder="Password" aria-required="true"><br>
+
+
+            <input type="submit" value="Confirm"><br>
+            <a href="{{ url_for('reg.register') }}" class="register">REGISTER / </a>
+            <a href="#" class="forgot">FORGOT PASSWORD</a>
+        </div>
+
+    </form>
+
+    <script>
+        $('body').addClass('body-log');
+    </script>
+
+
+</div>
