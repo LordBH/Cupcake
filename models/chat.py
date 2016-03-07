@@ -8,8 +8,8 @@ class Rooms(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     room_id = db.Column(db.String(80))
     time = db.Column(db.DateTime, default=datetime.now())
-    user1_mes = db.Column(db.Text)
-    user2_mes = db.Column(db.Text)
+    messages_1_ = db.Column(db.Text)
+    messages_2_ = db.Column(db.Text)
     checked = db.Column(db.Boolean, default=False)
 
     def __init__(self, room_id, time=None, user1_mes=None, user2_mes=None):

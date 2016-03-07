@@ -75,7 +75,7 @@ class User(db.Model, UserMixin):
         first_name = context.get('first_name')
         password1 = context.get('password1')
         password2 = context.get('password2')
-        email = context.get('email')
+        email = context.get('email').lower()
 
         if not User.clean_names(first_name, last_name):
             return False
