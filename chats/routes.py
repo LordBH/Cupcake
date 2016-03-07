@@ -22,7 +22,7 @@ def joined(data):
 
     extra = compare(user_1, user_2)
 
-    room_id = '%d|%d' % extra
+    room_id = '%d.%d' % extra
 
     if session.get('rooms') is None:
         session['rooms'] = []
@@ -48,11 +48,11 @@ def joined(data):
 def message(data):
     from models.chat import Rooms, db
 
-    room_id = data.get('room')
+    room_id = str(data.get('room'))
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
 
-    a = room_id.split('|')
+    a = room_id.split('.')
     user = session.get('user_id')
 
     if a[0] == str(user):
