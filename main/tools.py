@@ -16,12 +16,14 @@ def last_seen(user):
 
 
 def all_users_context(query, current_id):
+    from models.chat import Rooms
 
     data = {'people': []}
 
     for x in query:
         q = x.__dict__
 
+        activated = Rooms.query.filter_by(user_id=q.get('id')).first()
         extra = {
             'flag': True,
             'msg': 'success',
@@ -33,7 +35,8 @@ def all_users_context(query, current_id):
             'status': q.get('status'),
             'city': q.get('city'),
             'phone': q.get('phone'),
-            'birthday': str(q.get('birthday'))
+            'birthday': str(q.get('birthday')),
+            'activated': activated
 
         }
 
