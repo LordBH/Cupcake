@@ -48,7 +48,7 @@ def joined(data):
 def message(data):
     from models.chat import Rooms, db
 
-    room_id = str(data.get('room'))
+    room_id = data.get('room')
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
 
