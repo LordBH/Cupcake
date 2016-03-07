@@ -1,7 +1,11 @@
 $(document).ready(function () {
     OpenPage($('.active')[0].id.substr(0));
-    sendSocket('chat_all', {}, function () {
+    sendSocket('unique_wire', {}, function () {
     }, '/chat')
+
+
+    var audio = new Audio('main/media/hangouts_message.mp3');
+    audio.play();
 
 
 });
@@ -21,12 +25,11 @@ socket.on('status', function (data) {
     console.log(data);
 });
 
-socket.on('chat_open', function (data) {
-    console.log('chat_open');
+socket.on('unique_wire', function (data) {
+    console.log('unique_wire');
     console.log(data);
-    if (data['flag'] && (data['id'] == usersID['currentUser']['id'])) {
-        console.log('sending to join this current_user : ' + data['id']);
-        sendSocket('joined', {'id': data['user']}, function () {}, '/chat')
-    }
+    sendSocket('joined', {'id': data['user']}, function () {}, '/chat')
 
 });
+
+
