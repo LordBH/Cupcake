@@ -36,7 +36,6 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                     else if (key == 'id'){
-                        console.log($('.sendMessage').get(i));
                         $('.sendMessage').get(i).setAttribute('onclick', 'openChat(true, ' + people[i][key] + ')');
                     }
                 }
@@ -74,9 +73,6 @@ function openChat(friendFlag, id) {
     flag = true;
     $('#ChatWindow').show();
 
-
-    // re-write this code for id !!!!
-    console.log(id);
     sendSocket('joined', {'id': id}, function () {
 
     }, '/chat');
