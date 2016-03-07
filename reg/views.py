@@ -32,8 +32,8 @@ def register():
                         password=date.get('password'), email=date.get('email'), register=True)
             activate = ActivatedUsers(user)
 
-            db.session.add(user)
-            db.session.add(activate)
+            for x in [user, activate]:
+                db.session.add(x)
             try:
                 db.session.commit()
             except IntegrityError:
@@ -66,7 +66,7 @@ def login():
 
     if request.method == 'POST':
 
-        query = User.query.filter_by(email=context.get('email'),
+        query = User.query.filter_by(email=context.get('email').lower(),
                                      password=User.hash_password(context.get('password'))).first()
 
         if query:
@@ -108,13 +108,15 @@ def activate_user(s):
     query = ActivatedUsers.query.filter_by(activated_str=s).first()
 
     if query is not None:
+        if query.activated:
+            context['msg'] = 'This code has already registered'
         query.activated = True
         db.session.commit()
 
-        return render_template('reg/accepting_email.html', context=context)
+        return render_template('reg/accept_email.html', context=context)
 
     context['msg'] = 'Wrong code'
-    return render_template('reg/accepting_email.html', context=context)
+    return render_template('reg/accept_email.html', context=context)
 
 
 @socket_io.on('validationEmail', namespace='/reg')
