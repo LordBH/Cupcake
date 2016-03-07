@@ -36,6 +36,9 @@ function myFriends() {
                     else if (key == 'status') {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
+                    else if (key == 'id'){
+                        $('button').get(i).setAttribute('onclick', 'openChat(true, ' + people[i][key] + ')');
+                    }
                 }
             }
         }
@@ -63,8 +66,7 @@ function myConfiguration() {
 var flag = false;
 
 
-function openChat(friendFlag) {
-    sendSocket();
+function openChat(friendFlag, id) {
     if (friendFlag) {
         $('#Friends').hide();
     }
@@ -74,11 +76,9 @@ function openChat(friendFlag) {
 
 
     // re-write this code for id !!!!
-    sendSocket('joined', {'id': usersID['currentUser']['people']['0'].id}, function () {
-    // re-write this code for id !!!!
+    sendSocket('joined', {'id': id}, function () {
 
-
-    }, '/chat')
+    }, '/chat');
 }
 
 var socketFlag = 0;

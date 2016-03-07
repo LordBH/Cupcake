@@ -1,7 +1,6 @@
 $(document).ready(function () {
     OpenPage($('.active')[0].id.substr(0));
-    sendSocket('unique_wire', {}, function () {
-    }, '/chat')
+    sendSocket('unique_wire', {}, function () {}, '/chat');
 
 
     var audio = new Audio('main/media/hangouts_message.mp3');
@@ -21,8 +20,9 @@ socket.on('send_Message', function (data) {
 });
 
 socket.on('status', function (data) {
-    console.log('status');
     console.log(data);
+    document.getElementById('formNewMessage').setAttribute('onSubmit', 'return createMessage('+ data['room']+')');
+    document.getElementById('newMessage').setAttribute('onkeypress', 'if (event.keyCode==13){return createMessage(' +data['room']+ ')}');
 });
 
 socket.on('unique_wire', function (data) {

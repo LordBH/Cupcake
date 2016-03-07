@@ -60,8 +60,8 @@
       <div class="myPhoto friendPhoto">
 {#        <img src='img/o12S9j9oevs.png'>#}
       </div>
-      <form onsubmit="return createMessage()">
-        <textarea id='newMessage' onkeypress="if (event.keyCode==13){return createMessage()}"></textarea>
+      <form id="formNewMessage">
+        <textarea id='newMessage' ></textarea>
         <button class="sendMessage">Send</button>
       </form>
       <div class="friendPhoto">
