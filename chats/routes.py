@@ -22,7 +22,7 @@ def joined(data):
 
     extra = compare(user_1, user_2)
 
-    room_id = '%d.%d' % extra
+    room_id = '%d|%d' % extra
 
     if session.get('rooms') is None:
         session['rooms'] = []
@@ -32,7 +32,7 @@ def joined(data):
         session['rooms'].append(room_id)
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
 
-        chat = take_message(room_id)
+        chat = take_message(room_id, extra)
 
         context = {
             'flag': True,
@@ -52,7 +52,7 @@ def message(data):
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
 
-    a = room_id.split('.')
+    a = room_id.split('|')
     user = session.get('user_id')
 
     if a[0] == str(user):

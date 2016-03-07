@@ -5,12 +5,19 @@ def compare(a, b):
         return b, a
 
 
-def take_message(room, number=10):
+def take_message(room, l=None, number=10):
     from models.chat import Rooms
 
-    q = Rooms.query.filter_by(room_id=room).order_by('id').all()[-number:]
+    query = Rooms.query.filter_by(room_id=room).order_by('id').all()[-number:]
 
-    if q is None:
+    print(query[0].time)
+
+    if query is None:
         return False
 
-    return q
+    extra = {}
+
+    for i, x in enumerate(query):
+        extra[i] = {l[0]: x.messages_1_, l[1]: x.messages_2_, 'time': x.time}
+
+    return extra
