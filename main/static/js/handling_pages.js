@@ -15,7 +15,6 @@ function myFriends() {
         var people = usersID['currentUser']['people'];
         for (var i = 0; i < people.length - 1; i++) {
             $('.friends').append($('.myfriends:first').clone());
-            $('.myfriends').get(i).style.display = 'block';
         }
         for (i = 0; i < people.length; i++) {
             for (var key in people[i]) {
@@ -37,7 +36,8 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                     else if (key == 'id'){
-                        $('button').get(i).setAttribute('onclick', 'openChat(true, ' + people[i][key] + ')');
+                        console.log($('.sendMessage').get(i));
+                        $('.sendMessage').get(i).setAttribute('onclick', 'openChat(true, ' + people[i][key] + ')');
                     }
                 }
             }
@@ -76,6 +76,7 @@ function openChat(friendFlag, id) {
 
 
     // re-write this code for id !!!!
+    console.log(id);
     sendSocket('joined', {'id': id}, function () {
 
     }, '/chat');

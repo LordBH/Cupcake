@@ -75,6 +75,7 @@ function createMessage(room) {
 
         console.log(room);
 
+
         sendSocket('message', {'room': room, 'msg': minMessage.innerHTML}, function(){ }, '/chat');
         return false;
     }
