@@ -46,7 +46,7 @@ def joined(data):
 
 @socket_io.on('message', namespace='/chat')
 def message(data):
-    from models.chat import Rooms, db
+    from models.models import Rooms, db
 
     room_id = data.get('room')
     if room_id is None:

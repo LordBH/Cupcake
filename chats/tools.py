@@ -6,7 +6,7 @@ def compare(a, b):
 
 
 def take_message(room, l=None, number=10):
-    from models.chat import Rooms
+    from models.models import Rooms
 
     query = Rooms.query.filter_by(room_id=room).order_by('id').all()[-number:]
 
