@@ -54,3 +54,8 @@ def page(data=None):
     db.session.commit()
 
     return emit('userData', context)
+
+
+@extra.errorhandler(404)
+def page_not_found(error):
+    return render_template('base.html', context={'msg': error}), 404

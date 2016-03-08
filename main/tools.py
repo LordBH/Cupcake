@@ -1,5 +1,5 @@
 def all_users_context(query, current_id):
-    from models.models import ActivatedUsers
+    from models.models import ActivatedUsers, session
 
     data = {'people': []}
 
@@ -15,12 +15,13 @@ def all_users_context(query, current_id):
             'first_name': q.get('first_name'),
             'email': q.get('email'),
             'online': q.get('online'),
-            # 'active': q.get('active'),
+            'active': str(q.get('active')),
             'status': q.get('status'),
             'city': q.get('city'),
             'phone': q.get('phone'),
             'birthday': str(q.get('birthday')),
-            'activated': a.activated
+            'activated': a.activated,
+            'rooms': session.get('rooms'),
 
         }
 
@@ -38,11 +39,30 @@ def all_users_context(query, current_id):
     return data
 
 
+def get_rooms(user):
+    from models.models import ActivatedUsers, session
+
+    q = ActivatedUsers.query.filter_by(user_id=user).first()
+
+    if q.rooms is not None:
+
+        arr = q.rooms.split('/')
+
+        s = []
+
+        for x in arr:
+            if x:
+                s.append(x)
+
+        session['rooms'] = s
+
+
 def loading_user(user_id):
     from models.models import User, datetime, session, db
 
     if session.get('user_active'):
         print(' - session - ')
+        get_rooms(session.get('user_id'))
         return User(reverse_user_session=True)
 
     print(' - request to DB - ')
@@ -56,5 +76,6 @@ def loading_user(user_id):
     user = User(query=query, user_session=True)
 
     db.session.commit()
+    get_rooms(user.id)
 
     return user

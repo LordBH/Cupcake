@@ -158,6 +158,7 @@ class ActivatedUsers(db.Model):
     activated = db.Column(db.Boolean, default=False)
     activated_str = db.Column(db.String(120))
     registered = db.Column(db.DateTime, default=datetime.now())
+    rooms = db.Column(db.Text)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     parent = db.relationship("User", backref=backref("activated_users", uselist=False))

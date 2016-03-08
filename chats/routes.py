@@ -1,6 +1,6 @@
 from flask import session
 from flask.ext.socketio import emit, join_room, leave_room
-from .tools import compare, take_message
+from .tools import compare, take_message, save_room
 from . import from_chats, socket_io
 
 main = from_chats
@@ -32,13 +32,15 @@ def joined(data):
         session['rooms'].append(room_id)
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
 
-        # chat = take_message(room_id, extra)
+        save_room(user_1, user_2, room=room_id)
+
+        chat = take_message(room_id, extra)
 
         context = {
             'flag': True,
             'room': room_id,
             'msg': session.get('user_first_name') + ' joined ' + room_id,
-            # 'history': chat,
+            'history': chat,
         }
 
         return emit('status', context, room=room_id)
@@ -54,18 +56,22 @@ def message(data):
 
     a = room_id.split('|')
     user = session.get('user_id')
-
-    if a[0] == str(user):
-        q = Rooms(room_id, user1_mes=data.get('msg'))
-    else:
-        q = Rooms(room_id, user2_mes=data.get('msg'))
-    db.session.add(q)
-    db.session.commit()
+    msg = data.get('msg')
 
     context = {
         'flag': True,
-        'msg': data.get('msg')
+        'msg': msg,
     }
+
+    if a[0] == str(user):
+        q = Rooms(room_id, user1_mes=msg)
+        context['id_user'] = a[0]
+    else:
+        q = Rooms(room_id, user2_mes=msg)
+        context['id_user'] = a[1]
+
+    db.session.add(q)
+    db.session.commit()
 
     return emit('send_Message', context, room=room_id)
 
