@@ -17,11 +17,18 @@ socket.on('send_Message', function (data) {
 });
 
 socket.on('status', function (data) {
-    console.log(data);
-    document.getElementById('formNewMessage').setAttribute('onSubmit', 'return createMessage('
-        + data['room'] + ')');
-    document.getElementById('newMessage').setAttribute('onkeypress',
-        'if (event.keyCode==13){return createMessage("' + data['room'] + '")}');
+    console.log(data['room']);
+    $('#formNewMessage').submit(function(e){
+       createMessage(data['room']);
+        e.preventDefault();
+    });
+    $('#newMessage').keypress(function(e){
+        if (event.keyCode == 13){
+            createMessage(data['room']);
+            e.preventDefault();
+        }
+    })
+
 });
 
 socket.on('unique_wire', function (data) {
