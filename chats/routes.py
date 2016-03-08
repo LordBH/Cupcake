@@ -32,13 +32,13 @@ def joined(data):
         session['rooms'].append(room_id)
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
 
-        chat = take_message(room_id, extra)
+        # chat = take_message(room_id, extra)
 
         context = {
             'flag': True,
             'room': room_id,
             'msg': session.get('user_first_name') + ' joined ' + room_id,
-            'history': chat,
+            # 'history': chat,
         }
 
         return emit('status', context, room=room_id)

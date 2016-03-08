@@ -1,11 +1,11 @@
 from flask import render_template, abort, request, session, redirect, url_for
 from flask_socketio import emit
 from configurations.settings import ConfigClass
-from werkzeug.utils import secure_filename
 from chats import socket_io
 from main.tools import all_users_context
+from os import path, makedirs
+from werkzeug.utils import secure_filename
 from . import from_main
-import os
 
 
 extra = from_main
@@ -37,8 +37,8 @@ def upload_img():
     if request.method == 'POST' and f:
         filename = secure_filename(f.filename)
         user_directory = ConfigClass.IMAGES_FOLDER + '/' + str(session.get('user_id'))
-        if not os.path.exists(user_directory):
-            os.makedirs(user_directory)
+        if not path.exists(user_directory):
+            makedirs(user_directory)
         f.save(user_directory + '/' + filename)
 
     return redirect(url_for('main.index_page'))
