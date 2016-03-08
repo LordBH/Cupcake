@@ -2,8 +2,8 @@ from flask import request, redirect, render_template, url_for, session
 from flask_login import login_user, logout_user
 from chats import socket_io
 from flask_socketio import emit
-from . import from_reg
 from sqlalchemy.exc import IntegrityError
+from . import from_reg
 
 extra = from_reg
 

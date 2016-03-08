@@ -6,3 +6,5 @@ from_reg = Blueprint('reg', __name__, template_folder='templates',
 
 
 from . import views
+
+
