@@ -45,8 +45,15 @@ function checkArea(val) {
 
 /* ******************************   ******************************  */
 
-function createMessage(room) {
-    var mess = document.getElementById('newMessage').value;
+function createMessage(room, msg) {
+    if (room){
+        var mess = document.getElementById('newMessage').value;
+    }
+    else {
+        mess = msg;
+        var audio = new Audio('main/media/hangouts_message.mp3');
+        audio.play();
+    }
     if (mess != '' && mess != undefined && mess[0] != '\n') {
         var miniMessage = document.createElement('div');
         var photoDate = document.createElement('div');
@@ -73,9 +80,10 @@ function createMessage(room) {
         document.getElementById('newMessage').value = '';
         document.getElementById('newMessage').focus();
 
-        console.log(room);
+        if (room){
+            sendSocket('message', {'room': room, 'msg': minMessage.innerHTML}, function(){}, '/chat');
+        }
 
-        sendSocket('message', {'room': room, 'msg': minMessage.innerHTML}, function(){}, '/chat');
     }
 }
 
