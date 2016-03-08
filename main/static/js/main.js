@@ -23,6 +23,7 @@ socket.on('status', function (data) {
     $('#newMessage').keypress(function(e){
         if (event.keyCode == 13){
             createMessage(data['room']);
+            alert()
             e.preventDefault();
         }
     })

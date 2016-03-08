@@ -44,6 +44,12 @@ def get_rooms(user):
 
     q = ActivatedUsers.query.filter_by(user_id=user).first()
 
+    if q is None:
+        from flask_login import redirect, url_for
+
+        del session['user_active']
+        return redirect(url_for('main.index_page'))
+
     if q.rooms is not None:
 
         arr = q.rooms.split('/')

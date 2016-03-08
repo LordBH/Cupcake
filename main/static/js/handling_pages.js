@@ -129,6 +129,9 @@ function putData(data) {
         $('#ConfirmEmail').show();
         $('#ConfirmEmail span').html(data['email']);
     }
+    //if (data['rooms']){
+    //    sendSocket('join_all_rooms', {'rooms': data['rooms']}, function(){}, '/chat');
+    //}
     $('.user-status').html(data['status']);
     usersID['currentUser'] = data;
 

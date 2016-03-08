@@ -173,7 +173,7 @@ class ActivatedUsers(db.Model):
         msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
         msg.html = "Link http://127.0.0.1:5000/user/activate/%s" % (self.activated_str,)
 
-        mail.send(msg)
+        # mail.send(msg)
 
     @staticmethod
     def send_email_for_password(email, activated_str=None):

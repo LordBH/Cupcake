@@ -82,6 +82,18 @@ def unique_wire(data):
     join_room(user)
 
 
+@socket_io.on('join_all_rooms', namespace='/chat')
+def join_all_rooms(data):
+    rooms = data.get('rooms')
+    if rooms is not None:
+        print()
+        print(rooms)
+        print()
+        for x in rooms:
+            if x:
+                join_room(x)
+
+
 @socket_io.on('left', namespace='/chat')
 def left(data):
     room_id = data.get('room_id')
