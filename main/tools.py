@@ -1,20 +1,3 @@
-from flask import abort
-from datetime import datetime
-
-
-def last_seen(user):
-    if user is None:
-        abort(404)
-
-    last_active = user.active
-
-    day_today = last_active.date() != datetime.now().date()
-    hour_now = last_active.hour <= datetime.now().hour
-    last_10_minute = last_active.minute < datetime.now().minute - 10
-
-    return day_today or hour_now or last_10_minute
-
-
 def all_users_context(query, current_id):
     from models.models import ActivatedUsers
 
@@ -23,7 +6,7 @@ def all_users_context(query, current_id):
     for x in query:
         q = x.__dict__
 
-        activated_user = ActivatedUsers.query.filter_by(user_id=q.get('id')).first()
+        a = ActivatedUsers.query.filter_by(user_id=q.get('id')).first()
         extra = {
             'flag': True,
             'msg': 'success',
@@ -36,7 +19,7 @@ def all_users_context(query, current_id):
             'city': q.get('city'),
             'phone': q.get('phone'),
             'birthday': str(q.get('birthday')),
-            'activated': activated_user.activated
+            'activated': a.activated
 
         }
 
@@ -52,3 +35,25 @@ def all_users_context(query, current_id):
             data['people'].append(extra)
 
     return data
+
+
+def loading_user(user_id):
+    from models.models import User, datetime, session, db
+
+    if session.get('user_active'):
+        print(' - session - ')
+        return User(reverse_user_session=True)
+
+    print(' - request to DB - ')
+    query = User.query.filter(User.id == user_id).first()
+
+    if query is None:
+        return None
+
+    query.online = True
+    query.active = datetime.now()
+    user = User(query=query, user_session=True)
+
+    db.session.commit()
+
+    return user
