@@ -113,10 +113,65 @@ def activate_user(s):
         query.activated = True
         db.session.commit()
 
-        return render_template('reg/accept_email.html', context=context)
+        return render_template('reg/flash_message.html', context=context)
 
     context['msg'] = 'Wrong code'
-    return render_template('reg/accept_email.html', context=context)
+    return render_template('reg/flash_message.html', context=context)
+
+
+@extra.route(r'/forgot_password', methods=['POST', 'GET'])
+def forgot_password():
+    from models.models import ActivatedUsers, User
+    context = {
+        'msg': 'Please write your e-mail'
+    }
+
+    if request.method == 'POST':
+        email = request.form.get('email').lower()
+        q = User.query.filter_by(email=email).first()
+        if User.clean_email(email) and q is not None:
+            ActivatedUsers.send_email_for_password(email)
+            context['msg'] = 'Check your email address and confirm the link'
+
+            return render_template('reg/flash_message.html', context=context)
+
+        context['msg'] = 'Wrong e-mail'
+
+    return render_template('reg/email.html', context=context)
+
+
+@extra.route(r'/user/new_password/<s>', methods=['POST', 'GET'])
+def new_password(s):
+    context = {
+        'msg': 'Wrong code for create new password'
+    }
+
+    if s == session.get('act_str_for_password'):
+        context['msg'] = 'Please write your new password'
+
+        if request.method == 'POST':
+            from models.models import User, db
+
+            pass1 = request.form.get('pass1')
+            pass2 = request.form.get('pass2')
+
+            if User.clean_passwords(pass1, pass2):
+                query = User.query.filter_by(email=session.get('email')).first()
+                query.password = User.hash_password(pass1)
+
+                db.session.add(query)
+                db.session.commit()
+
+                del session['email']
+                del session['act_str_for_password']
+
+                context['msg'] = 'Successfully changed password'
+
+                return render_template('reg/flash_message.html', context=context)
+
+        return render_template('reg/forgot_pass.html', context=context)
+
+    return render_template('reg/flash_message.html', context=context)
 
 
 @socket_io.on('validationEmail', namespace='/reg')

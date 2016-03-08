@@ -172,7 +172,19 @@ class ActivatedUsers(db.Model):
         msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
         msg.html = "Link http://127.0.0.1:5000/user/activate/%s" % (self.activated_str,)
 
-        # mail.send(msg)
+        mail.send(msg)
+
+    @staticmethod
+    def send_email_for_password(email, activated_str=None):
+        if activated_str is None:
+            activated_str = ActivatedUsers.activated_message()
+
+        msg = Message("Create your new password on Cupcake Messenger", recipients=[email])
+        msg.html = "Link http://127.0.0.1:5000/user/new_password/%s" % (activated_str,)
+        session['act_str_for_password'] = activated_str
+        session['email'] = email
+
+        mail.send(msg)
 
     @staticmethod
     def activated_message():
@@ -184,6 +196,25 @@ class ActivatedUsers(db.Model):
                 continue
             a += x
         return a[:-1]
+
+
+class Rooms(db.Model):
+    __tablename__ = 'users_chat'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    room_id = db.Column(db.String(80))
+    time = db.Column(db.DateTime, default=datetime.now())
+    messages_1_ = db.Column(db.Text)
+    messages_2_ = db.Column(db.Text)
+    checked = db.Column(db.Boolean, default=False)
+
+    def __init__(self, room_id, time=None, user1_mes=None, user2_mes=None):
+        self.room_id = room_id
+        if time is not None:
+            self.time = time
+
+        self.user1_mes = user1_mes
+        self.user2_mes = user2_mes
 
 
 db.create_all()

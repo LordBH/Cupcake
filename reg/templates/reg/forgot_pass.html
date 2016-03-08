@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cupcake</title>
+    <link href="{{ url_for('main.static', filename='img/favicon.ico') }}" rel="icon" type="image/x-icon"/>
+    <link href="{{ url_for('main.static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('main.static', filename='resources/Font-Awesome-master/css/font-awesome.min.css') }}"
+          rel="stylesheet">
+</head>
+<body class="body-log">
+
+<div class="wrap-form">
+
+    <p class="msg">{{ msg }}</p>
+    <form action="{{ url_for('reg.new_password', s=session.act_str_for_password) }}" method="post">
+        <h1 class="mainLogo"><span>Cup</span>Cake</h1>
+        <span class="incorrect">{{ context.msg }}</span>
+        <div class="log-fls">
+
+            <input type="password" name="pass1"
+                   placeholder="Password" required aria-required="true"><br>
+            <input type="password" name="pass2"
+                   placeholder="Password" required aria-required="true"><br>
+
+
+            <input type="submit" value="Confirm"><br>
+            <a href="{{ url_for('reg.register') }}" class="register">REGISTER / </a>
+            <a href="{{ url_for('reg.login') }}" class="login">LOGIN</a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
