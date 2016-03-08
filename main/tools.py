@@ -15,6 +15,7 @@ def all_users_context(query, current_id):
             'first_name': q.get('first_name'),
             'email': q.get('email'),
             'online': q.get('online'),
+            # 'active': q.get('active'),
             'status': q.get('status'),
             'city': q.get('city'),
             'phone': q.get('phone'),
