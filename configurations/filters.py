@@ -1,11 +1,7 @@
 from datetime import datetime
-# from flask import session
 
 
 def online(time):
-    
-    # print(session.get('user_id'), session.get('user_username'), session.get('user_email'),
-    #       session.get('user_active'), session.get('user_online'), sep='\n')
 
     if time is None:
         return False

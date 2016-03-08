@@ -2,9 +2,9 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
-
+from main.tools import loading_user
 from chats import socket_io
-from configurations import filters, settings
+from configurations import filters, settings, thread
 
 
 # application
@@ -12,7 +12,6 @@ app = Flask(__name__)
 
 # configurations
 app.config.from_object(settings.DevelopmentConfig)
-
 
 # db
 db = SQLAlchemy(app)
@@ -38,28 +37,13 @@ if __name__ == '__main__':
     for x in blueprints:
         app.register_blueprint(x)
 
+    # threading
+    for x in thread.list_of_thread:
+        x.start()
+
     @login_manager.user_loader
     def load_user(user_id):
-
-        from models.models import User, datetime, session
-
-        if session.get('user_active'):
-            print(' - session - ')
-            return User(reverse_user_session=True)
-
-        print(' - request to DB - ')
-        query = User.query.filter(User.id == user_id).first()
-
-        if query is None:
-            return None
-
-        query.online = True
-        query.active = datetime.now()
-        user = User(query=query, user_session=True)
-
-        db.session.commit()
-
-        return user
+        return loading_user(user_id)
 
     socket_io.init_app(app)
     host = '0.0.0.0'
