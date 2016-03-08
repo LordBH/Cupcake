@@ -9,11 +9,9 @@ var usersID = {};
 socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
 
 socket.on('send_Message', function (data) {
-    console.log('send_Message');
-    console.log(data);
+    createMessage(false, data['msg']);
 
-    var audio = new Audio('main/media/hangouts_message.mp3');
-    audio.play();
+
 });
 
 socket.on('status', function (data) {

@@ -125,8 +125,13 @@ function putData(data) {
     if (data['online']) {
         $('.state').addClass('online');
     }
+    if (!data['activated']){
+        $('#ConfirmEmail').show();
+        $('#ConfirmEmail span').html(data['email']);
+    }
     $('.user-status').html(data['status']);
     usersID['currentUser'] = data;
+
 }
 
 /** *************** **/
