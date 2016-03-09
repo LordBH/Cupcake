@@ -170,8 +170,10 @@ class ActivatedUsers(db.Model):
 
     def send_email(self):
 
+        host = request.host_url
+
         msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
-        msg.html = "Link http://127.0.0.1:5000/user/activate/%s" % (self.activated_str,)
+        msg.html = "Link %s/user/activate/%s" % (host, self.activated_str)
 
         # mail.send(msg)
 
@@ -179,9 +181,9 @@ class ActivatedUsers(db.Model):
     def send_email_for_password(email, activated_str=None):
         if activated_str is None:
             activated_str = ActivatedUsers.activated_message()
-
+        host = request.host_url
         msg = Message("Create your new password on Cupcake Messenger", recipients=[email])
-        msg.html = "Link http://127.0.0.1:5000/user/new_password/%s" % (activated_str,)
+        msg.html = "Link %s/user/new_password/%s" % (host, activated_str)
         session['act_str_for_password'] = activated_str
         session['email'] = email
 
