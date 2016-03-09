@@ -27,23 +27,22 @@ def joined(data):
     if session.get('rooms') is None:
         session['rooms'] = []
 
-    if room_id not in session['rooms']:
-        join_room(room_id)
-        session['rooms'].append(room_id)
-        emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
+    join_room(room_id)
+    session['rooms'].append(room_id)
+    emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
 
-        save_room(user_1, user_2, room=room_id)
+    save_room(user_1, user_2, room=room_id)
 
-        chat = take_message(room_id, extra)
+    chat = take_message(room_id, extra)
 
-        context = {
-            'flag': True,
-            'room': room_id,
-            'msg': session.get('user_first_name') + ' joined ' + room_id,
-            'history': chat,
-        }
+    context = {
+        'flag': True,
+        'room': room_id,
+        'msg': session.get('user_first_name') + ' joined ' + room_id,
+        'history': chat,
+    }
 
-        return emit('status', context, room=room_id)
+    return emit('status', context, room=room_id)
 
 
 @socket_io.on('message', namespace='/chat')
