@@ -419,7 +419,7 @@ div.commentPhoto {
 }
 
 .myfriends {
-
+    display: none;
     position: relative;
     width: 380px;
     height: 270px;

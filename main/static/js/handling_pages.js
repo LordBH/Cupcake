@@ -17,6 +17,7 @@ function myFriends() {
             $('.friends').append($('.myfriends:first').clone());
         }
         for (i = 0; i < people.length; i++) {
+            $('.myfriends').css('display', 'block');
             for (var key in people[i]) {
                 if ($('.myfriends .' + key).attr('class') != undefined) {
                     if (key == 'online') {
@@ -36,7 +37,7 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                     else if (key == 'id'){
-                        $('.sendMessage').get(i).setAttribute('onclick', 'openChat(true, ' + people[i][key] + ')');
+                        $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
                     }
                 }
             }
@@ -63,19 +64,17 @@ function myConfiguration() {
 
 
 var flag = false;
+var friendFlag = true;
 
-
-function openChat(friendFlag, id) {
+function openChat(id) {
     if (friendFlag) {
-        $('#Friends').hide();
+        friendFlag = false;
+        sendSocket('joined', {'id': id}, function () {}, '/chat');
     }
+    $('#Friends').hide();
     $('#Messages').hide();
     flag = true;
     $('#ChatWindow').show();
-
-    sendSocket('joined', {'id': id}, function () {
-
-    }, '/chat');
 }
 
 var socketFlag = 0;

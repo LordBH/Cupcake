@@ -9,20 +9,18 @@ var usersID = {};
 socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
 
 socket.on('send_Message', function (data) {
-    createMessage(false, data['msg']);
-
-
+    console.log('send message' + data);
+    createMessage(data['msg']);
 });
 
 socket.on('status', function (data) {
-    console.log(data['room']);
-    $('#formNewMessage').submit(function(e){
-       createMessage(data['room']);
-        e.preventDefault();
+    console.log('send joined');
+    $('.typeMessage .sendMessage').click(function(e){
+       socketMessage(data['room']);
     });
     $('#newMessage').keypress(function(e){
         if (event.keyCode == 13){
-            createMessage(data['room']);
+            socketMessage(data['room']);
             e.preventDefault();
         }
     })
