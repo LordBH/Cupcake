@@ -85,3 +85,12 @@ def loading_user(user_id):
     get_rooms(user.id)
 
     return user
+
+
+def slash():
+    from configurations.settings import ConfigClass
+
+    extra = '/'
+    if extra in ConfigClass.BASE_DIR:
+        return extra
+    return '\\'

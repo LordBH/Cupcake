@@ -2,7 +2,7 @@ from flask import render_template, abort, request, session, redirect, url_for
 from flask_socketio import emit
 from configurations.settings import ConfigClass
 from chats import socket_io
-from main.tools import all_users_context
+from main.tools import all_users_context, slash
 from os import path, makedirs
 from werkzeug.utils import secure_filename
 from . import from_main
@@ -36,7 +36,7 @@ def upload_img():
     f = request.files.get('image')
     if request.method == 'POST' and f:
         filename = secure_filename(f.filename)
-        user_directory = ConfigClass.IMAGES_FOLDER + '/' + str(session.get('user_id'))
+        user_directory = ConfigClass.IMAGES_FOLDER + slash() + str(session.get('user_id'))
         if not path.exists(user_directory):
             makedirs(user_directory)
         f.save(user_directory + '/' + filename)
@@ -54,8 +54,3 @@ def page(data=None):
     db.session.commit()
 
     return emit('userData', context)
-
-
-@extra.errorhandler(404)
-def page_not_found(error):
-    return render_template('base.html', context={'msg': error}), 404
