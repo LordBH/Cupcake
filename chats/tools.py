@@ -33,3 +33,20 @@ def save_room(*args, room):
                 u.rooms += room + '/'
                 db.session.add(u)
     db.session.commit()
+
+
+def save_message(context, room_id):
+    from models.models import Rooms, db, session
+
+    a = room_id.split('|')
+    user = session.get('user_id')
+
+    if a[0] == str(user):
+        q = Rooms(room_id, user1_mes=msg)
+        context['id_user'] = a[0]
+    else:
+        q = Rooms(room_id, user2_mes=msg)
+        context['id_user'] = a[1]
+
+    db.session.add(q)
+    db.session.commit()

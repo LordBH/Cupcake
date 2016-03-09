@@ -1,6 +1,6 @@
 from flask import session
 from flask.ext.socketio import emit, join_room, leave_room
-from .tools import compare, take_message, save_room
+from .tools import compare, take_message, save_room, save_message
 from . import from_chats, socket_io
 
 main = from_chats
@@ -41,19 +41,16 @@ def joined(data):
             'history': chat,
         }
 
-        emit('status', context, room=room_id)
+        emit('status', context)
 
 
 @socket_io.on('message', namespace='/chat')
 def message(data):
-    from models.models import Rooms, db
 
     room_id = data.get('room')
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
 
-    a = room_id.split('|')
-    user = session.get('user_id')
     msg = data.get('msg')
 
     context = {
@@ -61,17 +58,10 @@ def message(data):
         'msg': msg,
     }
 
-    if a[0] == str(user):
-        q = Rooms(room_id, user1_mes=msg)
-        context['id_user'] = a[0]
-    else:
-        q = Rooms(room_id, user2_mes=msg)
-        context['id_user'] = a[1]
+    emit('send_Message', context, room=room_id)
 
-    db.session.add(q)
-    db.session.commit()
-
-    return emit('send_Message', context, room=room_id)
+    if False:
+        save_message(context, room_id)
 
 
 @socket_io.on('unique_wire', namespace='/chat')
