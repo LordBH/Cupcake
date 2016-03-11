@@ -23,6 +23,8 @@ def joined(data):
     extra = compare(user_1, user_2)
 
     room_id = '%d|%d' % extra
+    
+    session.setdefault('rooms', []):
 
     if room_id not in session['rooms']:
         join_room(room_id)
