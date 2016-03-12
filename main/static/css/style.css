@@ -47,6 +47,7 @@ a {
 
 .user-status {
     margin-left: 20px;
+    font-size: 22px;
     color: rgb(161, 161, 161);
 }
 
@@ -130,7 +131,7 @@ a {
 #wrapper {
     top: 0;
     position: relative;
-    left: 210px;
+    left: 360px;
     width: 800px;
     margin: 0;
 }
@@ -144,8 +145,7 @@ article {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    border-bottom: 1px ridge rgb(214, 214, 214);
-    margin: 10px auto;
+    margin: 60px auto 0 150px;
 }
 
 .mainInf {
@@ -155,8 +155,15 @@ article {
 }
 
 .mainInf h1#name {
+    font-size: 42px;
     display: inline-block;
     margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.mainInf .state{
+    position: relative;
+    bottom: 5px;
 }
 
 .mainInf ul li {
@@ -282,7 +289,7 @@ section {
 section .comments {
     width: 350px;
     height: 160px;
-    background: rgb(162, 186, 212);
+    background: rgb(159, 163, 255);
     border-radius: 5px;
     margin: 0 5px;
     overflow: hidden;
@@ -294,7 +301,7 @@ section .comments {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
-    background: rgb(52, 64, 152);
+    background: #001036;
 }
 
 .comments div span {
@@ -318,7 +325,7 @@ section .comments {
 
 .comments button {
     margin: 5px 10px;
-    background: rgb(30, 57, 152);
+    background: #001036;
     color: white;
     border: none;
     outline: none;
@@ -421,10 +428,11 @@ div.commentPhoto {
 .myfriends {
     display: none;
     position: relative;
-    width: 380px;
-    height: 270px;
-    border: 1px dashed black;
-    margin: 15px 0;
+    width: 500px;
+    height: 300px;
+    border: 1px solid rgb(201, 201, 201);
+    margin: 15px auto 10px auto;
+    padding: 10px;
 }
 
 .friendPhoto {
@@ -446,10 +454,10 @@ div.commentPhoto {
     text-align: right;
     margin: 10px 5px;
     float: right;
-    width: 200px;
+    width: 300px;
 }
 .friendInf ul{
-     width: 200px;
+     width: 300px;
     display: inline-block;
  }
 .friendInf ul li{
@@ -498,25 +506,31 @@ div.commentPhoto {
     cursor: pointer;
 }
 
+.getNewMessage{
+    background: #4cb8ff;
+}
+
 /*chatWindow*/
 .frame {
     width: 400px;
-    height: 450px;
-    border: 1px dashed black;
+    height: 550px;
+    border: 1px solid rgb(201, 201, 201);
     margin: 20px auto;
 }
 
 .showMessages {
     width: 350px;
-    height: 250px;
+    height: 350px;
     margin: 5px auto;
     border: 1px solid rgb(201, 201, 201);
     overflow-y: scroll;
-    position: relative;
+}
+
+.showMessages::-webkit-scrollbar{
+    width: 0;
 }
 
 .wall {
-    position: absolute;
     width: 100%;
 }
 
@@ -967,13 +981,14 @@ h1.mainLogo span{
 
 .confEmail{
     width: 100%;
+    min-width: 1200px;
     font-size: 30px;
     line-height: 50px;
     height: 50px;
-    background: #fbff16;
+    background: #fe93df;
     color: black;
     text-align: center;
-    text-shadow: 1px 1px 1px #bbbf16;
+    text-shadow: 1px 1px 1px #ac5d93;
 }
 
 .confEmail span{

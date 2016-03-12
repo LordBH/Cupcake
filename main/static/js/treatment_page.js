@@ -81,6 +81,8 @@ function createMessage(mess) {
         document.getElementsByClassName('wall')[0].appendChild(miniMessage);
         document.getElementById('newMessage').value = '';
         document.getElementById('newMessage').focus();
+        var scrollDiv = document.getElementById("scroll_div");
+        scrollDiv.scrollTop = scrollDiv.scrollHeight;
     }
 }
 

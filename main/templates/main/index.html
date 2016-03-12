@@ -8,9 +8,6 @@
       <li id="myFriends">
         <a onclick="myFriends()">People</a>
       </li>
-      <li id="myMessages">
-        <a onclick="myMessages()">My messages</a>
-      </li>
 {#      <li id="myPhoto">#}
 {#        <a href="#myPhoto">My photos</a>#}
 {#      </li>#}
@@ -30,12 +27,11 @@
   </div>
 
   <!-- Main container for the inf -->
+  <div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>
   <div id="wrapper">
-      <div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>
-      <div id="Load" hidden>{% include 'main/loading.html' %}</div>
+      <!--<div id="Load" hidden>{% include 'main/loading.html' %}</div>-->
       <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
       <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
-      <div id="Messages" hidden>{% include 'main/myMessages.html' %}</div>
       <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>
       <div id="Configuration" hidden>{% include 'main/configuration.html' %}</div>
   </div>

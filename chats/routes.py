@@ -24,7 +24,9 @@ def joined(data):
 
     room_id = '%d|%d' % extra
 
-    if room_id not in session.setdefault('flag_for_joined', []):
+    session.setdefault('rooms', [])
+
+    if room_id not in session['rooms']:
         join_room(room_id)
         session['rooms'].append(room_id)
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
@@ -46,6 +48,7 @@ def joined(data):
 
 @socket_io.on('message', namespace='/chat')
 def message(data):
+
     room_id = data.get('room')
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
