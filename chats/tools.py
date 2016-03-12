@@ -35,7 +35,7 @@ def save_room(*args, room):
     db.session.commit()
 
 
-def save_message(context, room_id):
+def save_message(context, room_id, msg):
     from models.models import Rooms, db, session
 
     a = room_id.split('|')

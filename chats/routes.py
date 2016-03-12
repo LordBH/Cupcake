@@ -24,7 +24,7 @@ def joined(data):
 
     room_id = '%d|%d' % extra
 
-    if room_id not in session['rooms']:
+    if room_id not in session.setdefault('flag_for_joined', []):
         join_room(room_id)
         session['rooms'].append(room_id)
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
@@ -46,7 +46,6 @@ def joined(data):
 
 @socket_io.on('message', namespace='/chat')
 def message(data):
-
     room_id = data.get('room')
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
@@ -61,11 +60,12 @@ def message(data):
     emit('send_Message', context, room=room_id)
 
     if False:
-        save_message(context, room_id)
+        save_message(context, room_id, msg)
 
 
 @socket_io.on('unique_wire', namespace='/chat')
 def unique_wire(data):
+    print('Create unique_wire ', data)
     user = session.get('user_id')
     join_room(user)
 
@@ -77,7 +77,7 @@ def join_all_rooms(data):
         for x in rooms:
             if x:
                 join_room(x)
-                print('Join room : ' + x)
+                print('USER id :', session.get('user_id'), 'joining room : ' + x)
 
 
 @socket_io.on('left', namespace='/chat')
@@ -89,3 +89,15 @@ def left(data):
     leave_room(room_id)
 
     return emit('status', {'msg': data.get('first_name') + ' has left the room.'}, room=room_id)
+
+
+@socket_io.on('connect')
+def connect():
+    session.setdefault('user_id', 'Guest')
+    print('Connect => USER id : ', session.get('user_id'))
+
+
+@socket_io.on('disconnect')
+def connect():
+    session.setdefault('user_id', 'Guest')
+    print('Disconnect => USER id : ', session.get('user_id'))
