@@ -1,6 +1,6 @@
+from flask.ext.socketio import emit, join_room
 from flask import session
-from flask.ext.socketio import emit, join_room, leave_room
-from .tools import compare, take_message, save_room, save_message
+from .tools import compare, connecting, take_message, save_room, save_message
 from . import from_chats, socket_io
 
 main = from_chats
@@ -58,6 +58,7 @@ def message(data):
     context = {
         'flag': True,
         'msg': msg,
+        'id': session.get('user_id')
     }
 
     emit('send_Message', context, room=room_id)
@@ -83,24 +84,11 @@ def join_all_rooms(data):
                 print('USER id :', session.get('user_id'), 'joining room : ' + x)
 
 
-@socket_io.on('left', namespace='/chat')
-def left(data):
-    room_id = data.get('room_id')
-    if room_id is None:
-        return emit('status', {'flag': False, 'msg': 'room_id is empty'})
-
-    leave_room(room_id)
-
-    return emit('status', {'msg': data.get('first_name') + ' has left the room.'}, room=room_id)
-
-
 @socket_io.on('connect')
-def connect():
-    session.setdefault('user_id', 'Guest')
-    print('Connect => USER id : ', session.get('user_id'))
+def connect_user():
+    connecting(True)
 
 
 @socket_io.on('disconnect')
-def connect():
-    session.setdefault('user_id', 'Guest')
-    print('Disconnect => USER id : ', session.get('user_id'))
+def disconnect_user():
+    connecting(False)

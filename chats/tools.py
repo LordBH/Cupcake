@@ -1,8 +1,22 @@
+from flask import session
+
+
 def compare(a, b):
     if a > b:
         return a, b
     else:
         return b, a
+
+
+def connecting(flag):
+    session.setdefault('user_id', 'Anonymous user')
+
+    if flag:
+        extra = 'Connect'
+    else:
+        extra = 'Disconnect'
+
+    print(extra + ' => USER ID :', session.get('user_id'))
 
 
 def take_message(room, l=None, number=10):
