@@ -48,13 +48,10 @@ function myFriends() {
                 }
             }
         }
+        notifyMessage(1);
     }
 }
 
-function myMessages() {
-    OpenPage('myMessages');
-
-}
 
 function myConfiguration() {
     OpenPage('myConfiguration');
@@ -85,7 +82,6 @@ function openChat(id) {
         sendSocket('joined', {'id': id}, function () {}, '/chat');
     }
     $('#Friends').hide();
-    $('#Messages').hide();
     flag = true;
     $('#ChatWindow').show();
     var scrollDiv = document.getElementById("scroll_div");

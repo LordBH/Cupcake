@@ -145,8 +145,7 @@ article {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    border-bottom: 1px ridge rgb(214, 214, 214);
-    margin: 10px auto;
+    margin: 60px auto 0 150px;
 }
 
 .mainInf {
@@ -458,7 +457,7 @@ div.commentPhoto {
     width: 300px;
 }
 .friendInf ul{
-     width: 200px;
+     width: 300px;
     display: inline-block;
  }
 .friendInf ul li{
@@ -505,6 +504,10 @@ div.commentPhoto {
     margin-left: -100px;
     outline: none;
     cursor: pointer;
+}
+
+.getNewMessage{
+    background: #4cb8ff;
 }
 
 /*chatWindow*/

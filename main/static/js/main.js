@@ -9,7 +9,6 @@ var usersID = {};
 socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
 
 socket.on('send_Message', function (data) {
-    console.log('send message' + data);
     createMessage(data['msg']);
 });
 
@@ -33,5 +32,11 @@ socket.on('unique_wire', function (data) {
     sendSocket('joined', {'id': data['user']}, function () {}, '/chat')
 
 });
+
+function notifyMessage(index){
+    var button = $('.myfriends .sendMessage');
+    button.get(index).innerHTML = '<i class="fa fa-envelope"></i> You got new message';
+    button.get(index).classList.add('getNewMessage');
+}
 
 
