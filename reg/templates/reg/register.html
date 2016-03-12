@@ -28,13 +28,9 @@
             <i class="fa fa-check"></i><i class="fa fa-times"></i></div>
             <div class="check"><input id="log-email" type="email" name="email" placeholder="Email" required aria-required="true" value="{{ context['email']  }}" onchange="checkValue(this, this.value, 2)">
             <i class="fa fa-check"></i><i class="fa fa-times"></i></div>
-            <div class="check"><input id="log-pass1" type="password" name="password1" placeholder="Password" required aria-required="true" onchange="checkValue(this, this.value, 3)"><br>
-            <i class="fa fa-check"></i><i class="fa fa-times"></i></div>
-            <div class="check"><input id="log-pass2" type="password" name="password2" placeholder="Password" required aria-required="true" onchange="checkValue(this, this.value, 4)"><br>
-            <i class="fa fa-check"></i><i class="fa fa-times"></i></div>
             <input type="submit" value="Confirm"><br>
             <a href="{{ url_for('reg.login') }}" class="register">LOGIN / </a>
-            <a href="#" class="forgot">FORGOT PASSWORD</a>
+            <a href="{{ url_for('reg.forgot_password') }}" class="forgot">FORGOT PASSWORD</a>
         </div>
 
     </form>

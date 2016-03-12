@@ -9,6 +9,9 @@ from datetime import datetime, date
 from sqlalchemy.orm import backref
 
 
+PERMITTED_EMAILS = ['gmail.com', 'ukr.net', 'yandex.ua']
+
+
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
@@ -33,8 +36,11 @@ class User(db.Model, UserMixin):
             self.last_name = last_name
             self.first_name = first_name
             self.email = email
-            self.password = password
+            self.password = ActivatedUsers.activated_message(20)
             self.online = True
+
+        if password is not None:
+            self.password = password
 
         if query:
             self.take_query(query)
@@ -73,14 +79,9 @@ class User(db.Model, UserMixin):
 
         last_name = context.get('last_name')
         first_name = context.get('first_name')
-        password1 = context.get('password1')
-        password2 = context.get('password2')
         email = context.get('email').lower()
 
         if not User.clean_names(first_name, last_name):
-            return False
-
-        if not User.clean_passwords(password1, password2):
             return False
 
         if not User.clean_email(email):
@@ -89,7 +90,6 @@ class User(db.Model, UserMixin):
         extra = dict(
             last_name=last_name,
             first_name=first_name,
-            password=User.hash_password(password1),
             email=email
         )
 
@@ -97,21 +97,23 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def clean_names(p1, p2):
-        if not (p1 and p2):
+        if not (len(p1) and len(p2) > 2):
             return False
         return True
 
     @staticmethod
     def clean_passwords(p1, p2):
-        if p1 != p2 and len(p1) > 3:
+        if len(p1) < 6 and p1 != p2:
             return False
         return True
 
     @staticmethod
     def clean_email(e):
-        if '@' not in e:
-            return False
-        return True
+        domain = e.split('@')
+
+        if len(domain) == 2 and domain[1] in PERMITTED_EMAILS:
+            return True
+        return False
 
     @staticmethod
     def hash_password(p):
@@ -173,9 +175,9 @@ class ActivatedUsers(db.Model):
         host = request.host_url
 
         msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
-        msg.html = "Link %s/user/activate/%s" % (host, self.activated_str)
+        msg.html = "Link %suser/activate/%s" % (host, self.activated_str)
 
-        # mail.send(msg)
+        mail.send(msg)
 
     @staticmethod
     def send_email_for_password(email, activated_str=None):
@@ -183,15 +185,15 @@ class ActivatedUsers(db.Model):
             activated_str = ActivatedUsers.activated_message()
         host = request.host_url
         msg = Message("Create your new password on Cupcake Messenger", recipients=[email])
-        msg.html = "Link %s/user/new_password/%s" % (host, activated_str)
+        msg.html = "Link %suser/new_password/%s" % (host, activated_str)
         session['act_str_for_password'] = activated_str
         session['email'] = email
 
         mail.send(msg)
 
     @staticmethod
-    def activated_message():
-        random_bytes = urandom(80)
+    def activated_message(quantity=80):
+        random_bytes = urandom(quantity)
         token = b64encode(random_bytes).decode('utf-8')
         a = ''
         for x in token:

@@ -19,8 +19,6 @@ def register():
     context = {
         'last_name': request.form.get('last-name'),
         'first_name': request.form.get('first-name'),
-        'password1': request.form.get('password1'),
-        'password2': request.form.get('password2'),
         'email': request.form.get('email'),
         'msg': 'Validation error',
     }
@@ -29,7 +27,7 @@ def register():
         date = User.valid_date(context)
         if date:
             user = User(first_name=date.get('first_name'), last_name=date.get('last_name'),
-                        password=date.get('password'), email=date.get('email'), register=True)
+                        email=date.get('email'), register=True)
             activate = ActivatedUsers(user)
 
             for x in [user, activate]:
@@ -42,9 +40,7 @@ def register():
 
             activate.send_email()
 
-            login_user(user, remember=True)
-
-            return redirect(url_for('main.index_page'))
+            return render_template('reg/flash_message.html', context={'msg': 'Activate your e-mail'})
         else:
 
             return render_template('reg/register.html', context=context)
@@ -97,25 +93,52 @@ def logout():
     return redirect(url_for('main.index_page'))
 
 
-@extra.route(r'/user/activate/<s>')
+@extra.route(r'/user/activate/<s>', methods=['POST', 'GET'])
 def activate_user(s):
-    from models.models import ActivatedUsers, db
+    from models.models import User, ActivatedUsers, db
 
     context = {
-        'msg': 'Successfully accept email'
+        'msg': 'Write yours password',
+        'action': "/user/activate/%s" % (s,),
     }
 
-    query = ActivatedUsers.query.filter_by(activated_str=s).first()
+    if request.method == 'GET':
+        return render_template('reg/handling_pass.html', context=context)
 
-    if query is not None:
-        if query.activated:
-            context['msg'] = 'This code has already registered'
-        query.activated = True
-        db.session.commit()
+    if request.method == 'POST':
 
-        return render_template('reg/flash_message.html', context=context)
+        f = {
+            'pass1': request.form.get('pass1'),
+            'pass2': request.form.get('pass2'),
+        }
 
-    context['msg'] = 'Wrong code'
+        query = ActivatedUsers.query.filter_by(activated_str=s).first()
+
+        if query is not None:
+            if query.activated:
+                context['msg'] = 'This code has already registered'
+            query.activated = True
+
+            if User.clean_passwords(f['pass1'], f['pass2']):
+                query.users.password = User.hash_password(f['pass1'])
+            else:
+                context['msg'] = 'Bad password'
+                return render_template('reg/handling_pass.html', context=context)
+
+            user = query.users
+
+            login_user(user, remember=True)
+
+            db.session.commit()
+
+            context['msg'] = 'Your account successfully create'
+
+            return render_template('reg/flash_message.html', context=context)
+
+        context['msg'] = 'Wrong code'
+
+    context['msg'] = 'Problem with activation'
+
     return render_template('reg/flash_message.html', context=context)
 
 
@@ -143,7 +166,8 @@ def forgot_password():
 @extra.route(r'/user/new_password/<s>', methods=['POST', 'GET'])
 def new_password(s):
     context = {
-        'msg': 'Wrong code for create new password'
+        'msg': 'Wrong code for create new password',
+        'action': "/user/new_password/%s" % (s,),
     }
 
     if s == session.get('act_str_for_password'):
@@ -169,7 +193,7 @@ def new_password(s):
 
                 return render_template('reg/flash_message.html', context=context)
 
-        return render_template('reg/forgot_pass.html', context=context)
+        return render_template('reg/handling_pass.html', context=context)
 
     return render_template('reg/flash_message.html', context=context)
 

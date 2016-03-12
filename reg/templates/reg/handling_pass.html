@@ -13,7 +13,7 @@
 <div class="wrap-form">
 
     <p class="msg">{{ msg }}</p>
-    <form action="{{ url_for('reg.new_password', s=session.act_str_for_password) }}" method="post">
+    <form action="{{ context['action'] }}" method="post">
         <h1 class="mainLogo"><span>Cup</span>Cake</h1>
         <span class="incorrect">{{ context.msg }}</span>
         <div class="log-fls">
