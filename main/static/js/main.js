@@ -9,6 +9,7 @@ var usersID = {};
 socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
 
 socket.on('send_Message', function (data) {
+    console.log(data);
     createMessage(data['msg']);
 });
 
