@@ -25,6 +25,12 @@ function myFriends() {
                             $('.state').get(i).classList.add('online');
                         }
                     }
+                    else if (key == 'birthday'){
+                        if (people[i][key] != 'None'){
+                            var date = new Date(Date.parse(people[i][key]));
+                            $('.myfriends .' + key).get(i).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
+                        }
+                    }
                     else {
                         $('.myfriends .' + key).get(i).innerHTML = people[i][key];
                     }
@@ -58,6 +64,13 @@ function myConfiguration() {
             if (key == $('#' + key).attr('id') && currentUser[key]) {
                 $('.inputs #' + key).val(currentUser[key]);
             }
+            if (key == 'birthday'){
+                var now = new Date(Date.parse(currentUser[key]));
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+                $('.inputs #' + key).val(today);
+            }
         }
     }
 }
@@ -75,6 +88,8 @@ function openChat(id) {
     $('#Messages').hide();
     flag = true;
     $('#ChatWindow').show();
+    var scrollDiv = document.getElementById("scroll_div");
+    scrollDiv.scrollTop = scrollDiv.scrollHeight;
 }
 
 var socketFlag = 0;
@@ -119,7 +134,8 @@ function putData(data) {
     $('#tel').html(data['phone']);
     $('#tel').attr('href', 'tel:' + data['phone']);
     if (data['birthday'] != 'None') {
-        $('#birthday').html(data['birthday']);
+        var date = new Date(Date.parse(data['birthday']));
+        $('#birthday').html(date.getDay() + '-' + date.getDate() + '-' + date.getFullYear());
     }
     if (data['online']) {
         $('.state').addClass('online');

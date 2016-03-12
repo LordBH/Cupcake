@@ -1,6 +1,6 @@
 from flask import session
 from flask.ext.socketio import emit, join_room, leave_room
-from .tools import compare, take_message, save_room, save_message
+from .tools import compare, take_message, save_room
 from . import from_chats, socket_io
 
 main = from_chats
@@ -23,36 +23,38 @@ def joined(data):
     extra = compare(user_1, user_2)
 
     room_id = '%d|%d' % extra
-    
-    session.setdefault('rooms', []):
 
-    if room_id not in session['rooms']:
-        join_room(room_id)
-        session['rooms'].append(room_id)
-        emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
-        save_room(user_1, user_2, room=room_id)
+    if session.get('rooms') is None:
+        session['rooms'] = []
 
-    if session.setdefault('flag_for_joined', True):
-        session['flag_for_joined'] = False
+    join_room(room_id)
+    session['rooms'].append(room_id)
+    emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
 
-        chat = take_message(room_id, extra)
+    save_room(user_1, user_2, room=room_id)
 
-        context = {
-            'flag': True,
-            'room': room_id,
-            'history': chat,
-        }
+    chat = take_message(room_id, extra)
 
-        emit('status', context)
+    context = {
+        'flag': True,
+        'room': room_id,
+        'msg': session.get('user_first_name') + ' joined ' + room_id,
+        'history': chat,
+    }
+
+    return emit('status', context, room=room_id)
 
 
 @socket_io.on('message', namespace='/chat')
 def message(data):
+    from models.models import Rooms, db
 
     room_id = data.get('room')
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
 
+    a = room_id.split('|')
+    user = session.get('user_id')
     msg = data.get('msg')
 
     context = {
@@ -60,10 +62,17 @@ def message(data):
         'msg': msg,
     }
 
-    emit('send_Message', context, room=room_id)
+    if a[0] == str(user):
+        q = Rooms(room_id, user1_mes=msg)
+        context['id_user'] = a[0]
+    else:
+        q = Rooms(room_id, user2_mes=msg)
+        context['id_user'] = a[1]
 
-    if False:
-        save_message(context, room_id)
+    db.session.add(q)
+    db.session.commit()
+
+    return emit('send_Message', context, room=room_id)
 
 
 @socket_io.on('unique_wire', namespace='/chat')
