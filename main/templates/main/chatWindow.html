@@ -1,70 +1,21 @@
-<div id='chatWindow'>
-  <div class="frame">
-    <div class="showMessages" id="scroll_div">
-      <!-- messages -->
-      <div class="wall">
+    <div class="frame">
+        <div class="showMessages" id="scroll_div">
+            <!-- messages -->
+            <div class="wall">
 
-      <div class="miniMessage">
-          <div class="photoDate">
-            <div class="friendPhoto">
-{#              <img src='img/hulk.jpg'>#}
+
             </div>
-            <span class='date'>11:40</span>
-          </div>
-        <span class="minMessage">lol, omg</span>
-      </div>
 
-      <div class="miniMessage">
-          <div class="photoDate">
-            <div class="friendPhoto">
-{#              <img src='img/hulk.jpg'>#}
+        </div>
+        <div class="typeMessage">
+            <div class="myPhoto friendPhoto">
+                 <img src="{{ url_for('main.static', filename='img/hulk.jpg') }}">
             </div>
-            <span class='date'>11:40</span>
-          </div>
-        <span class="minMessage">lol, omg</span>
-      </div>
-
-      <div class="miniMessage">
-          <div class="photoDate">
+            <textarea id='newMessage'></textarea>
+            <button class="sendMessage">Send</button>
             <div class="friendPhoto">
-{#              <img src='img/hulk.jpg'>#}
+                <img src="{{ url_for('main.static', filename='img/hulk.jpg') }}">
             </div>
-            <span class='date'>11:40</span>
-          </div>
-        <span class="minMessage">lol, omg</span>
-      </div>
-
-      <div class="miniMessage">
-          <div class="photoDate">
-            <div class="friendPhoto">
-{#              <img src='img/hulk.jpg'>#}
-            </div>
-            <span class='date'>11:40</span>
-          </div>
-        <span class="minMessage">lol, omg</span>
-      </div>
-
-      <div class="miniMessage">
-          <div class="photoDate">
-            <div class="friendPhoto">
-{#              <img src='img/hulk.jpg'>#}
-            </div>
-            <span class='date'>11:40</span>
-          </div>
-        <span class="minMessage">lol, omg</span>
-      </div>
-</div>
-
+        </div>
     </div>
-    <div class="typeMessage">
-      <div class="myPhoto friendPhoto">
-{#        <img src='img/o12S9j9oevs.png'>#}
-      </div>
-        <textarea id='newMessage' ></textarea>
-        <button class="sendMessage">Send</button>
-      <div class="friendPhoto">
-{#        <img src='img/hulk.jpg'>#}
-      </div>
-    </div>
-  </div>
-</div>
+

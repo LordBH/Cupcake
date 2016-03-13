@@ -25,8 +25,8 @@ function myFriends() {
                             $('.state').get(i).classList.add('online');
                         }
                     }
-                    else if (key == 'birthday'){
-                        if (people[i][key] != 'None'){
+                    else if (key == 'birthday') {
+                        if (people[i][key] != 'None') {
                             var date = new Date(Date.parse(people[i][key]));
                             $('.myfriends .' + key).get(i).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
                         }
@@ -42,7 +42,8 @@ function myFriends() {
                     else if (key == 'status') {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
-                    else if (key == 'id'){
+                    else if (key == 'id') {
+                        chatRooms.unshift({room : usersID['currentUser']['id'] +'|'+ people[i][key]});
                         $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
                     }
                 }
@@ -61,11 +62,11 @@ function myConfiguration() {
             if (key == $('#' + key).attr('id') && currentUser[key]) {
                 $('.inputs #' + key).val(currentUser[key]);
             }
-            if (key == 'birthday'){
+            if (key == 'birthday') {
                 var now = new Date(Date.parse(currentUser[key]));
                 var day = ("0" + now.getDate()).slice(-2);
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
-                var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+                var today = now.getFullYear() + "-" + (month) + "-" + (day);
                 $('.inputs #' + key).val(today);
             }
         }
@@ -77,10 +78,12 @@ var flag = false;
 var friendFlag = true;
 
 function openChat(id) {
-    if (friendFlag) {
-        friendFlag = false;
-        sendSocket('joined', {'id': id}, function () {}, '/chat');
-    }
+    //if (friendFlag) {
+    //    friendFlag = false;
+    console.log('send joinde');
+        sendSocket('joined', {'id': id}, function () {
+        }, '/chat');
+    //}
     $('#Friends').hide();
     flag = true;
     $('#ChatWindow').show();
@@ -136,12 +139,13 @@ function putData(data) {
     if (data['online']) {
         $('.state').addClass('online');
     }
-    if (!data['activated']){
-        $('#ConfirmEmail').show();
-        $('#ConfirmEmail span').html(data['email']);
-    }
-    if (data['rooms']){
-        sendSocket('join_all_rooms', {'rooms': data['rooms']}, function(){}, '/chat');
+    //if (!data['activated']){
+    //    $('#ConfirmEmail').show();
+    //    $('#ConfirmEmail span').html(data['email']);
+    //}
+    if (data['rooms']) {
+        sendSocket('join_all_rooms', {'rooms': data['rooms']}, function () {
+        }, '/chat');
     }
     $('.user-status').html(data['status']);
     usersID['currentUser'] = data;
