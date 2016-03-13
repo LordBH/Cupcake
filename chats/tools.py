@@ -94,10 +94,10 @@ def save_message(context, room_id, msg):
     user = session.get('user_id')
 
     if a[0] == str(user):
-        q = Rooms(room_id, user1_mes=msg)
+        q = Rooms(room_id, messages_1_=msg)
         context['id_user'] = a[0]
     else:
-        q = Rooms(room_id, user2_mes=msg)
+        q = Rooms(room_id, messages_2_=msg)
         context['id_user'] = a[1]
 
     db.session.add(q)

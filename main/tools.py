@@ -66,11 +66,11 @@ def loading_user(user_id):
     from models.models import User, datetime, session, db
 
     if session.get('user_active'):
-        print(' - session - ')
-        get_rooms(session.get('user_id'))
+        id_ = session.get('user_id')
+        print(' --- LOGIN from sessions ---> ID :', id_)
+        get_rooms(id_)
         return User(reverse_user_session=True)
 
-    print(' - request to DB - ')
     query = User.query.filter(User.id == user_id).first()
 
     if query is None:
@@ -79,6 +79,7 @@ def loading_user(user_id):
     query.online = True
     query.active = datetime.now()
     user = User(query=query, user_session=True)
+    print(' --- LOGIN with request to DB ---> ID :', user.id)
 
     db.session.commit()
     get_rooms(user.id)

@@ -214,13 +214,13 @@ class Rooms(db.Model):
     checked = db.Column(db.Boolean, default=False)
     # path_to_img = db.Column(db.String(200), default=None)
 
-    def __init__(self, room_id, time=None, user1_mes=None, user2_mes=None):
+    def __init__(self, room_id, time=None, messages_1_=None, messages_2_=None):
         self.room_id = room_id
         if time is not None:
             self.time = time
 
-        self.user1_mes = user1_mes
-        self.user2_mes = user2_mes
+        self.messages_1_ = messages_1_
+        self.messages_2_ = messages_2_
 
 
 db.create_all()
