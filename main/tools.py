@@ -20,7 +20,6 @@ def all_users_context(query, current_id):
             'city': q.get('city'),
             'phone': q.get('phone'),
             'birthday': str(q.get('birthday')),
-            'activated': a.activated,
             'rooms': session.get('rooms'),
 
         }
@@ -85,6 +84,10 @@ def loading_user(user_id):
     get_rooms(user.id)
 
     return user
+
+
+def save_image(path):
+    print(path)
 
 
 def slash():
