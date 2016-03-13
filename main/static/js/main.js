@@ -1,6 +1,7 @@
 $(document).ready(function () {
     OpenPage($('.active')[0].id.substr(0));
-    sendSocket('unique_wire', {}, function () {}, '/chat');
+    sendSocket('unique_wire', {}, function () {
+    }, '/chat');
 });
 
 var modalWindow = document.getElementById('modalWindow');
@@ -10,16 +11,21 @@ socket = io.connect('http://' + document.domain + ':' + location.port + '/chat')
 
 socket.on('send_Message', function (data) {
     console.log(data);
-    createMessage(data['msg']);
+    createMessage(data['msg'], data['id']);
 });
 
 socket.on('status', function (data) {
-    console.log('send joined');
-    $('.typeMessage .sendMessage').click(function(e){
-       socketMessage(data['room']);
+    console.log('Send message:');
+    console.log(data['history']);
+    var history = data['history'];
+    if (!$.isEmptyObject(history)) {
+        createMessage(history['msg']);
+    }
+    $('.typeMessage .sendMessage').click(function (e) {
+        socketMessage(data['room']);
     });
-    $('#newMessage').keypress(function(e){
-        if (event.keyCode == 13){
+    $('#newMessage').keypress(function (e) {
+        if (event.keyCode == 13) {
             socketMessage(data['room']);
             e.preventDefault();
         }
@@ -30,11 +36,12 @@ socket.on('status', function (data) {
 socket.on('unique_wire', function (data) {
     console.log('unique_wire');
     console.log(data);
-    sendSocket('joined', {'id': data['user']}, function () {}, '/chat')
+    sendSocket('joined', {'id': data['user']}, function () {
+    }, '/chat')
 
 });
 
-function notifyMessage(index){
+function notifyMessage(index) {
     var button = $('.myfriends .sendMessage');
     button.get(index).innerHTML = '<i class="fa fa-envelope"></i> You got new message';
     button.get(index).classList.add('getNewMessage');

@@ -1,58 +1,78 @@
-  <!-- leftside menu -->
-  <div class="left-side">
-      <h1 class="mainLogo" onclick="myPage()"><span>Cup</span>Cake</h1>
+<!-- leftside menu -->
+<div class="left-side">
+    <h1 class="mainLogo" onclick="myPage()"><span>Cup</span>Cake</h1>
     <ul>
-      <li id="myPage" class="active">
-        <a onclick="myPage()">My page</a>
-      </li>
-      <li id="myFriends">
-        <a onclick="myFriends()">People</a>
-      </li>
-{#      <li id="myPhoto">#}
-{#        <a href="#myPhoto">My photos</a>#}
-{#      </li>#}
-{#      <li id="myMusic">#}
-{#        <a href="#">My music</a>#}
-{#      </li>#}
-{#      <li id="myVideo">#}
-{#        <a href="#">My videos</a>#}
-{#      </li>#}
-      <li id="myConfiguration">
-        <a onclick="myConfiguration()">Configuration</a>
-      </li>
+        <li id="myPage" class="active">
+            <a onclick="myPage()">My page</a>
+        </li>
+        <li id="myFriends">
+            <a onclick="myFriends()">People</a>
+        </li>
+        {#
+        <li id="myPhoto">#}
+            {# <a href="#myPhoto">My photos</a>#}
+            {#
+        </li>
+        #}
+        {#
+        <li id="myMusic">#}
+            {# <a href="#">My music</a>#}
+            {#
+        </li>
+        #}
+        {#
+        <li id="myVideo">#}
+            {# <a href="#">My videos</a>#}
+            {#
+        </li>
+        #}
+        <li id="myConfiguration">
+            <a onclick="myConfiguration()">Configuration</a>
+        </li>
         <li id="logout">
             <a href="{{ url_for('reg.logout') }}">Logout</a>
         </li>
     </ul>
-  </div>
+</div>
 
-  <!-- Main container for the inf -->
-  <div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>
-  <div id="wrapper">
-      <!--<div id="Load" hidden>{% include 'main/loading.html' %}</div>-->
-      <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
-      <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
-      <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>
-      <div id="Configuration" hidden>{% include 'main/configuration.html' %}</div>
-  </div>
-  <!-- News container -->
-{#  <div id='rightSide'>#}
-{#      <div class="showComment">#}
-{#          <div class="commentPhoto">#}
-              {#      <img src="img/o12S9j9oevs.png" class="userImg">#}
-{#          </div>#}
-{#          <span class='commentSpan'>Hello my name is Alex))</span>#}
-{#          <div class="addImg">#}
-              {#      <img class='imgComment' src="img/o12S9j9oevs.png">#}
-{#          </div>#}
-{#      </div>#}
-{#  </div>#}
+<!-- Main container for the inf -->
+<!--<div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>-->
+<div id="wrapper">
+    <!--<div id="Load" hidden>{% include 'main/loading.html' %}</div>-->
+    <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
+    <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
+    <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>
+    <div id="Configuration" hidden>{% include 'main/configuration.html' %}</div>
+</div>
+<!-- News container -->
+{#
+<div id='rightSide'>#}
+    {#
+    <div class="showComment">#}
+        {#
+        <div class="commentPhoto">#}
+            {# <img src="img/o12S9j9oevs.png" class="userImg">#}
+            {#
+        </div>
+        #}
+        {# <span class='commentSpan'>Hello my name is Alex))</span>#}
+        {#
+        <div class="addImg">#}
+            {# <img class='imgComment' src="img/o12S9j9oevs.png">#}
+            {#
+        </div>
+        #}
+        {#
+    </div>
+    #}
+    {#
+</div>#}
 
-  <div id="modalWindow" onclick="closeModal()">
-      <div>
-          <div id="imgContainer"></div>
-          <div class="close" onclick="closeModal()">
-              <i class="fa fa-times"></i>
-          </div>
-      </div>
-  </div>
+<div id="modalWindow" onclick="closeModal()">
+    <div>
+        <div id="imgContainer"></div>
+        <div class="close" onclick="closeModal()">
+            <i class="fa fa-times"></i>
+        </div>
+    </div>
+</div>

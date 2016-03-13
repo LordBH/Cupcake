@@ -52,9 +52,12 @@ function socketMessage(room){
     }
 }
 
-function createMessage(mess) {
+function createMessage(mess, id) {
+    console.log(usersID['currentUser']['id']);
+    if (id != usersID['currentUser']['id'] && id != undefined){
         var audio = new Audio('main/media/hangouts_message.mp3');
         audio.play();
+    }
 
     if (mess != '' && mess != undefined && mess[0] != '\n') {
         var miniMessage = document.createElement('div');
