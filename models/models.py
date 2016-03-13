@@ -212,6 +212,7 @@ class Rooms(db.Model):
     messages_1_ = db.Column(db.Text)
     messages_2_ = db.Column(db.Text)
     checked = db.Column(db.Boolean, default=False)
+    # path_to_img = db.Column(db.String(200), default=None)
 
     def __init__(self, room_id, time=None, user1_mes=None, user2_mes=None):
         self.room_id = room_id
