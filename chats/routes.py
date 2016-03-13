@@ -3,7 +3,6 @@ from flask import session
 from .tools import compare, connecting, take_message, save_room, save_message, control_user_online
 from . import from_chats, socket_io
 
-
 main = from_chats
 
 
@@ -33,23 +32,19 @@ def joined(data):
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
         save_room(user_1, user_2, room=room_id)
 
-    if session.setdefault('flag_for_joined', True):
-        session['flag_for_joined'] = False
+    chat = take_message(room_id, extra)
 
-        chat = take_message(room_id, extra)
+    context = {
+        'flag': True,
+        'room': room_id,
+        'history': chat,
+    }
 
-        context = {
-            'flag': True,
-            'room': room_id,
-            'history': chat,
-        }
-
-        emit('status', context)
+    emit('status', context)
 
 
 @socket_io.on('message', namespace='/chat')
 def message(data):
-
     room_id = data.get('room')
     if room_id is None:
         return emit('send_Message', {'flag': False, 'msg': 'room is empty'})
