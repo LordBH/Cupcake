@@ -9,10 +9,15 @@ from datetime import datetime, date
 from sqlalchemy.orm import backref
 
 
-PERMITTED_EMAILS = ['gmail.com', 'ukr.net', 'yandex.ua']
+PERMITTED_DOMAIN = ['gmail.com', 'ukr.net', 'yandex.ua', 'rambler.ru', 'yandex.ru']
+PHONE_SYMBOLS = [40, 41, 43] + [x for x in range(48, 58)]
 
 
 class User(db.Model, UserMixin):
+    """
+    Main class for handling users
+    """
+
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
@@ -31,6 +36,14 @@ class User(db.Model, UserMixin):
 
     def __init__(self, last_name=None, first_name=None, password=None, email=None,
                  query=None, register=False, user_session=False, reverse_user_session=False):
+        """Taking information about users
+
+        :param
+            register=True: registration new User
+            query=True: if u want to create User class from query
+            user_session=True: save User data to sessions
+            reverse_user_session=True: otherwise with session
+        """
 
         if register:
             self.last_name = last_name
@@ -62,6 +75,11 @@ class User(db.Model, UserMixin):
             self.online = session.get('user_online')
 
     def take_query(self, query):
+        """
+        :param query: query from DateBase
+            fill class with data from sessions
+        :type query: dict
+        """
         query = query.__dict__
         self.id = query.get('id')
         self.last_name = query.get('last_name')
@@ -72,10 +90,17 @@ class User(db.Model, UserMixin):
         self.online = query.get('online')
 
     def get_id(self):
+        """
+        :return: return USER ID
+        """
         return self.id
 
     @staticmethod
     def valid_date(context):
+        """validate context for the next saving to DB
+        :param context: some last_name, first_name, email which need validate
+        :type context: dict
+        """
 
         last_name = context.get('last_name')
         first_name = context.get('first_name')
@@ -96,27 +121,88 @@ class User(db.Model, UserMixin):
         return extra
 
     @staticmethod
-    def clean_names(p1, p2):
-        if not (len(p1) and len(p2) > 2):
+    def clean_names(p1, p2=''):
+        """
+        Clean one or two str p1, p2. Validate length and existing symbols. If someone
+        symbol not in [A-z] return False
+
+        :param p1: name1
+        :param p2: name2
+        :type: both str
+
+        :return Return True if validation has gone successfully, otherwise False
+        """
+
+        length = (len(p1) or len(p2)) > 2
+        if not length:
             return False
+
+        for x in p1 + p2:
+            if not (64 < ord(x) < 91 or 96 < ord(x) < 123):
+                return False
+
         return True
 
     @staticmethod
     def clean_passwords(p1, p2):
-        if len(p1) < 6 and p1 != p2:
+        """
+        Validate password. They have to be the same and password -> length > 6
+
+        :param p1: password1
+        :param p2: password2
+        :type : both str
+        """
+        if len(p1) < 6 or p1 != p2:
             return False
         return True
 
     @staticmethod
     def clean_email(e):
+        """
+        Validate email. Check email domain in PERMITTED_DOMAIN
+
+        :param e: email
+        :type e: str
+        """
         domain = e.split('@')
 
-        if len(domain) == 2 and domain[1] in PERMITTED_EMAILS:
+        if len(domain) == 2 and domain[1] in PERMITTED_DOMAIN:
             return True
         return False
 
     @staticmethod
+    def clean_phone(e, q=20):
+        """
+        Validate phone. Compare symbols from PERMITTED_DOMAIN and phone number (e)
+        Check length
+
+        :param e: phone number
+        :param q: length phone number
+        :type e: str
+        :type q: int
+        """
+
+        l = len(e)
+        if l > q:
+            return False
+
+        for x in e:
+            if ord(x) not in PHONE_SYMBOLS:
+                return False
+
+        for x in ('(', ')', '+'):
+            c = e.split(x)
+            if len(c) > 2:
+                return False
+
+        if ('(' in e and ')' not in e) or (')' in e and '(' not in e):
+            return False
+
+        return True
+
+    @staticmethod
     def hash_password(p):
+        """Hashing passwords with sha224"""
 
         p = p.encode()
         sha = sha224(p)
@@ -126,6 +212,13 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def re_write_config(q):
+        """
+            Re-write user configuration (last_name, first_name, status, city, phone, birthday)
+            with validation
+
+        :param q: query, which contain info about User
+        :return: class with validation data
+        """
         last_name = request.form.get('last_name')
         first_name = request.form.get('first_name')
         status = request.form.get('status')
@@ -140,9 +233,9 @@ class User(db.Model, UserMixin):
         if status:
             q.status = status
 
-        if city:
+        if User.clean_names(city):
             q.city = city
-        if phone:
+        if User.clean_phone(phone):
             q.phone = phone
         if birthday:
             try:
