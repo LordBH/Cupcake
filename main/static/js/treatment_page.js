@@ -52,7 +52,7 @@ function socketMessage(room){
     }
 }
 
-function createMessage(mess, id) {
+function createMessage(mess, id, time) {
     console.log(usersID['currentUser']['id']);
     if (id != usersID['currentUser']['id'] && id != undefined){
         var audio = new Audio('main/media/hangouts_message.mp3');
@@ -65,6 +65,7 @@ function createMessage(mess, id) {
         var friendPhoto = document.createElement('div');
         var img = document.createElement('img');
         var date = document.createElement('span');
+        //var name = document.createElement('span');
         var minMessage = document.createElement('span');
 
         miniMessage.classList.add('miniMessage');
@@ -72,9 +73,16 @@ function createMessage(mess, id) {
         friendPhoto.classList.add('friendPhoto');
         img.src = 'img/hulk.jpg';
         date.classList.add('date');
-        date.innerHTML = (new Date()).getHours() + ':' + (new Date()).getMinutes();
+        if (time != undefined){
+            date.innerHTML = (new Date()).getHours() + ':' + (new Date()).getMinutes();
+        }
+        else{
+            date.innerHTML = (new Date(time)).getHours() + ':' + (new Date(time)).getMinutes();
+        }
         minMessage.classList.add('minMessage');
         minMessage.innerHTML = mess;
+        //name.classList.add('MessageName');
+        //name.innerHTML =
 
         friendPhoto.appendChild(img);
         photoDate.appendChild(friendPhoto);

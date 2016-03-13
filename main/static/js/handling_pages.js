@@ -43,6 +43,7 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                     else if (key == 'id') {
+                        chatRooms.unshift({room : usersID['currentUser']['id'] +'|'+ people[i][key]});
                         $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
                     }
                 }
@@ -77,11 +78,12 @@ var flag = false;
 var friendFlag = true;
 
 function openChat(id) {
-    if (friendFlag) {
-        friendFlag = false;
+    //if (friendFlag) {
+    //    friendFlag = false;
+    console.log('send joinde');
         sendSocket('joined', {'id': id}, function () {
         }, '/chat');
-    }
+    //}
     $('#Friends').hide();
     flag = true;
     $('#ChatWindow').show();
