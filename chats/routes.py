@@ -63,11 +63,6 @@ def message(data):
     }
 
     emit('send_Message', context, room=room_id)
-
-    print()
-    print(msg)
-    print()
-
     save_message(context, room_id, msg)
 
 
