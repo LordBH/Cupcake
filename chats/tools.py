@@ -1,4 +1,7 @@
-from flask import session
+from flask import session, request
+
+
+PEOPLE_ONLINE = {}
 
 
 def compare(a, b):
@@ -8,15 +11,50 @@ def compare(a, b):
         return b, a
 
 
-def connecting(flag):
-    session.setdefault('user_id', 'Anonymous user')
+def change_online(user_id, online=True):
+    from models.models import User, db
+    q = User.query.filter_by(id=user_id).first()
 
-    if flag:
-        extra = 'Connect'
+    if online:
+        q.online = True
     else:
-        extra = 'Disconnect'
+        q.online = False
 
-    print(extra + ' => USER ID :', session.get('user_id'))
+    db.session.add(q)
+    db.session.commit()
+
+
+def connecting(number, user, conn=False):
+    ip = request.remote_addr
+    if number is None:
+        if conn:
+            print('Anonymous user connect to CUPCAKE. His ip :', ip)
+        else:
+            print('Anonymous user disconnect from CUPCAKE. His ip :', ip)
+        return
+
+    if number == 0:
+        change_online(user, False)
+        return print("USER ID : |", user, '| disconnect from all pages on Cupcake. His ip :', ip)
+    elif number == 1:
+        change_online(user, True)
+    print("USER ID : |", user, '| has', number, 'open page(s) on Cupcake. His ip :', ip)
+
+
+def control_user_online(connect=False):
+    id_ = session.get('user_id')
+
+    if id_ is not None:
+        PEOPLE_ONLINE.setdefault(id_, 0)
+    else:
+        return None, None
+
+    if connect:
+        PEOPLE_ONLINE[id_] += 1
+    else:
+        PEOPLE_ONLINE[id_] -= 1
+
+    return PEOPLE_ONLINE[id_], id_
 
 
 def take_message(room, l=None, number=10):

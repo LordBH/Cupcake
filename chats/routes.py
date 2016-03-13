@@ -1,7 +1,8 @@
 from flask.ext.socketio import emit, join_room
 from flask import session
-from .tools import compare, connecting, take_message, save_room, save_message
+from .tools import compare, connecting, take_message, save_room, save_message, control_user_online
 from . import from_chats, socket_io
+
 
 main = from_chats
 
@@ -63,14 +64,13 @@ def message(data):
 
     emit('send_Message', context, room=room_id)
 
-    if False:
-        save_message(context, room_id, msg)
+    save_message(context, room_id, msg)
 
 
 @socket_io.on('unique_wire', namespace='/chat')
 def unique_wire(data):
-    print('Create unique_wire ', data)
     user = session.get('user_id')
+    print('Create unique_wire for user ID:', user, data)
     join_room(user)
 
 
@@ -86,9 +86,11 @@ def join_all_rooms(data):
 
 @socket_io.on('connect')
 def connect_user():
-    connecting(True)
+    number_of_connecting, user_id = control_user_online(connect=True)
+    connecting(number_of_connecting, user_id, conn=True)
 
 
 @socket_io.on('disconnect')
 def disconnect_user():
-    connecting(False)
+    number_of_connecting, user_id = control_user_online()
+    connecting(number_of_connecting, user_id)
