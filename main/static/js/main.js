@@ -37,6 +37,7 @@ socket.on('status', function (data) {
         }
     }
     $('.typeMessage .sendMessage').click(function (e) {
+        console.log('send message')
         socketMessage(data['room']);
     });
     $('#newMessage').keypress(function (e) {
