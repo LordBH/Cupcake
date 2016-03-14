@@ -73,7 +73,7 @@ function createMessage(mess, id, time) {
         friendPhoto.classList.add('friendPhoto');
         img.src = 'img/hulk.jpg';
         date.classList.add('date');
-        if (time != undefined){
+        if (time == undefined){
             date.innerHTML = (new Date()).getHours() + ':' + (new Date()).getMinutes();
         }
         else{

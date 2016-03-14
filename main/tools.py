@@ -1,3 +1,20 @@
+from configurations.settings import ConfigClass
+from flask import session
+from os import path
+
+
+def get_img():
+    u = str(session.get('user_id'))
+    s = slash()
+    user_directory = ConfigClass.IMAGES_FOLDER + s + u
+    path_to_file = user_directory + s + u + '.jpg'
+
+    if path.isfile(path_to_file):
+        return path_to_file
+
+    return ConfigClass.DEFAULT_IMG
+
+
 def all_users_context(query, current_id):
     from models.models import ActivatedUsers, session
 
@@ -21,6 +38,7 @@ def all_users_context(query, current_id):
             'phone': q.get('phone'),
             'birthday': str(q.get('birthday')),
             'rooms': session.get('rooms'),
+            'picture': get_img()
 
         }
 
@@ -85,10 +103,6 @@ def loading_user(user_id):
     get_rooms(user.id)
 
     return user
-
-
-def save_image(path):
-    print(path)
 
 
 def slash():
