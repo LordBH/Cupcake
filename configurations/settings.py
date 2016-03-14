@@ -28,8 +28,9 @@ class ConfigClass:
     STATIC_FOLDER = 'static'
 
     # Files folder
-    FILES_FOLDER = BASE_DIR + '/files'
-    IMAGES_FOLDER = FILES_FOLDER + '/images'
+    IMAGES_FOLDER = '/main/static/img'
+    ABSOLUTE_IMAGES_FOLDER = BASE_DIR + IMAGES_FOLDER
+    DEFAULT_IMG = IMAGES_FOLDER + '/default.png'
 
 
 class ProductionConfig(ConfigClass):
