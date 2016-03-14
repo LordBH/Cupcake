@@ -45,16 +45,16 @@ function checkArea(val) {
 
 /* ******************************   ******************************  */
 
-function socketMessage(room){
-    if (room){
+function socketMessage(room) {
+    if (room) {
         var mess = document.getElementById('newMessage').value;
-        sendSocket('message', {'room': room, 'msg': mess}, function(){}, '/chat');
+        sendSocket('message', {'room': room, 'msg': mess}, function () {
+        }, '/chat');
     }
 }
 
 function createMessage(mess, id, time) {
-    console.log(usersID['currentUser']['id']);
-    if (id != usersID['currentUser']['id'] && id != undefined){
+    if (id != usersID['currentUser']['id'] && id != undefined) {
         var audio = new Audio('main/media/hangouts_message.mp3');
         audio.play();
     }
@@ -73,10 +73,10 @@ function createMessage(mess, id, time) {
         friendPhoto.classList.add('friendPhoto');
         img.src = 'img/hulk.jpg';
         date.classList.add('date');
-        if (time != undefined){
+        if (time == undefined) {
             date.innerHTML = (new Date()).getHours() + ':' + (new Date()).getMinutes();
         }
-        else{
+        else {
             date.innerHTML = (new Date(time)).getHours() + ':' + (new Date(time)).getMinutes();
         }
         minMessage.classList.add('minMessage');

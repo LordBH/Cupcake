@@ -8,9 +8,9 @@
     font-family: "lobster";
 }
 
-html{
-    min-height:100%;
-    position:relative;
+html {
+    min-height: 100%;
+    position: relative;
 }
 
 body {
@@ -20,6 +20,7 @@ body {
     padding: 0;
     height: 100%;
     font-size: 16px;
+    overflow-x: hidden;
 }
 
 ul {
@@ -72,7 +73,7 @@ a {
     background: #001036;
 }
 
-.left-side .mainLogo{
+.left-side .mainLogo {
     margin: 10px auto;
 }
 
@@ -127,7 +128,7 @@ a {
     width: 0;
 }
 
-#rightSide .showComment{
+#rightSide .showComment {
 
 }
 
@@ -167,7 +168,7 @@ article {
     margin-top: 0;
 }
 
-.mainInf .state{
+.mainInf .state {
     position: relative;
     bottom: 5px;
 }
@@ -244,41 +245,41 @@ article {
 }
 
 /*.education div {*/
-    /*display: flex;*/
-    /*flex-flow: row nowrap;*/
-    /*align-items: center;*/
-    /*justify-content: space-between;*/
-    /*margin-bottom: 10px;*/
+/*display: flex;*/
+/*flex-flow: row nowrap;*/
+/*align-items: center;*/
+/*justify-content: space-between;*/
+/*margin-bottom: 10px;*/
 /*}*/
 
 /*.education div span {*/
-    /*width: 200px;*/
+/*width: 200px;*/
 /*}*/
 
 /*.education div span small {*/
-    /*font-size: .8em;*/
+/*font-size: .8em;*/
 /*}*/
 
 /*.education div span small a {*/
-    /*color: rgb(58, 88, 164);*/
+/*color: rgb(58, 88, 164);*/
 /*}*/
 
 /*.education div > div {*/
-    /*height: 50px;*/
-    /*width: 50px;*/
-    /*border-radius: 50%;*/
-    /*overflow: hidden;*/
-    /*box-shadow: 0 0 1px 1px rgb(189, 189, 189);*/
+/*height: 50px;*/
+/*width: 50px;*/
+/*border-radius: 50%;*/
+/*overflow: hidden;*/
+/*box-shadow: 0 0 1px 1px rgb(189, 189, 189);*/
 /*}*/
 
 /*.education img {*/
-    /*width: 100%;*/
-    /*height: 100%;*/
+/*width: 100%;*/
+/*height: 100%;*/
 /*}*/
 
 /*.education i {*/
-    /*margin-right: 5px;*/
-    /*color: rgb(58, 88, 164);*/
+/*margin-right: 5px;*/
+/*color: rgb(58, 88, 164);*/
 /*}*/
 
 /*==========================================================*/
@@ -462,11 +463,13 @@ div.commentPhoto {
     float: right;
     width: 300px;
 }
-.friendInf ul{
-     width: 300px;
+
+.friendInf ul {
+    width: 300px;
     display: inline-block;
- }
-.friendInf ul li{
+}
+
+.friendInf ul li {
     display: block;
     text-align: left;
     margin-bottom: 10px;
@@ -512,12 +515,11 @@ div.commentPhoto {
     cursor: pointer;
 }
 
-.getNewMessage{
+.getNewMessage {
     background: #4cb8ff;
 }
 
-
-#ChatWindow{
+#ChatWindow {
     height: 100%;
 
 }
@@ -539,7 +541,7 @@ div.commentPhoto {
     overflow-y: scroll;
 }
 
-.showMessages::-webkit-scrollbar{
+.showMessages::-webkit-scrollbar {
     width: 0;
 }
 
@@ -776,10 +778,9 @@ div.commentPhoto {
     height: 25px;
 }
 
-
 /*=================registration/login===============*/
 
-.wrap-form{
+.wrap-form {
     width: 700px;
     height: 500px;
     display: flex;
@@ -793,20 +794,17 @@ div.commentPhoto {
     text-align: center;
 }
 
-
-
-.body-log{
+.body-log {
     background: #001036;
 }
 
-
-.wrap-form img{
-   width: 100%;
+.wrap-form img {
+    width: 100%;
     height: auto;
     display: block;
 }
 
-.cupcake-logo{
+.cupcake-logo {
     background: #001036;
     width: 200px;
     height: auto;
@@ -815,7 +813,7 @@ div.commentPhoto {
     z-index: 2;
 }
 
-.wrap-form input{
+.wrap-form input {
     width: 300px;
     height: 25px;
     padding: 10px;
@@ -829,7 +827,7 @@ div.commentPhoto {
     display: inline-block;
 }
 
-.wrap-form input[type = submit]{
+.wrap-form input[type = submit] {
     width: 325px;
     font-size: 22px;
     font-weight: bold;
@@ -839,23 +837,22 @@ div.commentPhoto {
     cursor: pointer;
 }
 
-.wrap-form input[type = submit]:active{
+.wrap-form input[type = submit]:active {
     padding-top: 12px;
     background: #000a1d;
 }
 
-::-webkit-input-placeholder{
+::-webkit-input-placeholder {
     color: white;
 }
 
-input:-webkit-autofill{
+input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #001036 inset;
     -webkit-text-fill-color: white !important;
 }
 
-
-h1.mainLogo{
-    margin:  0;
+h1.mainLogo {
+    margin: 0;
     color: #4cb8ff;
     font-size: 42px;
     text-shadow: 2px 2px 1px #001020;
@@ -868,7 +865,7 @@ h1.mainLogo{
     cursor: pointer;
 }
 
-h1.mainLogo span{
+h1.mainLogo span {
     color: #fe93df;
     animation-name: noLight;
     animation-duration: 10s;
@@ -877,113 +874,112 @@ h1.mainLogo span{
     text-align: center;
 }
 
-@keyframes noLight{
-    0%{
+@keyframes noLight {
+    0% {
         color: #fe93df;
     }
-    10%{
+    10% {
         color: #fe93df;
     }
-    11%{
+    11% {
         color: #93527f;
     }
-    12%{
+    12% {
         color: #fe93df;
     }
-    13%{
+    13% {
         color: #93527f;
     }
-    14%{
+    14% {
         color: #fe93df;
     }
-    80%{
+    80% {
         color: #fe93df;
     }
-    90%{
+    90% {
         color: #93527f;
     }
-    92%{
+    92% {
         color: #fe93df;
     }
-    93%{
+    93% {
         color: #93527f;
     }
-    94%{
+    94% {
         color: #fe93df;
     }
-    95%{
+    95% {
         color: #93527f;
     }
-    100%{
+    100% {
         color: #fe93df;
     }
 }
 
 @keyframes lightName {
-    0%{
+    0% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    10%{
+    10% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    11%{
+    11% {
         text-shadow: none;
         color: #2e729d;
     }
-    12%{
+    12% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    13%{
+    13% {
         text-shadow: none;
         color: #2e729d;
     }
-    14%{
+    14% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    80%{
+    80% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    90%{
+    90% {
         text-shadow: none;
         color: #2e729d;
     }
-    92%{
+    92% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    93%{
+    93% {
         text-shadow: none;
         color: #2e729d;
     }
-    94%{
+    94% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
-    95%{
+    95% {
         text-shadow: none;
         color: #2e729d;
     }
-    100%{
+    100% {
         text-shadow: 0 0 5px #fcffa8;
         color: #4cb8ff;
     }
 }
 
-
-.wrap-form a{
+.wrap-form a {
     color: white;
 }
 
-.wrap-form .incorrect{
+.wrap-form .incorrect {
     color: #cf171e;
 }
 
-.check{
+.check {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -992,13 +988,14 @@ h1.mainLogo span{
     width: 350px;
     left: 13px;
 }
-.wrap-form i{
+
+.wrap-form i {
     color: white;
     position: relative;
     display: none;
 }
 
-.confEmail{
+.confEmail {
     width: 100%;
     min-width: 1200px;
     font-size: 30px;
@@ -1010,8 +1007,52 @@ h1.mainLogo span{
     text-shadow: 1px 1px 1px #ac5d93;
 }
 
-.confEmail span{
+.confEmail span {
     color: #4cb8ff;
+}
+
+.messageNotification{
+    display: none;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 300px;
+    height: 100px;
+    background: rgba(0, 14, 31, .8);
+    color: white;
+    padding: 10px;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.messageNotification .left-block{
+    margin-right: 10px;
+    height: auto;
+    width: 60px;
+    text-align: center;
+}
+
+.messageNotification .right-block{
+    height: auto;
+    width: auto;
+}
+
+.messageNotification .friendPhoto{
+    width: 60px;
+    height: auto;
+    margin: 0 0 5px 0;
+    box-shadow: none;
+}
+
+.messageNotification .name{
+    font-size: 22px;
+    color: #4cb8ff;
+}
+
+.messageNotification .time{
+    font-size: 14px;
 }
 
 
