@@ -16,24 +16,21 @@ socket.on('send_Message', function (data) {
 });
 
 socket.on('status', function (data) {
+    $('.wall')[0].innerHTML = '';
     console.log('status socket');
-    for (var i = 0; i < chatRooms.length; i++){
-        if (data['room'] == chatRooms[i]['room']){
-            var currentRoom = chatRooms[i];
-        }
-    }
-    var history = currentRoom.history = data['history'];
+    console.log(data);
+    var history = data['history'];
     console.log(history);
     if (!$.isEmptyObject(history)) {
         console.log('history is not empty');
-        //for (var key in history){
-        //    for (var idKey in history[key]){
-        //        console.log(history[key][idKey]);
-        //        if (history[key][idKey] != null && idKey != 'time'){
-        //            createMessage(history[key][idKey], idKey, history[key]['time']);
-        //        }
-        //    }
-        //}
+        for (var key in history){
+            for (var idKey in history[key]){
+                console.log(history[key][idKey]);
+                if (history[key][idKey] != null && idKey != 'time'){
+                    createMessage(history[key][idKey], idKey, history[key]['time']);
+                }
+            }
+        }
     }
     $('.typeMessage .sendMessage').click(function (e) {
         socketMessage(data['room']);
