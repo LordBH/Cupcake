@@ -20,12 +20,7 @@ function myFriends() {
             $('.myfriends').css('display', 'block');
             for (var key in people[i]) {
                 if ($('.myfriends .' + key).attr('class') != undefined) {
-                    if (key == 'online') {
-                        if (people[i][key]) {
-                            $('.state').get(i).classList.add('online');
-                        }
-                    }
-                    else if (key == 'birthday') {
+                    if (key == 'birthday') {
                         if (people[i][key] != 'None') {
                             var date = new Date(Date.parse(people[i][key]));
                             $('.myfriends .' + key).get(i).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
@@ -42,14 +37,20 @@ function myFriends() {
                     else if (key == 'status') {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
+                    else if (key == 'online') {
+                        console.log(people[i]['id']+' '+people[i][key]);
+                        if (people[i][key]) {
+                            $('.myfriends .state').get(i).classList.add('online');
+                        }
+                    }
                     else if (key == 'id') {
-                        chatRooms.unshift({room : usersID['currentUser']['id'] +'|'+ people[i][key]});
+                        //chatRooms.unshift({room : usersID['currentUser']['id'] +'|'+ people[i][key]});
                         $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
                     }
                 }
             }
         }
-        notifyMessage(1);
+       // notifyMessage(1);
     }
 }
 
@@ -75,16 +76,13 @@ function myConfiguration() {
 
 
 var flag = false;
-var friendFlag = true;
 
 function openChat(id) {
-    //if (friendFlag) {
-    //    friendFlag = false;
-    console.log('send joinde');
-        sendSocket('joined', {'id': id}, function () {
-        }, '/chat');
-    //}
+    sendSocket('joined', {'id': id}, function () {
+    }, '/chat');
+
     $('#Friends').hide();
+    $('#Page').hide();
     flag = true;
     $('#ChatWindow').show();
     var scrollDiv = document.getElementById("scroll_div");
@@ -120,7 +118,7 @@ function OpenPage(pageName) {
     }
     $(hideDiv).hide();
     $(showDiv).show();
-
+    document.cookie = 'page=' + pageName;
 }
 
 
@@ -137,7 +135,7 @@ function putData(data) {
         $('#birthday').html(date.getDay() + '-' + date.getDate() + '-' + date.getFullYear());
     }
     if (data['online']) {
-        $('.state').addClass('online');
+        $('#Page .state').addClass('online');
     }
     //if (!data['activated']){
     //    $('#ConfirmEmail').show();

@@ -9,7 +9,7 @@ def last_online(user, db):
     if now.date() == online.date():
         online_min = online.hour * 60 + online.minute
         now_minute = now.hour * 60 + now.minute
-        if now_minute - online_min < 5:
+        if now_minute - online_min < 15:
             return
 
     user.online = flag
