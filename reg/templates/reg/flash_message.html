@@ -10,11 +10,12 @@
 </head>
 <body class="body-log">
 
-<div class="wrap-form">
-
-    <h1>{{ context['msg'] }}</h1>
-    <br>
-    <a href="{{ url_for('main.index_page') }}">Home</a>
+<div class="wrap-form flash">
+    <h1 class="mainLogo"><span>Cup</span>Cake</h1>
+    <h1 class="checkMail">{{ context['msg'] }}</h1>
+    <a href="{{ url_for('main.index_page') }}">
+        <h1 class="checkMail blue">Return to main page</h1>
+    </a>
 
 </div>
 </body>

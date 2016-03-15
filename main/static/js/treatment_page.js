@@ -48,18 +48,24 @@ function checkArea(val) {
 function socketMessage(room) {
     if (room) {
         var mess = document.getElementById('newMessage').value;
-        sendSocket('message', {'room': room, 'msg': mess}, function () {
-        }, '/chat');
+        sendSocket('message', {'room': room, 'msg': mess}, function () {}, '/chat');
     }
 }
 
-function createMessage(mess, id, time) {
-    if (id != usersID['currentUser']['id'] && id != undefined) {
-        var audio = new Audio('main/media/hangouts_message.mp3');
-        audio.play();
-    }
-
+function createMessage(mess, id, time, audio, myimg, myfriend) {
     if (mess != '' && mess != undefined && mess[0] != '\n') {
+        var picture;
+        if (id != usersID['currentUser']['id'] && id != undefined && audio) {
+            var audio = new Audio('main/media/hangouts_message.mp3');
+            audio.play();
+        }
+
+        if (id != usersID['currentUser']['id']){
+            picture = myfriend;
+        }
+        else{
+            picture = myimg;
+        }
         var miniMessage = document.createElement('div');
         var photoDate = document.createElement('div');
         var friendPhoto = document.createElement('div');
@@ -71,7 +77,7 @@ function createMessage(mess, id, time) {
         miniMessage.classList.add('miniMessage');
         photoDate.classList.add('photoDate');
         friendPhoto.classList.add('friendPhoto');
-        img.src = 'img/hulk.jpg';
+        img.src = picture;
         date.classList.add('date');
         if (time == undefined){
             date.innerHTML = (new Date()).getHours() + ':' + (new Date()).getMinutes();

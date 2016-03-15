@@ -1,16 +1,15 @@
 from configurations.settings import ConfigClass
-from flask import session
 from os import path
 
 
-def get_img():
-    u = str(session.get('user_id'))
+def get_img(_id):
+    u = str(_id)
     s = slash()
-    user_directory = ConfigClass.IMAGES_FOLDER + s + u
-    path_to_file = user_directory + s + u + '.jpg'
+    file = ConfigClass.ABSOLUTE_IMAGES_FOLDER + s + u + '/' + u + '.jpg'
+    static_path = ConfigClass.GET_IMAGE + s + u + '/' + u + '.jpg'
 
-    if path.isfile(path_to_file):
-        return path_to_file
+    if path.isfile(file):
+        return static_path
 
     return ConfigClass.DEFAULT_IMG
 
@@ -38,7 +37,7 @@ def all_users_context(query, current_id):
             'phone': q.get('phone'),
             'birthday': str(q.get('birthday')),
             'rooms': session.get('rooms'),
-            'picture': get_img()
+            'picture': get_img(q.get('id'))
 
         }
 

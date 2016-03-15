@@ -1,5 +1,6 @@
 /**manual functions**/
 
+var people;
 
 function myPage() {
     $('body').removeClass('body-log');
@@ -12,7 +13,8 @@ function myFriends() {
     OpenPage('myFriends');
     if (usersID && friendPageFlag) {
         friendPageFlag = false;
-        var people = usersID['currentUser']['people'];
+        people = usersID['currentUser']['people'];
+        //console.log(people);
         for (var i = 0; i < people.length - 1; i++) {
             $('.friends').append($('.myfriends:first').clone());
         }
@@ -26,7 +28,11 @@ function myFriends() {
                             $('.myfriends .' + key).get(i).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
                         }
                     }
+                    else if (key == 'online'){
+
+                    }
                     else {
+                        //console.log(key);
                         $('.myfriends .' + key).get(i).innerHTML = people[i][key];
                     }
                 }
@@ -38,7 +44,7 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                     else if (key == 'online') {
-                        console.log(people[i]['id']+' '+people[i][key]);
+                        //console.log(people[i]['id']+' '+people[i][key]);
                         if (people[i][key]) {
                             $('.myfriends .state').get(i).classList.add('online');
                         }
@@ -46,6 +52,9 @@ function myFriends() {
                     else if (key == 'id') {
                         //chatRooms.unshift({room : usersID['currentUser']['id'] +'|'+ people[i][key]});
                         $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
+                    }
+                    else if (key == 'picture'){
+                        $('.myfriends .userImg').get(i).setAttribute('src', people[i][key]);
                     }
                 }
             }
@@ -123,13 +132,14 @@ function OpenPage(pageName) {
 
 
 function putData(data) {
-    console.log(data);
+   // console.log(data);
     $('#name').html(data['first_name'] + ' ' + data['last_name']);
     $('#city').html(data['city']);
     $('#mail').html(data['email']);
     $('#mail').attr('href', 'malito:' + data['email']);
     $('#tel').html(data['phone']);
     $('#tel').attr('href', 'tel:' + data['phone']);
+    $('.mainPhoto .userImg').attr('src', data['picture']);
     if (data['birthday'] != 'None') {
         var date = new Date(Date.parse(data['birthday']));
         $('#birthday').html(date.getDay() + '-' + date.getDate() + '-' + date.getFullYear());

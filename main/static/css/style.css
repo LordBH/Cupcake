@@ -705,6 +705,7 @@ div.commentPhoto {
 /*-=-=-===--=-=-configuration=--=-=-=-=-=-=-==-=*/
 
 #myPageConfig {
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
@@ -716,14 +717,23 @@ div.commentPhoto {
     margin-top: 20px;
 }
 
+#myPageConfig > div:last-of-type{
+    /*border-left: 1px solid #eaeaea;*/
+
+}
+
 #myPageConfig input {
-    margin: 5px;
+    height: 22px;
+    margin: 12px 10px 10px 0;
     display: block;
+    border: none;
+    border-bottom: 1px solid #eaeaea;
 }
 
 #myPageConfig label {
+    font-size: 22px;
     display: block;
-    margin: 8px 0 0 0;
+    margin: 9px 0 0 0;
 }
 
 #myPageConfig button.sendMessage {
@@ -1053,6 +1063,20 @@ h1.mainLogo span {
 
 .messageNotification .time{
     font-size: 14px;
+}
+
+.checkMail{
+    color: #ffffff;
+    display: block;
+    margin: 5px 0;
+}
+
+.blue{
+    color: #6a8ed4;
+}
+
+.flash{
+    flex-flow: column;
 }
 
 

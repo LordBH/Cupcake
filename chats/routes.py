@@ -32,12 +32,13 @@ def joined(data):
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
         save_room(user_1, user_2, room=room_id)
 
-    chat = take_message(room_id, extra)
+    chat = take_message(room_id, extra, number=0)
 
     context = {
         'flag': True,
         'room': room_id,
         'history': chat,
+        'id': user_2,
     }
 
     emit('status', context)
@@ -54,7 +55,8 @@ def message(data):
     context = {
         'flag': True,
         'msg': msg,
-        'id': session.get('user_id')
+        'id': session.get('user_id'),
+        'name': session.get('user_first_name') + session.get('user_last_name'),
     }
 
     emit('send_Message', context, room=room_id)

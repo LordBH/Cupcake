@@ -102,7 +102,9 @@ def activate_user(s):
         'action': "/user/activate/%s" % (s,),
     }
 
-    if request.method == 'GET':
+    query = ActivatedUsers.query.filter_by(activated_str=s).first()
+
+    if request.method == 'GET' and query is not None:
         return render_template('reg/handling_pass.html', context=context)
 
     if request.method == 'POST':
@@ -111,8 +113,6 @@ def activate_user(s):
             'pass1': request.form.get('pass1'),
             'pass2': request.form.get('pass2'),
         }
-
-        query = ActivatedUsers.query.filter_by(activated_str=s).first()
 
         if query is not None:
             if query.activated:
@@ -153,7 +153,7 @@ def forgot_password():
         email = request.form.get('email').lower()
         q = User.query.filter_by(email=email).first()
         if User.clean_email(email) and q is not None:
-            ActivatedUsers.send_email_for_password(email)
+            # ActivatedUsers.send_email_for_password(email)
             context['msg'] = 'Check your email address and confirm the link'
 
             return render_template('reg/flash_message.html', context=context)

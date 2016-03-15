@@ -30,7 +30,8 @@ class ConfigClass:
     # Files folder
     IMAGES_FOLDER = '/main/static/img'
     ABSOLUTE_IMAGES_FOLDER = BASE_DIR + IMAGES_FOLDER
-    DEFAULT_IMG = IMAGES_FOLDER + '/default.png'
+    GET_IMAGE = '/main/img'
+    DEFAULT_IMG = GET_IMAGE + '/default.png'
 
 
 class ProductionConfig(ConfigClass):
