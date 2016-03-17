@@ -1,0 +1,206 @@
+@media all and (max-width: 1260px) and (min-width: 894px){
+    .left-side{
+        width: 18%;
+    }
+
+    .left-side ul li{
+        width: 94%;
+        border-left: 10px solid transparent;
+    }
+
+    #wrapper {
+        left: 18%;
+        width: 72%;
+    }
+
+}
+
+@media all and (max-width: 893px) and (min-width: 698px){
+    .left-side{
+        width: 22%;
+    }
+
+    .left-side ul li{
+        width: 90%;
+        border-left: 10px solid transparent;
+    }
+
+    #wrapper {
+        left: 18%;
+        width: 80%;
+    }
+
+    article {
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        margin: 0 auto 0 5%;
+    }
+
+    .mainInf {
+        margin-left: 0;
+        padding: 0;
+        border-left: none;
+    }
+
+    .mainInf ul li span.inf {
+        text-align: right;
+    }
+
+    .mainInf h1#name {
+        margin-left: 5%;
+    }
+
+
+
+}
+
+@media all and (max-width: 895px) and (min-width: 200px){
+    #wrapper article.friends {
+        flex-flow: column;
+        width: 100%;
+    }
+
+
+    .myfriends {
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        height: auto;
+        max-height: 460px;
+        text-align: center;
+    }
+
+    .friendPhoto {
+        float: none;
+        margin: 10px auto;
+    }
+
+    .friendInf {
+        text-align: center;
+        float: none;
+        width: 90%;
+        margin: 5px auto;
+    }
+
+    .friendInf ul {
+        width: auto;
+        margin: 0 auto;
+
+    }
+
+    .friendInf ul li span.inf{
+        margin-left: 10px;
+    }
+
+    .friendName {
+        font-size: 26px;
+    }
+
+    .friendInf .status {
+        margin: 5px auto 5px auto;
+    }
+
+    .friendState {
+        padding: 5px;
+        background: rgb(72, 232, 58);
+        color: white;
+        text-shadow: 1px 1px 1px rgb(39, 136, 37);
+        margin: 20px 10px 5px 0;
+        width: 80px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .myfriends .state {
+        position: relative;
+        top: -2px;
+    }
+
+    .myfriends .sendMessage {
+        position: static;
+        margin: 10px auto;
+    }
+}
+
+@media all and (max-width: 697px) and (min-width: 200px){
+    .left-side{
+        width: 12%;
+    }
+
+    .left-side ul li{
+        width: 100%;
+        border-left: 0;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    .left-side ul li a {
+        margin-left: 0;
+    }
+
+    #wrapper {
+        left: 12%;
+        width: 88%;
+    }
+
+    article {
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        margin: 0 auto 0 5%;
+    }
+
+    .mainInf {
+        margin-left: 0;
+        padding: 0;
+        border-left: none;
+    }
+
+    .mainInf ul li span.inf {
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .mainInf h1#name {
+        margin-left: 5%;
+    }
+
+    .left-side ul li i{
+        display: inline-block;
+        font-size: 20px;
+    }
+
+
+    .left-side ul li span{
+        display: none;
+    }
+
+    .left-side ul li.active {
+        border-left: none;
+        color: #4cb8ff;
+    }
+
+    body:not(.body-log).mainLogo:not(.mediaLogo){
+        display: none;
+    }
+
+    .mediaLogo{
+        display: block;
+    }
+
+    /*---------------------*/
+    .cupcake-logo{
+        display: none;
+    }
+
+    .wrap-form{
+        width: 100%;
+        margin-left: -50%;
+    }
+
+}

@@ -7,12 +7,11 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
     socket.emit(emitName, obj);
 
     socket.on('flag', function (data) {
-        //console.log('flag');
         fn(data['extra'], 2);
     });
 
     socket.on('userData', function (data) {
-        //console.log('userData');
+        removeAnimation();
         if (data['flag']) {
             fn(data);
         }

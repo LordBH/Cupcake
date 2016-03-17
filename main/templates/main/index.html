@@ -1,12 +1,13 @@
 <!-- leftside menu -->
 <div class="left-side">
     <h1 class="mainLogo" onclick="myPage()"><span>Cup</span>Cake</h1>
+    <h1 class="mainLogo mediaLogo" onclick="myPage()"><span>C </span>C</h1>
     <ul>
         <li id="myPage" class="active">
-            <a onclick="myPage()">My page</a>
+            <a onclick="myPage()"><i class="fa fa-desktop"></i><span>My page</span></a>
         </li>
         <li id="myFriends">
-            <a onclick="myFriends()">People</a>
+            <a onclick="myFriends()"><i class="fa fa-users"></i><span>People</span></a>
         </li>
         {#
         <li id="myPhoto">#}
@@ -27,10 +28,10 @@
         </li>
         #}
         <li id="myConfiguration">
-            <a onclick="myConfiguration()">Configuration</a>
+            <a onclick="myConfiguration()"><i class="fa fa-pencil-square-o"></i><span>Configuration</span></a>
         </li>
         <li id="logout">
-            <a href="{{ url_for('reg.logout') }}">Logout</a>
+            <a href="{{ url_for('reg.logout') }}"><i class="fa fa-sign-out"></i><span>Logout</span></a>
         </li>
     </ul>
 </div>
@@ -38,7 +39,7 @@
 <!-- Main container for the inf -->
 <!--<div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>-->
 <div id="wrapper">
-    <!--<div id="Load" hidden>{% include 'main/loading.html' %}</div>-->
+    <div id="Load" hidden>{% include 'main/loading.html' %}</div>
     <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
     <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
     <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>

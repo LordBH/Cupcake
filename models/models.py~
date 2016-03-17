@@ -269,9 +269,9 @@ class ActivatedUsers(db.Model):
 
         msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
         msg.html = "Link %suser/activate/%s" % (host, self.activated_str)
-        print()
-        print(msg.html)
-        print()
+	print()
+	print(msg.html)
+	print()
 
         #mail.send(msg)
 

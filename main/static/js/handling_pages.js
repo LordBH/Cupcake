@@ -1,13 +1,10 @@
 /**manual functions**/
-
-var people;
+var people, friendPageFlag = true; //friendPAgeFlag = false - function myFriends() doesn't put all data again
 
 function myPage() {
     $('body').removeClass('body-log');
     OpenPage('myPage');
 }
-
-var friendPageFlag = true;
 
 function myFriends() {
     OpenPage('myFriends');
@@ -28,9 +25,6 @@ function myFriends() {
                             $('.myfriends .' + key).get(i).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
                         }
                     }
-                    else if (key == 'online'){
-
-                    }
                     else {
                         //console.log(key);
                         $('.myfriends .' + key).get(i).innerHTML = people[i][key];
@@ -46,7 +40,7 @@ function myFriends() {
                     else if (key == 'online') {
                         //console.log(people[i]['id']+' '+people[i][key]);
                         if (people[i][key]) {
-                            $('.myfriends .state').get(i).classList.add('online');
+                            $('.myfriends .state').get(i).classList.add('online-state');
                         }
                     }
                     else if (key == 'id') {
@@ -87,8 +81,7 @@ function myConfiguration() {
 var flag = false;
 
 function openChat(id) {
-    sendSocket('joined', {'id': id}, function () {
-    }, '/chat');
+    sendSocket('joined', {'id': id}, function () {}, '/chat');
 
     $('#Friends').hide();
     $('#Page').hide();
@@ -101,20 +94,23 @@ function openChat(id) {
 var socketFlag = 0;
 
 function OpenPage(pageName) {
+    var load = '#' + 'Load';
+    if (socketFlag == 0) {
+        var link  = document.createElement('link');
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.id = 'animation';
+        link.href = '/main/css/loading.css';
+
+        $('head').append(link);
+        $(load).show();
+
+        sendSocket('page', {}, putData, '/main');
+        socketFlag++;
+    }
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
-    //var load = '#' + 'Load';
-    if (socketFlag == 0) {
-        //$(load).show();
-        sendSocket('page', {}, putData, '/main');
-
-        //setTimeout(function () {
-        //    $(load).hide();
-        //}, 2000);
-
-        socketFlag++;
-    }
     editImgs();
     pageName = '#' + pageName;
 
@@ -132,7 +128,7 @@ function OpenPage(pageName) {
 
 
 function putData(data) {
-   // console.log(data);
+    console.log(data);
     $('#name').html(data['first_name'] + ' ' + data['last_name']);
     $('#city').html(data['city']);
     $('#mail').html(data['email']);
@@ -145,7 +141,7 @@ function putData(data) {
         $('#birthday').html(date.getDay() + '-' + date.getDate() + '-' + date.getFullYear());
     }
     if (data['online']) {
-        $('#Page .state').addClass('online');
+        $('#Page .state').addClass('online-state');
     }
     //if (!data['activated']){
     //    $('#ConfirmEmail').show();
@@ -158,6 +154,13 @@ function putData(data) {
     $('.user-status').html(data['status']);
     usersID['currentUser'] = data;
 
+}
+
+function removeAnimation(){
+    setTimeout(function(){
+        $('#animation').remove();
+        $('#Load').hide();
+    }, 2000);
 }
 
 /** *************** **/

@@ -12,6 +12,7 @@ socket = io.connect('http://' + document.domain + ':' + location.port + '/chat')
 
 socket.on('send_Message', function (data) {
     //console.log('send message: ');
+    removeAnimation();
     console.log(data);
     if (data['id'] != usersID['currentUser']['id'] && !flag){
         //console.log(data['id']);
@@ -40,6 +41,7 @@ function searchById(id){
 
 socket.on('status', function (data) {
     console.log(data);
+    removeAnimation();
     myPicture = usersID['currentUser']['picture'];
     console.log(people[searchById(data['id'])]['picture']);
 
@@ -110,11 +112,8 @@ function msgNr(name, msg, id, picture){
 }
 
 
-socket.on('msg', function(data){
-
-});
-
 socket.on('unique_wire', function (data) {
+    removeAnimation();
     //console.log('unique_wire');
     //console.log(data);
     sendSocket('joined', {'id': data['user']}, function () {

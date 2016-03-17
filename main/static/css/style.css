@@ -36,6 +36,10 @@ a {
     cursor: pointer;
 }
 
+input{
+    outline: none;
+}
+
 /*-------------------------*/
 
 .state { /*online - offline*/
@@ -47,7 +51,7 @@ a {
     background: rgb(175, 175, 175);
 }
 
-.online {
+.online-state {
     background: rgb(133, 128, 223);
 }
 
@@ -92,6 +96,10 @@ a {
     cursor: pointer;
 }
 
+.left-side ul li i{
+    display: none;
+}
+
 .left-side ul li:not(.active):hover {
     background: #05091f;
 }
@@ -114,23 +122,21 @@ a {
 
 /*-------------------*/
 
-#rightSide {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 350px;
-    background: #001036;
-    height: 100%;
-    overflow-y: scroll;
-}
+/*#rightSide {*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*right: 0;*/
+    /*width: 350px;*/
+    /*background: #001036;*/
+    /*height: 100%;*/
+    /*overflow-y: scroll;*/
+/*}*/
 
-#rightSide::-webkit-scrollbar {
-    width: 0;
-}
+/*#rightSide::-webkit-scrollbar {*/
+    /*width: 0;*/
+/*}*/
 
-#rightSide .showComment {
 
-}
 
 /*------------------*/
 
@@ -140,14 +146,14 @@ a {
     left: 360px;
     width: 800px;
     margin: 0;
-    height: 100%;
+    height: auto;
 }
 
 /*--------------------*/
 
 article {
     width: 730px;
-    height: 400px;
+    height: auto;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -284,7 +290,7 @@ article {
 
 /*==========================================================*/
 
-section {
+/*section {
     width: 730px;
     margin: 0 auto;
     height: 200px;
@@ -411,7 +417,7 @@ div.commentPhoto {
     margin: 0 5px 5px 0;
     float: left;
     box-shadow: 0 0 1px 1px rgb(189, 189, 189);
-}
+}*/
 
 /*.showComment img#commentImg, #rightSide .showComment img#commentImg{
     display: none;
@@ -504,7 +510,7 @@ div.commentPhoto {
     background: rgb(12, 89, 152);
     padding: 10px;
     color: white;
-    border: 1px solid rgb(41, 33, 108);
+    border: none;/*1px solid rgb(41, 33, 108);*/
     border-radius: 3px;
     font-weight: bold;
     bottom: 10px;
@@ -591,7 +597,8 @@ div.commentPhoto {
 
 .miniMessage {
     width: 95%;
-    height: 60px;
+    min-height: 60px;
+    height: auto;
     margin: 5px auto;
     display: flex;
     flex-flow: row nowrap;
@@ -622,7 +629,7 @@ div.commentPhoto {
 }
 
 .minMessage {
-    width: 100px;
+    max-width: 100%;
     display: block;
     height: auto;
     margin: 0 20px;
@@ -981,6 +988,10 @@ h1.mainLogo span {
     }
 }
 
+.mediaLogo{
+    display: none;
+}
+
 .wrap-form a {
     color: white;
 }
@@ -1078,6 +1089,8 @@ h1.mainLogo span {
 .flash{
     flex-flow: column;
 }
+
+
 
 
 

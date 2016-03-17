@@ -7,6 +7,7 @@
     <link href="{{ url_for('main.static', filename='css/style.css') }}" rel="stylesheet">
     <link href="{{ url_for('main.static', filename='resources/Font-Awesome-master/css/font-awesome.min.css') }}"
           rel="stylesheet">
+    <link href="{{ url_for('main.static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body class="body-log">
 
@@ -14,7 +15,7 @@
 
     <p class="msg">{{ msg }}</p>
     <form action="{{ url_for('reg.forgot_password') }}" method="post">
-        <h1 class="mainLogo"><span>Cup</span>Cake</h1>
+        <h1 class="mainLogo "><span>Cup</span>Cake</h1>
         <span class="incorrect">{{ context.msg }}</span>
         <div class="log-fls">
 
