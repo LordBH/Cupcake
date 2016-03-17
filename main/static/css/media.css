@@ -185,7 +185,7 @@
         color: #4cb8ff;
     }
 
-    body:not(.body-log).mainLogo:not(.mediaLogo){
+    body:not(.body-log) .mainLogo:not(.mediaLogo){
         display: none;
     }
 
