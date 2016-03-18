@@ -15,7 +15,7 @@ socket = io.connect('http://' + document.domain + ':' + location.port + '/chat')
 
 socket.on('send_Message', function (data) {
     removeAnimation();
-    if ($('.wall').get(0).room == undefined || !flag) {
+    if ($('.wall').get(0).room == undefined) {
         msgNr(data['name'], data['msg'], data['id']);
     } else {
         var roomId = $('.wall').get(0).room.split('|');
@@ -89,6 +89,8 @@ function msgNr(name, msg, id) {
         openChat(id);
     });
     $('body').append(block);
+    var audio = new Audio('main/media/hangouts_message.mp3');
+    audio.play();
 }
 
 
