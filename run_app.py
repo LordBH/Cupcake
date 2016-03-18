@@ -16,13 +16,6 @@ app.config.from_object(settings.DevelopmentConfig)
 # db
 db = SQLAlchemy(app)
 
-# sending email
-mail = Mail(app)
-
-# user handling
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
 
 @app.teardown_request
 def teardown_request(exception):
@@ -31,6 +24,13 @@ def teardown_request(exception):
         db.session.remove()
     db.session.remove()
 
+# sending email
+mail = Mail(app)
+
+# user handling
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 # template filters
 for x in filters.filters:
@@ -54,8 +54,6 @@ if __name__ == '__main__':
 
     socket_io.init_app(app)
     host = '0.0.0.0'
-
-    # port = 5000
-    from port import port
+    port = 5000
 
     socket_io.run(app, host=host, port=port)
