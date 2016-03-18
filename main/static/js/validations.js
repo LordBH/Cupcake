@@ -19,8 +19,6 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
             $('#wrapper').innerHTML = '404';
         }
     });
-
-
 }
 
 function checks(flag, i) {

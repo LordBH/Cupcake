@@ -32,16 +32,14 @@ function myFriends() {
                         $('.myfriends .user-status').get(i).innerHTML = people[i][key];
                     }
                     else if (key == 'online') {
-                        //console.log(people[i]['id']+' '+people[i][key]);
                         if (people[i][key]) {
                             $('.myfriends .state').get(i).classList.add('online-state');
                         }
                     }
                     else if (key == 'id') {
-                        //chatRooms.unshift({room : usersID['currentUser']['id'] +'|'+ people[i][key]});
                         $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
                     }
-                    else if (key == 'picture'){
+                    else if (key == 'picture') {
                         $('.myfriends .userImg').get(i).setAttribute('src', people[i][key]);
                     }
                 }
@@ -71,11 +69,8 @@ function myConfiguration() {
 }
 
 
-var flag = false;
-
 function openChat(id) {
-    sendSocket('joined', {'id': id}, function () {}, '/chat');
-
+    sendSocket('joined', {'id': id}, '', '/chat');
     $('#Friends').hide();
     $('#Page').hide();
     flag = true;
@@ -84,13 +79,17 @@ function openChat(id) {
     scrollDiv.scrollTop = scrollDiv.scrollHeight;
 }
 
-var socketFlag = 0;
+var socketFlag = true;
 
 function OpenPage(pageName) {
     var load = '#' + 'Load';
-    if (socketFlag == 0) {
-        var link  = document.createElement('link');
-        link.rel  = 'stylesheet';
+    var active = $('.active');
+    var hideDiv = '#' + active[0].id.substr(2);
+    var showDiv = '#' + pageName.substr(2);
+
+    if (socketFlag) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
         link.type = 'text/css';
         link.id = 'animation';
         link.href = '/main/css/loading.css';
@@ -99,11 +98,9 @@ function OpenPage(pageName) {
         $(load).css('display', 'block');
 
         sendSocket('page', {}, putData, '/main');
-        socketFlag++;
+        socketFlag = false;
     }
-    var active = $('.active');
-    var hideDiv = '#' + active[0].id.substr(2);
-    var showDiv = '#' + pageName.substr(2);
+
     editImgs();
     pageName = '#' + pageName;
 
@@ -121,7 +118,6 @@ function OpenPage(pageName) {
 
 
 function putData(data) {
-    console.log(data);
     $('#name').html(data['first_name'] + ' ' + data['last_name']);
     $('#city').html(data['city']);
     $('#mail').html(data['email']);
@@ -129,6 +125,8 @@ function putData(data) {
     $('#tel').html(data['phone']);
     $('#tel').attr('href', 'tel:' + data['phone']);
     $('.mainPhoto .userImg').attr('src', data['picture']);
+    $('.user-status').html(data['status']);
+
     if (data['birthday'] != 'None') {
         var date = new Date(Date.parse(data['birthday']));
         $('#birthday').html(date.getDay() + '-' + date.getDate() + '-' + date.getFullYear());
@@ -137,20 +135,16 @@ function putData(data) {
         $('#Page .state').addClass('online-state');
     }
     if (data['rooms']) {
-        sendSocket('join_all_rooms', {'rooms': data['rooms']}, function () {
-        }, '/chat');
+        sendSocket('join_all_rooms', {'rooms': data['rooms']}, '', '/chat');
     }
-    $('.user-status').html(data['status']);
+
     usersID['currentUser'] = data;
     people = data['people'];
-
 }
 
-function removeAnimation(){
-    setTimeout(function(){
+function removeAnimation() {
+    setTimeout(function () {
         $('#animation').remove();
         $('#Load').hide();
     }, 2000);
 }
-
-/** *************** **/

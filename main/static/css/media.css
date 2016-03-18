@@ -1,9 +1,9 @@
-@media all and (max-width: 1260px) and (min-width: 894px){
-    .left-side{
+@media all and (max-width: 1260px) and (min-width: 894px) {
+    .left-side {
         width: 18%;
     }
 
-    .left-side ul li{
+    .left-side ul li {
         width: 94%;
         border-left: 10px solid transparent;
     }
@@ -15,12 +15,12 @@
 
 }
 
-@media all and (max-width: 893px) and (min-width: 698px){
-    .left-side{
+@media all and (max-width: 893px) and (min-width: 698px) {
+    .left-side {
         width: 22%;
     }
 
-    .left-side ul li{
+    .left-side ul li {
         width: 90%;
         border-left: 10px solid transparent;
     }
@@ -52,16 +52,13 @@
         margin-left: 5%;
     }
 
-
-
 }
 
-@media all and (max-width: 895px) and (min-width: 200px){
+@media all and (max-width: 895px) and (min-width: 200px) {
     #wrapper article.friends {
         flex-flow: column;
         width: 100%;
     }
-
 
     .myfriends {
         display: flex;
@@ -91,7 +88,7 @@
 
     }
 
-    .friendInf ul li span.inf{
+    .friendInf ul li span.inf {
         margin-left: 10px;
     }
 
@@ -123,14 +120,22 @@
         position: static;
         margin: 10px auto;
     }
+
+    .friendPhoto{
+
+    }
+
+    .typeMessage textarea{
+        width: 80%;
+    }
 }
 
-@media all and (max-width: 697px) and (min-width: 200px){
-    .left-side{
+@media all and (max-width: 697px) and (min-width: 200px) {
+    .left-side {
         width: 12%;
     }
 
-    .left-side ul li{
+    .left-side ul li {
         width: 100%;
         border-left: 0;
         line-height: 40px;
@@ -162,20 +167,20 @@
 
     .mainInf ul li span.inf {
         text-align: right;
-        margin-right: 10px;
+        margin-right: 1%;
+        width: 50%;
     }
 
     .mainInf h1#name {
         margin-left: 5%;
     }
 
-    .left-side ul li i{
+    .left-side ul li i {
         display: inline-block;
         font-size: 20px;
     }
 
-
-    .left-side ul li span{
+    .left-side ul li span {
         display: none;
     }
 
@@ -184,20 +189,20 @@
         color: #4cb8ff;
     }
 
-    body:not(.body-log) .mainLogo:not(.mediaLogo){
+    body:not(.body-log) .mainLogo:not(.mediaLogo) {
         display: none;
     }
 
-    .mediaLogo{
+    .mediaLogo {
         display: block;
     }
 
     /*---------------------*/
-    .cupcake-logo{
+    .cupcake-logo {
         display: none;
     }
 
-    .wrap-form{
+    .wrap-form {
         width: 100%;
         margin-left: -50%;
     }

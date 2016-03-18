@@ -36,7 +36,7 @@ a {
     cursor: pointer;
 }
 
-input{
+input {
     outline: none;
 }
 
@@ -96,7 +96,7 @@ input{
     cursor: pointer;
 }
 
-.left-side ul li i{
+.left-side ul li i {
     display: none;
 }
 
@@ -123,20 +123,18 @@ input{
 /*-------------------*/
 
 /*#rightSide {*/
-    /*position: fixed;*/
-    /*top: 0;*/
-    /*right: 0;*/
-    /*width: 350px;*/
-    /*background: #001036;*/
-    /*height: 100%;*/
-    /*overflow-y: scroll;*/
+/*position: fixed;*/
+/*top: 0;*/
+/*right: 0;*/
+/*width: 350px;*/
+/*background: #001036;*/
+/*height: 100%;*/
+/*overflow-y: scroll;*/
 /*}*/
 
 /*#rightSide::-webkit-scrollbar {*/
-    /*width: 0;*/
+/*width: 0;*/
 /*}*/
-
-
 
 /*------------------*/
 
@@ -510,7 +508,7 @@ div.commentPhoto {
     background: rgb(12, 89, 152);
     padding: 10px;
     color: white;
-    border: none;/*1px solid rgb(41, 33, 108);*/
+    border: none; /*1px solid rgb(41, 33, 108);*/
     border-radius: 3px;
     font-weight: bold;
     bottom: 10px;
@@ -724,7 +722,7 @@ div.commentPhoto {
     margin-top: 20px;
 }
 
-#myPageConfig > div:last-of-type{
+#myPageConfig > div:last-of-type {
     /*border-left: 1px solid #eaeaea;*/
 
 }
@@ -988,7 +986,7 @@ h1.mainLogo span {
     }
 }
 
-.mediaLogo{
+.mediaLogo {
     display: none;
 }
 
@@ -1032,7 +1030,7 @@ h1.mainLogo span {
     color: #4cb8ff;
 }
 
-.messageNotification{
+.messageNotification {
     display: none;
     position: absolute;
     right: 20px;
@@ -1048,45 +1046,45 @@ h1.mainLogo span {
     cursor: pointer;
 }
 
-.messageNotification .left-block{
+.messageNotification .left-block {
     margin-right: 10px;
     height: auto;
     width: 60px;
     text-align: center;
 }
 
-.messageNotification .right-block{
+.messageNotification .right-block {
     height: auto;
     width: auto;
 }
 
-.messageNotification .friendPhoto{
+.messageNotification .friendPhoto {
     width: 60px;
-    height: auto;
+    height: 60px;
     margin: 0 0 5px 0;
     box-shadow: none;
 }
 
-.messageNotification .name{
+.messageNotification .name {
     font-size: 22px;
     color: #4cb8ff;
 }
 
-.messageNotification .time{
+.messageNotification .time {
     font-size: 14px;
 }
 
-.checkMail{
+.checkMail {
     color: #ffffff;
     display: block;
     margin: 5px 0;
 }
 
-.blue{
+.blue {
     color: #6a8ed4;
 }
 
-.flash{
+.flash {
     flex-flow: column;
 }
 

@@ -1,4 +1,4 @@
-<!-- leftside menu -->
+<!-- left-side menu -->
 <div class="left-side">
     <h1 class="mainLogo" onclick="myPage()"><span>Cup</span>Cake</h1>
     <h1 class="mainLogo mediaLogo" onclick="myPage()"><span>C </span>C</h1>
@@ -9,24 +9,6 @@
         <li id="myFriends">
             <a onclick="myFriends()"><i class="fa fa-users"></i><span>People</span></a>
         </li>
-        {#
-        <li id="myPhoto">#}
-            {# <a href="#myPhoto">My photos</a>#}
-            {#
-        </li>
-        #}
-        {#
-        <li id="myMusic">#}
-            {# <a href="#">My music</a>#}
-            {#
-        </li>
-        #}
-        {#
-        <li id="myVideo">#}
-            {# <a href="#">My videos</a>#}
-            {#
-        </li>
-        #}
         <li id="myConfiguration">
             <a onclick="myConfiguration()"><i class="fa fa-pencil-square-o"></i><span>Configuration</span></a>
         </li>
@@ -35,45 +17,19 @@
         </li>
     </ul>
 </div>
-
 <!-- Main container for the inf -->
-<!--<div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>-->
 <div id="wrapper">
     <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
     <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
     <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>
     <div id="Configuration" hidden>{% include 'main/configuration.html' %}</div>
 </div>
-<!-- News container -->
-{#
-<div id='rightSide'>#}
-    {#
-    <div class="showComment">#}
-        {#
-        <div class="commentPhoto">#}
-            {# <img src="img/o12S9j9oevs.png" class="userImg">#}
-            {#
-        </div>
-        #}
-        {# <span class='commentSpan'>Hello my name is Alex))</span>#}
-        {#
-        <div class="addImg">#}
-            {# <img class='imgComment' src="img/o12S9j9oevs.png">#}
-            {#
-        </div>
-        #}
-        {#
-    </div>
-    #}
-    {#
-</div>#}
-
+<!-- Additional containers -->
 <div id="Load">
-        <div class="leftEye"></div>
-        <div class="rightEye"></div>
-        <div class="mouth"></div>
+    <div class="leftEye"></div>
+    <div class="rightEye"></div>
+    <div class="mouth"></div>
 </div>
-
 <div id="modalWindow" onclick="closeModal()">
     <div>
         <div id="imgContainer"></div>
@@ -82,7 +38,6 @@
         </div>
     </div>
 </div>
-
 <div class="messageNotification">
     <div class="left-block">
         <div class="friendPhoto">

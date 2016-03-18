@@ -20,66 +20,46 @@ function editImgs() {  //add func for modal window to all imgs
 
 /* ******************************   ******************************  */
 
-function changeTextArea(val) {
-    var span = document.getElementById("commentChg");
-    if (val.length > 20) {
-        val = val.split(' ');
-        val.push('\n');
-        val = val.join(' ');
-        span.innerHTML = val;
-    }
-    else {
-        span.innerHTML = val;
-    }
-}
-
-function showPhoto() {
-    document.getElementById('mainPhComm').style.display = 'block';
-}
-
-function checkArea(val) {
-    if (!val) {
-        document.getElementById('mainPhComm').style.display = 'none';
-    }
-}
-
 /* ******************************   ******************************  */
 
 function socketMessage(room) {
     if (room) {
         var mess = document.getElementById('newMessage').value;
-        sendSocket('message', {'room': room, 'msg': mess}, function () {}, '/chat');
+        sendSocket('message', {'room': room, 'msg': mess}, function () {
+        }, '/chat');
     }
 }
 
 function createMessage(mess, id, time, audio, myimg, myfriend) {
     if (mess != '' && mess != undefined && mess[0] != '\n') {
-        var picture;
-        if (id != usersID['currentUser']['id'] && id != undefined && audio) {
-            var audio = new Audio('main/media/hangouts_message.mp3');
-            audio.play();
-        }
 
-        if (id != usersID['currentUser']['id']){
-            picture = myfriend;
-        }
-        else{
-            picture = myimg;
-        }
+        var picture;
         var miniMessage = document.createElement('div');
         var photoDate = document.createElement('div');
         var friendPhoto = document.createElement('div');
         var img = document.createElement('img');
         var date = document.createElement('span');
-        //var name = document.createElement('span');
         var minMessage = document.createElement('span');
+        var scrollDiv = document.getElementById("scroll_div");
+
+        if (id != usersID['currentUser']['id'] && id != undefined && audio) {
+            var audio = new Audio('main/media/hangouts_message.mp3');
+            audio.play();
+        }
+
+        if (id != usersID['currentUser']['id']) {
+            picture = myfriend;
+        }
+        else {
+            picture = myimg;
+        }
 
         miniMessage.classList.add('miniMessage');
         photoDate.classList.add('photoDate');
         friendPhoto.classList.add('friendPhoto');
         img.src = picture;
         date.classList.add('date');
-        if (time == undefined){
+        if (time == undefined) {
             date.innerHTML = (new Date()).getHours() + ':' + (new Date()).getMinutes();
         }
         else {
@@ -87,8 +67,6 @@ function createMessage(mess, id, time, audio, myimg, myfriend) {
         }
         minMessage.classList.add('minMessage');
         minMessage.innerHTML = mess;
-        //name.classList.add('MessageName');
-        //name.innerHTML =
 
         friendPhoto.appendChild(img);
         photoDate.appendChild(friendPhoto);
@@ -98,7 +76,6 @@ function createMessage(mess, id, time, audio, myimg, myfriend) {
         document.getElementsByClassName('wall')[0].appendChild(miniMessage);
         document.getElementById('newMessage').value = '';
         document.getElementById('newMessage').focus();
-        var scrollDiv = document.getElementById("scroll_div");
         scrollDiv.scrollTop = scrollDiv.scrollHeight;
     }
 }
