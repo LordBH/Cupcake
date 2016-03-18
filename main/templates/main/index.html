@@ -39,7 +39,6 @@
 <!-- Main container for the inf -->
 <!--<div id="ConfirmEmail" class="confEmail" hidden>PLEASE CONFIRM YOUR E-MAIL: <span></span></div>-->
 <div id="wrapper">
-    <div id="Load" hidden>{% include 'main/loading.html' %}</div>
     <div id="Page" hidden>{% include 'main/myPage.html' %}</div>
     <div id="Friends" hidden>{% include 'main/myFriends.html' %}</div>
     <div id="ChatWindow" hidden>{% include 'main/chatWindow.html' %}</div>
@@ -68,6 +67,12 @@
     #}
     {#
 </div>#}
+
+<div id="Load">
+        <div class="leftEye"></div>
+        <div class="rightEye"></div>
+        <div class="mouth"></div>
+</div>
 
 <div id="modalWindow" onclick="closeModal()">
     <div>

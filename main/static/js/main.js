@@ -7,53 +7,46 @@ var modalWindow = document.getElementById('modalWindow');
 var usersID = {};
 var myPicture;
 var myFriend;
+var people;
+var friendPageFlag = true; //friendPAgeFlag = false - function myFriends() doesn't put all data again
 
 socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
 
 socket.on('send_Message', function (data) {
-    //console.log('send message: ');
     removeAnimation();
-    console.log(data);
-    if (data['id'] != usersID['currentUser']['id'] && !flag){
-        //console.log(data['id']);
-        //console.log(searchById(data['id']));
-        //console.log(people[searchById(data['id'])]['picture']);
-        //console.log();
-        //
-        //var pic =  people[searchById(data['id'])]['picture'];
+    if ($('.wall').get(0).room == undefined || !flag){
         msgNr(data['name'], data['msg'], data['id']);
     }else{
-        createMessage(data['msg'], data['id'], undefined, true, myPicture, myFriend);
+        var roomId = $('.wall').get(0).room.split('|');
+        if(data['id'] == +roomId[0] || data['id'] == +roomId[1]){
+            createMessage(data['msg'], data['id'], undefined, true, myPicture, myFriend);
+        }
+        else{
+            msgNr(data['name'], data['msg'], data['id']);
+        }
     }
 });
 
 function searchById(id){
-    console.log(id);
     for (var key in people){
         for (var newKey in people[key]){
             if (newKey == 'id' && people[key][newKey] == id){
                 console.log(newKey, people[key][newKey], key);
-                 return key
+                 return key;
             }
         }
     }
 }
 
 socket.on('status', function (data) {
-    console.log(data);
     removeAnimation();
+    $('.wall').get(0).room = data['room'];
     myPicture = usersID['currentUser']['picture'];
-    console.log(people[searchById(data['id'])]['picture']);
-
     myFriend =  people[searchById(data['id'])]['picture'];
 
-
     document.getElementsByClassName('wall')[0].innerHTML = '';
-    console.log(document.getElementsByClassName('wall')[0]);
     var history = data['history'];
     if (!$.isEmptyObject(history)) {
-        //console.log('history is not empty');
-        //console.log(history);
         for (var key in  history) {
             for (var idKey in history[key]) {
                 if (history[key][idKey] != null && idKey != 'time') {
@@ -83,27 +76,17 @@ socket.on('status', function (data) {
         socketMessage(data['room']);
     }
 
-    //$('.typeMessage .sendMessage').click(function (e) {
-    //    console.log('send message: '+ data['room']);
-    //    socketMessage(data['room']);
-    //});
-    //$('#newMessage').keypress(function (e) {
-    //    if (event.keyCode == 13) {
-    //        console.log('send message: '+ data['room']);
-    //        socketMessage(data['room']);
-    //        e.preventDefault();
-    //    }
-    //})
-
 });
 
-function msgNr(name, msg, id, picture){
+function msgNr(name, msg, id){
     var block = $('.messageNotification').clone();
     block.css('display', 'flex');
     block[0].firstElementChild.lastElementChild.innerHTML =  new Date().getHours() +':'+ new Date().getMinutes();
     block[0].lastElementChild.firstElementChild.innerHTML = name;
     block[0].lastElementChild.lastElementChild.innerHTML = msg;
-    $('.notifPhoto').attr('src', picture);
+    var picture = people[searchById(id)]['picture'];
+    console.log(picture);
+    block[0].firstElementChild.firstElementChild.firstElementChild.setAttribute('src', picture);
     block.click(function(e){
         block.remove();
         openChat(id);

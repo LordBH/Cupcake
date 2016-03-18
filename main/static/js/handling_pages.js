@@ -1,6 +1,3 @@
-/**manual functions**/
-var people, friendPageFlag = true; //friendPAgeFlag = false - function myFriends() doesn't put all data again
-
 function myPage() {
     $('body').removeClass('body-log');
     OpenPage('myPage');
@@ -10,8 +7,6 @@ function myFriends() {
     OpenPage('myFriends');
     if (usersID && friendPageFlag) {
         friendPageFlag = false;
-        people = usersID['currentUser']['people'];
-        //console.log(people);
         for (var i = 0; i < people.length - 1; i++) {
             $('.friends').append($('.myfriends:first').clone());
         }
@@ -26,7 +21,6 @@ function myFriends() {
                         }
                     }
                     else {
-                        //console.log(key);
                         $('.myfriends .' + key).get(i).innerHTML = people[i][key];
                     }
                 }
@@ -53,7 +47,6 @@ function myFriends() {
                 }
             }
         }
-       // notifyMessage(1);
     }
 }
 
@@ -103,7 +96,7 @@ function OpenPage(pageName) {
         link.href = '/main/css/loading.css';
 
         $('head').append(link);
-        $(load).show();
+        $(load).css('display', 'block');
 
         sendSocket('page', {}, putData, '/main');
         socketFlag++;
@@ -143,16 +136,13 @@ function putData(data) {
     if (data['online']) {
         $('#Page .state').addClass('online-state');
     }
-    //if (!data['activated']){
-    //    $('#ConfirmEmail').show();
-    //    $('#ConfirmEmail span').html(data['email']);
-    //}
     if (data['rooms']) {
         sendSocket('join_all_rooms', {'rooms': data['rooms']}, function () {
         }, '/chat');
     }
     $('.user-status').html(data['status']);
     usersID['currentUser'] = data;
+    people = data['people'];
 
 }
 

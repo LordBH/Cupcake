@@ -1,20 +1,22 @@
-body {
+/*body {
         width: 100%;
         height: 100%;
         margin: 0;
         padding: 0;
         overflow: hidden;
         background: transparent;
-}
+}*/
 
-.loading-wrapper{
-    top: -100px;
-    position: absolute;
+#Load{
+    display: none;
+    left: 0;
+    top: 0;
     width: 100%;
-    min-height: 800px;
     height: 100%;
-    background: white;
-    z-index: 10000;
+    text-align: center;
+    z-index: 1000;
+    background: rgba(255,255,255,1);
+    position: fixed;
 }
 
 body .leftEye,
@@ -269,9 +271,9 @@ body .mouth {
 }
 
 
-.loading{
-    position: relative;
-    /*top: 250px;*/
-    height: 680px;
-    background-color: white;
-}
+/*.loading{*/
+    /*position: relative;*/
+    /*width: auto;*/
+    /*height: auto;*/
+    /*background-color: white;*/
+/*}*/
