@@ -735,6 +735,11 @@ div.commentPhoto {
     border-bottom: 1px solid #eaeaea;
 }
 
+#myPageConfig input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    -webkit-text-fill-color: black !important;
+}
+
 #myPageConfig label {
     font-size: 22px;
     display: block;
