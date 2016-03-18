@@ -11,7 +11,7 @@ from configurations import filters, settings, thread
 app = Flask(__name__)
 
 # configurations
-app.config.from_object(settings.DevelopmentConfig)
+app.config.from_object(settings.ProductionConfig)
 
 # db
 db = SQLAlchemy(app)
