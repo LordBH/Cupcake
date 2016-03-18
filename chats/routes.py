@@ -56,7 +56,7 @@ def message(data):
         'flag': True,
         'msg': msg,
         'id': session.get('user_id'),
-        'name': session.get('user_first_name') + session.get('user_last_name'),
+        'name': session.get('user_first_name') + ' ' + session.get('user_last_name'),
     }
 
     emit('send_Message', context, room=room_id)
