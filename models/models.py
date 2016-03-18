@@ -202,7 +202,10 @@ class User(db.Model, UserMixin):
 
     @staticmethod
     def hash_password(p):
-        """Hashing passwords with sha224"""
+        """Hashing passwords with sha224
+
+        :parameter p: password
+        """
 
         p = p.encode()
         sha = sha224(p)
@@ -269,11 +272,8 @@ class ActivatedUsers(db.Model):
 
         msg = Message("Confirm your account on Cupcake Messenger", recipients=[self.email])
         msg.html = "Link %suser/activate/%s" % (host, self.activated_str)
-        print()
-        print(msg.html)
-        print()
 
-        #mail.send(msg)
+        mail.send(msg)
 
     @staticmethod
     def send_email_for_password(email, activated_str=None):

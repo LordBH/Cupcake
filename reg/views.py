@@ -144,7 +144,7 @@ def activate_user(s):
 
 @extra.route(r'/forgot_password', methods=['POST', 'GET'])
 def forgot_password():
-    from models.models import ActivatedUsers, User
+    from models.models import User
     context = {
         'msg': 'Please write your e-mail'
     }

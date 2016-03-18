@@ -41,11 +41,3 @@ class ProductionConfig(ConfigClass):
 class DevelopmentConfig(ConfigClass):
     DEVELOPMENT = True
     DEBUG = True
-
-
-class BionicConfig(ConfigClass):
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost:5432/cupcake"
-
-
-class BronzerClass(ConfigClass):
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:111111@localhost:5432/cupcake"

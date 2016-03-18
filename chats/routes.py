@@ -19,9 +19,7 @@ def joined(data):
         return emit('status', {'flag': False, 'msg': 'TypeError'})
 
     user_1 = session.get('user_id')
-
     extra = compare(user_1, user_2)
-
     room_id = '%d|%d' % extra
 
     session.setdefault('rooms', [])

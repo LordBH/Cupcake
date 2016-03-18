@@ -1,3 +1,4 @@
+from flask import session
 from configurations.settings import ConfigClass
 from os import path
 
@@ -15,14 +16,11 @@ def get_img(_id):
 
 
 def all_users_context(query, current_id):
-    from models.models import ActivatedUsers, session
-
     data = {'people': []}
 
     for x in query:
         q = x.__dict__
 
-        a = ActivatedUsers.query.filter_by(user_id=q.get('id')).first()
         extra = {
             'flag': True,
             'msg': 'success',
