@@ -2,27 +2,18 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
-from main.tools import loading_user
+from main.tools import loading_user, t_r
 from chats import socket_io
-from configurations import filters, settings, thread
-
+from configurations import filters, settings, thread, blueprints
 
 # application
 app = Flask(__name__)
 
 # configurations
-app.config.from_object(settings.ProductionConfig)
+app.config.from_object(settings.DevelopmentConfig)
 
 # db
 db = SQLAlchemy(app)
-
-
-@app.teardown_request
-def teardown_request(exception):
-    if exception:
-        db.session.rollback()
-        db.session.remove()
-    db.session.remove()
 
 # sending email
 mail = Mail(app)
@@ -36,24 +27,29 @@ login_manager.login_view = 'login'
 for x in filters.filters:
     app.jinja_env.filters[x.__name__] = x
 
+# blueprints
+for x in blueprints.blueprints:
+    app.register_blueprint(x)
+
+# threading
+for x in thread.list_of_thread:
+    x.start()
+
+
+@app.teardown_request
+def teardown_request(e):
+    t_r(e, db)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return loading_user(user_id)
+
 
 if __name__ == '__main__':
-    from configurations.blueprints import blueprints
-
-    # blueprint
-    for x in blueprints:
-        app.register_blueprint(x)
-
-    # threading
-    for x in thread.list_of_thread:
-        x.start()
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return loading_user(user_id)
-
     socket_io.init_app(app)
+
     host = '0.0.0.0'
     port = 5000
 
-    socket_io.run(app, host=host, port=port)
+    socket_io.run(app, host=host, port=port, debug=True)
