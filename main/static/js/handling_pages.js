@@ -20,7 +20,6 @@ function myFriends() {
 }
 
 function putMyfriendsData() {
-    console.log(people);
     if (usersID) {
         $('.myfriends:not(.original)').remove();
         for (var i = 0; i < people.length - 1; i++) {

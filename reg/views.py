@@ -144,7 +144,7 @@ def activate_user(s):
 
 @extra.route(r'/forgot_password', methods=['POST', 'GET'])
 def forgot_password():
-    from models.models import User
+    from models.models import User, ActivatedUsers
     context = {
         'msg': 'Please write your e-mail'
     }
@@ -153,7 +153,7 @@ def forgot_password():
         email = request.form.get('email').lower()
         q = User.query.filter_by(email=email).first()
         if User.clean_email(email) and q is not None:
-            # ActivatedUsers.send_email_for_password(email)
+            ActivatedUsers.send_email_for_password(email)
             context['msg'] = 'Check your email address and confirm the link'
 
             return render_template('reg/flash_message.html', context=context)

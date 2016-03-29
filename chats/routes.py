@@ -31,7 +31,6 @@ def joined(data):
         save_room(room_id, user_1, user_2)
 
     chat = take_message(room_id, extra, number=0)
-
     context = {
         'flag': True,
         'room': room_id,
