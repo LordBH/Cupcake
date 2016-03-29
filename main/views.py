@@ -2,7 +2,7 @@ from flask import render_template, abort, request, session, redirect, url_for
 from flask_socketio import emit
 from configurations.settings import ConfigClass
 from chats import socket_io
-from main.tools import all_users_context, slash
+from main.tools import users_context, slash
 from os import path, makedirs
 from werkzeug.utils import secure_filename
 from . import from_main
@@ -52,12 +52,22 @@ def upload_img():
 
 
 @socket_io.on('page', namespace='/main')
-def page(data=None):
-    from models.models import User, db
+def page_context(data=None):
+    from models.models import User
+
+    current_id = session.get('user_id')
+    query = User.query.filter_by(id=current_id).all()
+    context = users_context(query)
+
+    return emit('userData', context)
+
+
+@socket_io.on('friends', namespace='/main')
+def people_context(data=None):
+    from models.models import User
 
     current_id = session.get('user_id')
     query = User.query.all()
-    context = all_users_context(query, current_id)
-    db.session.commit()
+    context = users_context(query, current_id)
 
-    return emit('userData', context)
+    return emit('people', context)

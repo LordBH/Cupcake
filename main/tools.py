@@ -15,8 +15,12 @@ def get_img(_id):
     return ConfigClass.DEFAULT_IMG
 
 
-def all_users_context(query, current_id):
-    data = {'people': []}
+def users_context(query, current_id=None):
+
+    data = {}
+
+    if current_id is not None:
+        data['people'] = []
 
     for x in query:
         q = x.__dict__
@@ -39,12 +43,7 @@ def all_users_context(query, current_id):
 
         }
 
-        if not extra.get('online'):
-            """Re-write for active"""
-            # extra['active'] = last_seen()
-            pass
-
-        if q.get('id') == current_id:
+        if current_id is None:
             for key, value in extra.items():
                 data[key] = value
         else:
@@ -95,11 +94,17 @@ def loading_user(user_id):
     query.active = datetime.now()
     user = User(query=query, user_session=True)
     print(' --- LOGIN with request to DB ---> ID :', user.id)
-
     db.session.commit()
     get_rooms(user.id)
 
     return user
+
+
+def t_r(exception, db):
+    if exception:
+        db.session.rollback()
+        db.session.remove()
+    db.session.remove()
 
 
 def slash():
