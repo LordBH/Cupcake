@@ -26,8 +26,8 @@
     }
 
     #wrapper {
-        left: 18%;
-        width: 80%;
+        left: 22%;
+        width: 78%;
     }
 
     article {
@@ -131,6 +131,10 @@
 
     .showMessages{
         width: 100%;
+    }
+
+    .frame{
+        width: 90%;
     }
 }
 
