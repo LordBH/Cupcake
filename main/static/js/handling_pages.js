@@ -4,7 +4,6 @@ socket.on('people', function (data) {
     people = data['people'];
     if (friendPageFlag){
         putMyfriendsData();
-        removeAnimation();
         $('.left-side').get(0).style.display = 'block';
         friendPageFlag = false;
     }
@@ -21,6 +20,7 @@ function myFriends() {
 }
 
 function putMyfriendsData() {
+    console.log(people);
     if (usersID) {
         $('.myfriends:not(.original)').remove();
         for (var i = 0; i < people.length - 1; i++) {
@@ -52,6 +52,18 @@ function putMyfriendsData() {
                     else if (key == 'online') {
                         if (people[i][key]) {
                             $('.myfriends .state').get(i).classList.add('online-state');
+                        }
+                        else{
+                            if (new Date(people[i]['active']).getDate() == new Date().getDate()){
+                                var active = new Date(people[i]['active']).getHours() +
+                                    ' ' + new Date(people[i]['active']).getMinutes();
+                            }else{
+                                active ='Was here on: ' + new Date(people[i]['active']).getDate() +
+                                    '/'+ new Date(people[i]['active']).getMonth() + ' at '
+                                    + new Date(people[i]['active']).getHours() +
+                                    ':' + new Date(people[i]['active']).getMinutes();
+                            }
+                            $('.myfriends .state').get(i).innerHTML = active;
                         }
                     }
                     else if (key == 'id') {

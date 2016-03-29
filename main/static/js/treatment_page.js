@@ -30,7 +30,7 @@ function socketMessage(room) {
     }
 }
 
-function createMessage(mess, id, time, audio, myimg, myfriend) {
+function createMessage(mess, id, time, audio, myimg, myfriend, name) {
     if (mess != '' && mess != undefined && mess[0] != '\n') {
 
         var picture;
@@ -39,6 +39,7 @@ function createMessage(mess, id, time, audio, myimg, myfriend) {
         var friendPhoto = document.createElement('div');
         var img = document.createElement('img');
         var date = document.createElement('span');
+        var nameSpan = document.createElement('span');
         var minMessage = document.createElement('span');
         var scrollDiv = document.getElementById("scroll_div");
 
@@ -49,14 +50,17 @@ function createMessage(mess, id, time, audio, myimg, myfriend) {
 
         if (id != usersID['currentUser']['id']) {
             picture = myfriend;
+            name = people[searchById(id)]['first_name'] + ' ' + people[searchById(id)]['last_name'];
         }
         else {
             picture = myimg;
+            name = usersID['currentUser']['first_name'] + ' ' + people[searchById(id)]['last_name'];
         }
 
         miniMessage.classList.add('miniMessage');
         photoDate.classList.add('photoDate');
         friendPhoto.classList.add('friendPhoto');
+        nameSpan.classList.add('messageName');
         img.src = picture;
         date.classList.add('date');
         if (time == undefined) {
@@ -66,7 +70,10 @@ function createMessage(mess, id, time, audio, myimg, myfriend) {
             date.innerHTML = (new Date(time)).getHours() + ':' + (new Date(time)).getMinutes();
         }
         minMessage.classList.add('minMessage');
-        minMessage.innerHTML = mess;
+        nameSpan.innerHTML = name;
+        minMessage.appendChild(nameSpan);
+        minMessage.innerHTML += '<br>' + mess;
+
 
         friendPhoto.appendChild(img);
         photoDate.appendChild(friendPhoto);

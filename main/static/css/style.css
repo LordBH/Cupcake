@@ -43,16 +43,17 @@ input {
 /*-------------------------*/
 
 .state { /*online - offline*/
+    display: block;
+    color: #939595;
+}
+
+.online-state {
     display: inline-block;
     width: 10px;
     height: 10px;
     margin-left: 10px;
     border-radius: 50%;
-    background: rgb(0, 0, 0);
-}
-
-.online-state {
-    background: rgb(223, 0, 3);
+    background: #0868b3;
 }
 
 .user-status {
@@ -594,15 +595,19 @@ div.commentPhoto {
 }
 
 .miniMessage {
-    width: 95%;
+    width: 99%;
     min-height: 60px;
     height: auto;
     margin: 5px auto;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
     border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.miniMessage .messageName{
+    color: #0868b3;
 }
 
 .miniMessage .friendPhoto {

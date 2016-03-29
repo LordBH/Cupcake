@@ -31,7 +31,7 @@ socket.on('send_Message', function (data) {
     } else {
         var roomId = $('.wall').get(0).room.split('|');
         if ((data['id'] == +roomId[0] || data['id'] == +roomId[1]) && flag) {
-            createMessage(data['msg'], data['id'], undefined, true, myPicture, myFriend);
+            createMessage(data['msg'], data['id'], undefined, true, myPicture, myFriend, data['name']);
         }
         else {
             msgNr(data['name'], data['msg'], data['id']);
@@ -56,6 +56,7 @@ socket.on('status', function (data) {
 
     document.getElementsByClassName('wall')[0].innerHTML = '';
     var history = data['history'];
+    console.log(history);
     if (!$.isEmptyObject(history)) {
         for (var key in  history) {
             for (var idKey in history[key]) {
