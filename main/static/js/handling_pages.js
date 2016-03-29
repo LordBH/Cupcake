@@ -22,54 +22,60 @@ function myFriends() {
 function putMyfriendsData() {
     if (usersID) {
         $('.myfriends:not(.original)').remove();
-        for (var i = 0; i < people.length - 1; i++) {
-            var block = $('.original:first').clone();
+        for (var i = 0; i < people.length; i++) {
+            var block = $('.original').clone();
             block[0].classList.remove('original');
             $('.friends').append(block[0]);
-        }
-        for (i = 0; i < people.length; i++) {
-            $('.myfriends').css('display', 'block');
+            $('.myfriends:not(.original)').css('display', 'block');
             for (var key in people[i]) {
                 if ($('.myfriends .' + key).attr('class') != undefined) {
                     if (key == 'birthday') {
                         if (people[i][key] != 'None') {
                             var date = new Date(Date.parse(people[i][key]));
-                            $('.myfriends .' + key).get(i).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
+                            $('.myfriends .' + key).get(i+1).innerHTML = date.getDay() + '-' + date.getDate() + '-' + date.getFullYear();
                         }
                     }
                     else {
-                        $('.myfriends .' + key).get(i).innerHTML = people[i][key];
+                        $('.myfriends .' + key).get(i+1).innerHTML = people[i][key];
                     }
                 }
                 else {
                     if (key == 'first_name') {
-                        $('.myfriends .friendName').get(i).innerHTML = people[i]['first_name'] + ' ' + people[i]['last_name'];
+                        $('.myfriends .friendName').get(i+1).innerHTML = people[i]['first_name'] + ' ' + people[i]['last_name'];
                     }
                     else if (key == 'status') {
-                        $('.myfriends .user-status').get(i).innerHTML = people[i][key];
+                        $('.myfriends .user-status').get(i+1).innerHTML = people[i][key];
                     }
                     else if (key == 'online') {
                         if (people[i][key]) {
-                            $('.myfriends .state').get(i).classList.add('online-state');
+                            $('.myfriends .state').get(i+1).classList.add('online-state');
                         }
                         else{
+                            var o_ = new Date(people[i]['active']).getHours();
+                            if ((o_.toString().length) == 1){
+                                o_ = '0' + o_
+                            }
+                            var m_ = new Date(people[i]['active']).getMinutes();
+                            if ((m_.toString().length) == 1){
+                                m_ = '0' + m_
+                            }
+
                             if (new Date(people[i]['active']).getDate() == new Date().getDate()){
-                                var active = new Date(people[i]['active']).getHours() +
-                                    ' ' + new Date(people[i]['active']).getMinutes();
+                                var active = 'Was here today at: ' + o_ +
+                                    ':' + m_;
                             }else{
                                 active ='Was here on: ' + new Date(people[i]['active']).getDate() +
                                     '/'+ new Date(people[i]['active']).getMonth() + ' at '
-                                    + new Date(people[i]['active']).getHours() +
-                                    ':' + new Date(people[i]['active']).getMinutes();
+                                    + o_ + ':' + m_;
                             }
-                            $('.myfriends .state').get(i).innerHTML = active;
+                            $('.myfriends .state').get(i+1).innerHTML = active;
                         }
                     }
                     else if (key == 'id') {
-                        $('.sendMessage').get(i).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
+                        $('.sendMessage').get(i+1).setAttribute('onclick', 'openChat(' + people[i][key] + ')');
                     }
                     else if (key == 'picture') {
-                        $('.myfriends .userImg').get(i).setAttribute('src', people[i][key]);
+                        $('.myfriends .userImg').get(i+1).setAttribute('src', people[i][key]);
                     }
                 }
             }

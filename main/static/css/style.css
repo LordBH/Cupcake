@@ -449,6 +449,10 @@ div.commentPhoto {
     padding: 10px;
 }
 
+.friends .original{
+    display: none;
+}
+
 .friendPhoto {
     width: 140px;
     height: auto;
