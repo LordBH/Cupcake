@@ -41,3 +41,12 @@ class ProductionConfig(ConfigClass):
 class DevelopmentConfig(ConfigClass):
     DEVELOPMENT = True
     DEBUG = True
+
+
+class BionicConfig(ConfigClass):
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost:5432/cupcake"
+
+
+class HerokuConfig:
+    SQLALCHEMY_DATABASE_URI = "postgres://shmnsffpnbkohx:v8GTa1__T0hvrw1GmaRiyiwEbS@ec2-107-22-246-252.compute-1.amazonaws.com:5432/ddj4gc8g9fn0bs"
+
