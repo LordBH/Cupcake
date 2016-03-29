@@ -7,6 +7,7 @@ from os import urandom
 from hashlib import sha224
 from datetime import datetime, date
 from sqlalchemy.orm import backref
+from re import search
 
 
 PERMITTED_DOMAIN = ['gmail.com', 'ukr.net', 'yandex.ua', 'rambler.ru', 'yandex.ru']
@@ -186,19 +187,14 @@ class User(db.Model, UserMixin):
         if l > q:
             return False
 
-        for x in e:
-            if ord(x) not in PHONE_SYMBOLS:
-                return False
+        pattern = '\+?\d{0,2}\d*'
+        s = search(pattern, e)
+        g = s.group()
 
-        for x in ('(', ')', '+'):
-            c = e.split(x)
-            if len(c) > 2:
-                return False
-
-        if ('(' in e and ')' not in e) or (')' in e and '(' not in e):
+        if not g:
             return False
 
-        return True
+        return g
 
     @staticmethod
     def hash_password(p):
@@ -238,7 +234,8 @@ class User(db.Model, UserMixin):
 
         if User.clean_names(city):
             q.city = city
-        if User.clean_phone(phone):
+        phone = User.clean_phone(phone)
+        if phone:
             q.phone = phone
         if birthday:
             try:
