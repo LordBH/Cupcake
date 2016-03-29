@@ -1,14 +1,32 @@
+socket = io.connect('http://' + document.domain + ':' + location.port + '/main');
+
+socket.on('people', function (data) {
+    people = data['people'];
+    if (friendPageFlag){
+        putMyfriendsData();
+        removeAnimation();
+        $('.left-side').get(0).style.display = 'block';
+        friendPageFlag = false;
+    }
+});
+
 function myPage() {
     $('body').removeClass('body-log');
     OpenPage('myPage');
 }
 
 function myFriends() {
+    friendPageFlag = true;
     OpenPage('myFriends');
-    if (usersID && friendPageFlag) {
-        friendPageFlag = false;
+}
+
+function putMyfriendsData() {
+    if (usersID) {
+        $('.myfriends:not(.original)').remove();
         for (var i = 0; i < people.length - 1; i++) {
-            $('.friends').append($('.myfriends:first').clone());
+            var block = $('.original:first').clone();
+            block[0].classList.remove('original');
+            $('.friends').append(block[0]);
         }
         for (i = 0; i < people.length; i++) {
             $('.myfriends').css('display', 'block');
@@ -79,27 +97,16 @@ function openChat(id) {
     scrollDiv.scrollTop = scrollDiv.scrollHeight;
 }
 
-var socketFlag = true;
+
 
 function OpenPage(pageName) {
-    var load = '#' + 'Load';
+    if (pageName == 'myFriends'){
+        sendSocket('friends', {}, function () {
+        }, '/main');
+    }
     var active = $('.active');
     var hideDiv = '#' + active[0].id.substr(2);
     var showDiv = '#' + pageName.substr(2);
-
-    if (socketFlag) {
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.id = 'animation';
-        link.href = '/main/css/loading.css';
-
-        $('head').append(link);
-        $(load).css('display', 'block');
-
-        sendSocket('page', {}, putData, '/main');
-        socketFlag = false;
-    }
 
     editImgs();
     pageName = '#' + pageName;
@@ -113,7 +120,6 @@ function OpenPage(pageName) {
     }
     $(hideDiv).hide();
     $(showDiv).show();
-    document.cookie = 'page=' + pageName;
 }
 
 
@@ -137,14 +143,5 @@ function putData(data) {
     if (data['rooms']) {
         sendSocket('join_all_rooms', {'rooms': data['rooms']}, '', '/chat');
     }
-
     usersID['currentUser'] = data;
-    people = data['people'];
-}
-
-function removeAnimation() {
-    setTimeout(function () {
-        $('#animation').remove();
-        $('#Load').hide();
-    }, 2000);
 }

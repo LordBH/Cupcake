@@ -11,7 +11,7 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
     });
 
     socket.on('userData', function (data) {
-        removeAnimation();
+        OpenPage($('.active')[0].id.substr(0));
         if (data['flag']) {
             fn(data);
         }
@@ -19,6 +19,8 @@ function sendSocket(emitName, obj, fn, namespace) {  //send socket to validate a
             $('#wrapper').innerHTML = '404';
         }
     });
+
+    
 }
 
 function checks(flag, i) {
