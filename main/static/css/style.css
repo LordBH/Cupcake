@@ -48,11 +48,11 @@ input {
     height: 10px;
     margin-left: 10px;
     border-radius: 50%;
-    background: rgb(175, 175, 175);
+    background: rgb(0, 0, 0);
 }
 
 .online-state {
-    background: rgb(133, 128, 223);
+    background: rgb(223, 0, 3);
 }
 
 .user-status {
@@ -1059,9 +1059,21 @@ h1.mainLogo span {
 }
 
 .messageNotification .right-block {
-    height: auto;
-    width: auto;
+    height: 90px;
+    width: 220px;
+    position: relative;
 }
+
+.messageNotification .right-block .close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
 
 .messageNotification .friendPhoto {
     width: 60px;
