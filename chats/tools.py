@@ -35,10 +35,11 @@ def connecting(number, user, conn=False):
 
     if number == 0:
         change_online(user, False)
-        return print("USER ID : |", user, '| disconnect from all pages on Cupcake. His ip :', ip)
+        print('USER ID : |', user, '| disconnect from all pages on Cupcake. His ip :', ip)
+        return
     elif number == 1:
         change_online(user, True)
-    print("USER ID : |", user, '| has', number, 'open page(s) on Cupcake. His ip :', ip)
+    print('USER ID : |', user, '| has', number, 'open page(s) on Cupcake. His ip :', ip)
 
 
 def control_user_online(connect=False):
@@ -73,7 +74,7 @@ def take_message(room, l=None, number=10):
     return extra
 
 
-def save_room(*args, room):
+def save_room(room, *args):
     from models.models import ActivatedUsers, db
 
     for x in args:

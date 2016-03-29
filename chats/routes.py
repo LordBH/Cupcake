@@ -28,7 +28,7 @@ def joined(data):
         join_room(room_id)
         session['rooms'].append(room_id)
         emit('unique_wire', {'flag': True, 'id': user_2, 'user': user_1}, room=user_2)
-        save_room(user_1, user_2, room=room_id)
+        save_room(room_id, user_1, user_2)
 
     chat = take_message(room_id, extra, number=0)
 
@@ -64,8 +64,9 @@ def message(data):
 @socket_io.on('unique_wire', namespace='/chat')
 def unique_wire(data):
     user = session.get('user_id')
-    print('Create unique_wire for user ID:', user, data)
-    join_room(user)
+    if user is not None:
+        print('Create unique_wire for user ID:', user, data)
+        join_room(user)
 
 
 @socket_io.on('join_all_rooms', namespace='/chat')
